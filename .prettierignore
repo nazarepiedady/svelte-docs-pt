@@ -1,0 +1,13 @@
+/*
+!/elements
+!/scripts
+!/src
+src/compiler/compile/internal_exports.ts
+!/test
+!documentation
+!sites
+/test/**/*.svelte
+/test/**/_expected*
+/test/**/_actual*
+/test/**/expected*
+/types
