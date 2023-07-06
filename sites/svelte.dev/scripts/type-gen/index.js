@@ -1,10 +1,17 @@
 // @ts-check
-import fs from 'fs';
+import fs from 'node:fs';
+import path from 'node:path';
 import prettier from 'prettier';
 import ts from 'typescript';
-import { get_bundled_types } from './compile-types.js';
 
-/** @typedef {{ name: string; comment: string; markdown: string; snippet: string; children: Extracted[] }} Extracted */
+/** @typedef {{
+ * name: string;
+ * comment: string;
+ * markdown?: string;
+ * snippet: string;
+ * deprecated: string | null;
+ * children: Extracted[] }
+ * } Extracted */
 
 /** @type {Array<{ name: string; comment: string; exports: Extracted[]; types: Extracted[]; exempt?: boolean; }>} */
 const modules = [];
@@ -24,7 +31,10 @@ function get_types(code, statements) {
 		for (const statement of statements) {
 			const modifiers = ts.canHaveModifiers(statement) ? ts.getModifiers(statement) : undefined;
 
-			const export_modifier = modifiers?.find((modifier) => modifier.kind === 93);
+			const export_modifier = modifiers?.find(
+				(modifier) => modifier.kind === ts.SyntaxKind.ExportKeyword
+			);
+
 			if (!export_modifier) continue;
 
 			if (
@@ -44,28 +54,40 @@ function get_types(code, statements) {
 
 				let start = statement.pos;
 				let comment = '';
+				/** @type {string | null} */
+				let deprecated_notice = null;
 
 				// @ts-ignore i think typescript is bad at typescript
 				if (statement.jsDoc) {
 					// @ts-ignore
-					comment = statement.jsDoc[0].comment;
+					const jsDoc = statement.jsDoc[0];
+
+					comment = jsDoc.comment;
+
+					if (jsDoc?.tags?.[0]?.tagName?.escapedText === 'deprecated') {
+						deprecated_notice = jsDoc.tags[0].comment;
+					}
+
 					// @ts-ignore
-					start = statement.jsDoc[0].end;
+					start = jsDoc.end;
 				}
 
 				const i = code.indexOf('export', start);
 				start = i + 6;
 
-				/** @type {string[]} */
-				const children = [];
+				/** @type {Extracted[]} */
+				let children = [];
 
 				let snippet_unformatted = code.slice(start, statement.end).trim();
 
-				if (ts.isInterfaceDeclaration(statement)) {
+				if (ts.isInterfaceDeclaration(statement) || ts.isClassDeclaration(statement)) {
 					if (statement.members.length > 0) {
 						for (const member of statement.members) {
+							// @ts-ignore
 							children.push(munge_type_element(member));
 						}
+
+						children = children.filter(Boolean);
 
 						// collapse `interface Foo {/* lots of stuff*/}` into `interface Foo {…}`
 						const first = statement.members.at(0);
@@ -87,7 +109,7 @@ function get_types(code, statements) {
 				const snippet = prettier
 					.format(snippet_unformatted, {
 						parser: 'typescript',
-						printWidth: 80,
+						printWidth: 60,
 						useTabs: true,
 						singleQuote: true,
 						trailingComma: 'none'
@@ -100,7 +122,13 @@ function get_types(code, statements) {
 						? exports
 						: types;
 
-				collection.push({ name, comment, snippet, children });
+				collection.push({
+					name,
+					comment,
+					snippet,
+					children,
+					deprecated: deprecated_notice
+				});
 			}
 		}
 
@@ -118,13 +146,15 @@ function munge_type_element(member, depth = 1) {
 	// @ts-ignore
 	const doc = member.jsDoc?.[0];
 
+	if (/(private api|do not use)/i.test(doc?.comment)) return;
+
 	/** @type {string[]} */
 	const children = [];
 
 	const name = member.name?.escapedText;
 	let snippet = member.getText();
 
-	for (let i = 0; i < depth; i += 1) {
+	for (let i = -1; i < depth; i += 1) {
 		snippet = snippet.replace(/^\t/gm, '');
 	}
 
@@ -150,6 +180,14 @@ function munge_type_element(member, depth = 1) {
 		const type = tag.tagName.escapedText;
 
 		switch (tag.tagName.escapedText) {
+			case 'private':
+				bullets.push(`- <span class="tag">private</span> ${tag.comment}`);
+				break;
+
+			case 'readonly':
+				bullets.push(`- <span class="tag">readonly</span> ${tag.comment}`);
+				break;
+
 			case 'param':
 				bullets.push(`- \`${tag.name.getText()}\` ${tag.comment}`);
 				break;
@@ -160,6 +198,10 @@ function munge_type_element(member, depth = 1) {
 
 			case 'returns':
 				bullets.push(`- <span class="tag">returns</span> ${tag.comment}`);
+				break;
+
+			case 'deprecated':
+				bullets.push(`- <span class="tag deprecated">deprecated</span> ${tag.comment}`);
 				break;
 
 			default:
@@ -180,168 +222,69 @@ function munge_type_element(member, depth = 1) {
 	};
 }
 
-const bundled_types = await get_bundled_types();
+/**
+ * Type declarations include fully qualified URLs so that they become links when
+ * you hover over names in an editor with TypeScript enabled. We need to remove
+ * the origin so that they become root-relative, so that they work in preview
+ * deployments and when developing locally
+ * @param {string} str
+ */
+function strip_origin(str) {
+	return str.replace(/https:\/\/svelte\.dev/g, '');
+}
 
-{
-	const module = bundled_types.get('svelte');
+/**
+ * @param {string} file
+ */
+function read_d_ts_file(file) {
+	const resolved = path.resolve('../../packages/svelte', file);
 
-	if (!module) throw new Error('Could not find svelte');
+	// We can't use JSDoc comments inside JSDoc, so we would get ts(7031) errors if
+	// we didn't ignore this error specifically for `/// file:` code examples
+	const str = fs.readFileSync(resolved, 'utf-8');
 
-	modules.push({
-		name: 'svelte',
-		comment: '',
-		...get_types(module.code, module.ts_source_file.statements)
+	return str.replace(/(\s*\*\s*)```js([\s\S]+?)```/g, (match, prefix, code) => {
+		return `${prefix}\`\`\`js${prefix}// @errors: 7031${code}\`\`\``;
 	});
 }
 
 {
-	const module = bundled_types.get('svelte/compiler');
+	const code = read_d_ts_file('types/index.d.ts');
+	const node = ts.createSourceFile('index.d.ts', code, ts.ScriptTarget.Latest, true);
 
-	if (!module) throw new Error('Could not find svelte/compiler');
+	for (const statement of node.statements) {
+		if (ts.isModuleDeclaration(statement)) {
+			// @ts-ignore
+			const name = statement.name.text || statement.name.escapedText;
 
-	modules.push({
-		name: 'svelte/compiler',
-		comment: '',
-		...get_types(module.code, module.ts_source_file.statements)
-	});
-}
+			const ignore_list = [
+				'*.svelte',
+				'svelte/types/compiler/preprocess', // legacy entrypoints, omit from docs
+				'svelte/types/compiler/interfaces' // legacy entrypoints, omit from docs
+			];
+			if (ignore_list.includes(name)) {
+				continue;
+			}
 
-{
-	const module = bundled_types.get('svelte/action');
+			// @ts-ignore
+			const comment = strip_origin(statement.jsDoc?.[0].comment ?? '');
 
-	if (!module) throw new Error('Could not find svelte/action');
-
-	modules.push({
-		name: 'svelte/action',
-		comment: '',
-		...get_types(module.code, module.ts_source_file.statements)
-	});
-}
-
-{
-	const module = bundled_types.get('svelte/animate');
-
-	if (!module) throw new Error('Could not find svelte/animate');
-
-	modules.push({
-		name: 'svelte/animate',
-		comment: '',
-		...get_types(module.code, module.ts_source_file.statements)
-	});
-}
-
-{
-	const module = bundled_types.get('svelte/easing');
-
-	if (!module) throw new Error('Could not find svelte/easing');
-
-	modules.push({
-		name: 'svelte/easing',
-		comment: '',
-		...get_types(module.code, module.ts_source_file.statements)
-	});
-}
-
-{
-	const module = bundled_types.get('svelte/motion');
-
-	if (!module) throw new Error('Could not find svelte/motion');
-
-	modules.push({
-		name: 'svelte/motion',
-		comment: '',
-		...get_types(module.code, module.ts_source_file.statements)
-	});
-}
-
-{
-	const module = bundled_types.get('svelte/store');
-
-	if (!module) throw new Error('Could not find svelte/store');
-
-	modules.push({
-		name: 'svelte/store',
-		comment: '',
-		...get_types(module.code, module.ts_source_file.statements)
-	});
-}
-
-{
-	const module = bundled_types.get('svelte/transition');
-
-	if (!module) throw new Error('Could not find svelte/transition');
-
-	modules.push({
-		name: 'svelte/transition',
-		comment: '',
-		...get_types(module.code, module.ts_source_file.statements)
-	});
+			modules.push({
+				name,
+				comment,
+				// @ts-ignore
+				...get_types(code, statement.body?.statements)
+			});
+		}
+	}
 }
 
 modules.sort((a, b) => (a.name < b.name ? -1 : 1));
 
-// Fix the duplicate/messed up types
-// !NOTE: This relies on mutation of `modules`
-$: {
-	const module_with_SvelteComponent = modules.find((m) =>
-		m.types.filter((t) => t.name === 'SvelteComponent')
-	);
-
-	if (!module_with_SvelteComponent) break $;
-
-	const svelte_comp_part = module_with_SvelteComponent?.types.filter(
-		(t) => t.name === 'SvelteComponent'
-	);
-
-	if (svelte_comp_part?.[1]) {
-		// Take the comment from [0], and insert into [1]. Then delete [0]
-		svelte_comp_part[1].comment = svelte_comp_part?.[0].comment;
-		delete svelte_comp_part[0];
-		svelte_comp_part.reverse();
-		svelte_comp_part.length = 1;
-
-		module_with_SvelteComponent.types = module_with_SvelteComponent?.types.filter(
-			(t) => t.name !== 'SvelteComponent'
-		);
-
-		module_with_SvelteComponent.types.push(svelte_comp_part[0]);
-		module_with_SvelteComponent.types.sort((a, b) => (a.name < b.name ? -1 : 1));
-	}
-}
-
-// Fix the duplicate/messed up types
-// !NOTE: This relies on mutation of `modules`
-$: {
-	const module_with_SvelteComponentTyped = modules.find((m) =>
-		m.types.filter((t) => t.name === 'SvelteComponentTyped')
-	);
-
-	if (!module_with_SvelteComponentTyped) break $;
-
-	const svelte_comp_typed_part = module_with_SvelteComponentTyped?.types.filter(
-		(t) => t.name === 'SvelteComponentTyped'
-	);
-
-	if (svelte_comp_typed_part?.[1]) {
-		// Take the comment from [1], and insert into [0]. Then delete [1]
-		svelte_comp_typed_part[0].comment = svelte_comp_typed_part?.[1].comment;
-		delete svelte_comp_typed_part[1];
-		svelte_comp_typed_part.length = 1;
-
-		module_with_SvelteComponentTyped.types = module_with_SvelteComponentTyped?.types.filter(
-			(t) => t.name !== 'SvelteComponentTyped'
-		);
-
-		module_with_SvelteComponentTyped.types.push(svelte_comp_typed_part[0]);
-		module_with_SvelteComponentTyped.types.sort((a, b) => (a.name < b.name ? -1 : 1));
-	}
-}
-
 // Remove $$_attributes from ActionReturn
-
 $: {
 	const module_with_ActionReturn = modules.find((m) =>
-		m.types.find((t) => t.name === 'ActionReturn')
+		m.types.find((t) => t?.name === 'ActionReturn')
 	);
 
 	const new_children =
@@ -359,8 +302,12 @@ try {
 fs.writeFileSync(
 	new URL('../../src/lib/generated/type-info.js', import.meta.url),
 	`
-/* This file is generated by running \`node scripts/extract-types.js\`
-   in the packages/kit directory — do not edit it */
-export const modules = ${JSON.stringify(modules, null, '  ')};
+/* This file is generated by running \`pnpm generate\`
+   in the sites/svelte.dev directory — do not edit it */
+export const modules = /** @type {import('@sveltejs/site-kit/markdown').Modules} */ (${JSON.stringify(
+		modules,
+		null,
+		'  '
+	)});
 `.trim()
 );

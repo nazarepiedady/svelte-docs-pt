@@ -1,10 +1,15 @@
-import { get_parsed_tutorial } from '$lib/server/tutorial';
-import { get_tutorial_data, get_tutorial_list } from '$lib/server/tutorial/get-tutorial';
-import { error } from '@sveltejs/kit';
+import {
+	get_parsed_tutorial,
+	get_tutorial_data,
+	get_tutorial_list
+} from '$lib/server/tutorial/index.js';
+import { error, redirect } from '@sveltejs/kit';
 
 export const prerender = true;
 
 export async function load({ params }) {
+	if (params.slug === 'local-transitions') throw redirect(307, '/tutorial/global-transitions');
+
 	const tutorial_data = get_tutorial_data();
 	const tutorials_list = get_tutorial_list(tutorial_data);
 
@@ -21,7 +26,12 @@ export async function load({ params }) {
 
 export async function entries() {
 	const tutorials_list = get_tutorial_list(get_tutorial_data());
-	return tutorials_list
+	const slugs = tutorials_list
 		.map(({ tutorials }) => tutorials)
 		.flatMap((val) => val.map(({ slug }) => ({ slug })));
+
+	// to force redirect
+	slugs.push({ slug: 'local-transitions' });
+
+	return slugs;
 }

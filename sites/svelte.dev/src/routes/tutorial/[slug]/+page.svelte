@@ -2,11 +2,9 @@
 	import { browser } from '$app/environment';
 	import ScreenToggle from '$lib/components/ScreenToggle.svelte';
 	import Repl from '@sveltejs/repl';
-	import { theme } from '@sveltejs/site-kit/components';
+	import { theme } from '@sveltejs/site-kit/stores';
 	import { mapbox_setup, svelteUrl } from '../../../config.js';
 	import TableOfContents from './TableOfContents.svelte';
-
-	import '@sveltejs/site-kit/styles/code.css';
 
 	export let data;
 
@@ -49,7 +47,7 @@
 	$: if (scrollable) data.tutorial, scrollable.scrollTo(0, 0);
 
 	$: selected = lookup.get(data.slug);
-	$: improve_link = `https://github.com/sveltejs/svelte/tree/master/documentation/content/tutorial/${data.tutorial.dir}`;
+	$: improve_link = `https://github.com/sveltejs/svelte/tree/master/documentation/tutorial/${data.tutorial.dir}`;
 
 	const clone = (file) => ({
 		name: file.name.replace(/.\w+$/, ''),
@@ -67,21 +65,27 @@
 	$: mobile = width < 768;
 
 	function reset() {
-		repl.update({
+		repl.set({
 			files: data.tutorial.initial.map(clone)
 		});
+
+		//! BUG: Fix handleChange on REPL side, setting repl.set doesn't trigger it, and repl.update doesn't even work
+		completed = false;
 	}
 
 	function complete() {
-		repl.update({
+		repl.set({
 			files: data.tutorial.complete.map(clone)
 		});
+
+		completed = true;
 	}
 
 	let completed = false;
 
+	/** @param {import('svelte').ComponentEvents<Repl>['change']} event */
 	function handle_change(event) {
-		completed = event.detail.components.every((file, i) => {
+		completed = event.detail.files.every((file, i) => {
 			const expected = data.tutorial.complete[i] && clone(data.tutorial.complete[i]);
 			return (
 				expected &&

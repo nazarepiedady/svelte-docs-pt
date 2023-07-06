@@ -1,99 +1,98 @@
-import { replace_placeholders } from '$lib/server/docs/render';
+import { modules } from '$lib/generated/type-info.js';
 import {
-	extract_frontmatter,
+	extractFrontmatter,
+	markedTransform,
 	normalizeSlugify,
 	removeMarkdown,
-	transform
-} from '$lib/server/markdown';
+	replaceExportTypePlaceholders
+} from '@sveltejs/site-kit/markdown';
 import fs from 'node:fs';
 import path from 'node:path';
 import glob from 'tiny-glob/sync.js';
+import { CONTENT_BASE } from '../../constants.js';
 
-const base = '../../documentation/content/';
+const base = CONTENT_BASE;
 
-const categories = [
-	{
-		slug: 'docs',
-		label: null,
-		/** @param {string[]} parts */
-		href: (parts) => (parts.length > 1 ? `/docs/${parts[0]}#${parts.at(-1)}` : `/docs/${parts[0]}`)
-	},
-	{
-		slug: 'faq',
-		label: 'FAQ',
-		/** @param {string[]} parts */
-		href: (parts) => `/faq#${parts.join('-')}`
-	}
-];
+/** @param {string[]} parts */
+function get_href(parts) {
+	return parts.length > 1 ? `/docs/${parts[0]}#${parts.at(-1)}` : `/docs/${parts[0]}`;
+}
 
 export function content() {
 	/** @type {import('@sveltejs/site-kit/search').Block[]} */
 	const blocks = [];
 
-	for (const category of categories) {
-		const breadcrumbs = category.label ? [category.label] : [];
+	const breadcrumbs = [];
 
-		for (const file of glob('**/*.md', { cwd: `${base}/${category.slug}` })) {
-			const basename = path.basename(file);
-			const match = /\d{2}-(.+)\.md/.exec(basename);
-			if (!match) continue;
+	for (const file of glob('**/*.md', { cwd: `${base}/docs` })) {
+		const basename = path.basename(file);
+		const match = /\d{2}-(.+)\.md/.exec(basename);
+		if (!match) continue;
 
-			const slug = match[1];
+		const slug = match[1];
 
-			const filepath = `${base}/${category.slug}/${file}`;
-			// const markdown = replace_placeholders(fs.readFileSync(filepath, 'utf-8'));
-			const markdown = replace_placeholders(fs.readFileSync(filepath, 'utf-8'));
+		const filepath = `${base}/docs/${file}`;
+		// const markdown = replace_placeholders(fs.readFileSync(filepath, 'utf-8'));
+		const markdown = replaceExportTypePlaceholders(fs.readFileSync(filepath, 'utf-8'), modules);
 
-			const { body, metadata } = extract_frontmatter(markdown);
+		const { body, metadata } = extractFrontmatter(markdown);
 
-			const sections = body.trim().split(/^## /m);
-			const intro = sections.shift().trim();
-			const rank = +metadata.rank || undefined;
+		const sections = body.trim().split(/^## /m);
+		const intro = sections.shift().trim();
+		const rank = +metadata.rank || undefined;
+
+		blocks.push({
+			breadcrumbs: [...breadcrumbs, removeMarkdown(remove_TYPE(metadata.title) ?? '')],
+			href: get_href([slug]),
+			content: plaintext(intro),
+			rank
+		});
+
+		for (const section of sections) {
+			const lines = section.split('\n');
+			const h2 = lines.shift();
+			const content = lines.join('\n');
+
+			const subsections = content.trim().split('## ');
+
+			const intro = subsections.shift().trim();
 
 			blocks.push({
-				breadcrumbs: [...breadcrumbs, removeMarkdown(metadata.title ?? '')],
-				href: category.href([slug]),
+				breadcrumbs: [
+					...breadcrumbs,
+					removeMarkdown(remove_TYPE(metadata.title)),
+					remove_TYPE(removeMarkdown(h2))
+				],
+				href: get_href([slug, normalizeSlugify(h2)]),
 				content: plaintext(intro),
 				rank
 			});
 
-			for (const section of sections) {
-				const lines = section.split('\n');
-				const h2 = lines.shift();
-				const content = lines.join('\n');
-
-				const subsections = content.trim().split('## ');
-
-				const intro = subsections.shift().trim();
+			for (const subsection of subsections) {
+				const lines = subsection.split('\n');
+				const h3 = lines.shift();
 
 				blocks.push({
-					breadcrumbs: [...breadcrumbs, removeMarkdown(metadata.title), removeMarkdown(h2)],
-					href: category.href([slug, normalizeSlugify(h2)]),
-					content: plaintext(intro),
+					breadcrumbs: [
+						...breadcrumbs,
+						removeMarkdown(remove_TYPE(metadata.title)),
+						removeMarkdown(remove_TYPE(h2)),
+						removeMarkdown(remove_TYPE(h3))
+					],
+					href: get_href([slug, normalizeSlugify(h2) + '-' + normalizeSlugify(h3)]),
+					content: plaintext(lines.join('\n').trim()),
 					rank
 				});
-
-				for (const subsection of subsections) {
-					const lines = subsection.split('\n');
-					const h3 = lines.shift();
-
-					blocks.push({
-						breadcrumbs: [
-							...breadcrumbs,
-							removeMarkdown(metadata.title),
-							removeMarkdown(h2),
-							removeMarkdown(h3)
-						],
-						href: category.href([slug, normalizeSlugify(h2), normalizeSlugify(h3)]),
-						content: plaintext(lines.join('\n').trim()),
-						rank
-					});
-				}
 			}
 		}
 	}
 
 	return blocks;
+}
+
+/** @param {string} str */
+function remove_TYPE(str) {
+	return str?.replace(/^\[TYPE\]:\s+(.+)/, '$1') ?? '';
 }
 
 /** @param {string} markdown */
@@ -104,7 +103,7 @@ function plaintext(markdown) {
 	/** @param {string} text */
 	const inline = (text) => text;
 
-	return transform(markdown, {
+	return markedTransform(markdown, {
 		code: (source) => source.split('// ---cut---\n').pop(),
 		blockquote: block,
 		html: () => '\n',

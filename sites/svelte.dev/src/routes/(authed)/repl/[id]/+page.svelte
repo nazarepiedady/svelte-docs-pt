@@ -2,7 +2,7 @@
 	import { browser } from '$app/environment';
 	import { afterNavigate, goto } from '$app/navigation';
 	import Repl from '@sveltejs/repl';
-	import { theme } from '@sveltejs/site-kit/components';
+	import { theme } from '@sveltejs/site-kit/stores';
 	import { onMount } from 'svelte';
 	import { mapbox_setup } from '../../../../config.js';
 	import AppControls from './AppControls.svelte';
@@ -32,7 +32,7 @@
 
 	onMount(() => {
 		if (data.version !== 'local') {
-			fetch(`https://unpkg.com/svelte@${data.version || '3'}/package.json`)
+			fetch(`https://unpkg.com/svelte@${data.version || '4'}/package.json`)
 				.then((r) => r.json())
 				.then((pkg) => {
 					version = pkg.version;
@@ -41,7 +41,7 @@
 	});
 
 	afterNavigate(() => {
-		repl.set({
+		repl?.set({
 			files: data.gist.components
 		});
 	});
@@ -101,7 +101,8 @@
 <style>
 	.repl-outer {
 		position: relative;
-		height: calc(100vh - var(--sk-nav-height));
+		height: calc(100% - var(--sk-nav-height));
+		height: calc(100dvh - var(--sk-nav-height));
 		--app-controls-h: 5.6rem;
 		--pane-controls-h: 4.2rem;
 		overflow: hidden;

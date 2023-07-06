@@ -1,9 +1,12 @@
 <script>
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
-	import { Icon, Nav, NavItem, Separator, Shell } from '@sveltejs/site-kit/components';
+	import { Icon, Shell } from '@sveltejs/site-kit/components';
+	import { Nav, Separator } from '@sveltejs/site-kit/nav';
 	import { Search, SearchBox } from '@sveltejs/site-kit/search';
 	import '@sveltejs/site-kit/styles/index.css';
+
+	export let data;
 </script>
 
 <svelte:head>
@@ -16,38 +19,37 @@
 
 <div style:display={$page.url.pathname !== '/docs' ? 'contents' : 'none'}>
 	<Shell nav_visible={$page.url.pathname !== '/repl/embed'}>
-		<Nav slot="top-nav">
-			<svelte:fragment slot="home">
+		<Nav slot="top-nav" title={data.nav_title} links={data.nav_links}>
+			<svelte:fragment slot="home-large">
 				<strong>svelte</strong>.dev
 			</svelte:fragment>
 
-			<svelte:fragment slot="nav-center">
+			<svelte:fragment slot="home-small">
+				<strong>svelte</strong>
+			</svelte:fragment>
+
+			<svelte:fragment slot="search">
 				{#if $page.url.pathname !== '/search'}
-					<li><Search /></li>
+					<Search />
 				{/if}
 			</svelte:fragment>
 
-			<svelte:fragment slot="nav-right">
-				<NavItem href="/tutorial">Tutorial</NavItem>
-				<NavItem href="/docs/introduction">Docs</NavItem>
-				<NavItem href="/examples">Examples</NavItem>
-				<NavItem href="/repl">REPL</NavItem>
-				<NavItem href="/blog">Blog</NavItem>
-				<NavItem href="/faq">FAQ</NavItem>
+			<svelte:fragment slot="external-links">
+				<a href="https://learn.svelte.dev/">Tutorial</a>
+
+				<a href="https://kit.svelte.dev">SvelteKit</a>
 
 				<Separator />
 
-				<NavItem external="https://kit.svelte.dev">SvelteKit</NavItem>
+				<a href="/chat" title="Discord Chat">
+					<span class="small">Discord</span>
+					<span class="large"><Icon name="discord" /></span>
+				</a>
 
-				<NavItem external="/chat" title="Discord Chat">
-					<span slot="small">Discord</span>
-					<Icon name="message-square" />
-				</NavItem>
-
-				<NavItem external="https://github.com/sveltejs/svelte" title="GitHub Repo">
-					<span slot="small">GitHub</span>
-					<Icon name="github" />
-				</NavItem>
+				<a href="https://github.com/sveltejs/svelte" title="GitHub Repo">
+					<span class="small">GitHub</span>
+					<span class="large"><Icon name="github" /></span>
+				</a>
 			</svelte:fragment>
 		</Nav>
 
@@ -64,20 +66,8 @@
 		color-scheme: light dark;
 	}
 
-	@media (max-width: 830px) {
-		:global(aside) {
-			z-index: 9999 !important;
-		}
-	}
-
 	:global(html, body) {
 		height: 100%;
 		width: 100%;
-	}
-
-	@media (max-width: 830px) {
-		:global(aside) {
-			z-index: 9999 !important;
-		}
 	}
 </style>

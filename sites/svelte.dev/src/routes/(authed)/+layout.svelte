@@ -1,6 +1,6 @@
 <script>
+	import { invalidateAll } from '$app/navigation';
 	import { setContext } from 'svelte';
-	import { invalidate } from '$app/navigation';
 
 	setContext('app', {
 		login: () => {
@@ -13,13 +13,13 @@
 			window.addEventListener('message', function handler(event) {
 				login_window.close();
 				window.removeEventListener('message', handler);
-				invalidate();
+				invalidateAll();
 			});
 		},
 
 		logout: async () => {
 			const r = await fetch(`/auth/logout`);
-			if (r.ok) invalidate();
+			if (r.ok) invalidateAll();
 		}
 	});
 </script>

@@ -1,7 +1,7 @@
 <script>
 	import { page } from '$app/stores';
-	import OnThisPage from './OnThisPage.svelte';
-	import * as hovers from '$lib/utils/hovers';
+	import { Icon } from '@sveltejs/site-kit/components';
+	import { DocsOnThisPage, setupDocsHovers } from '@sveltejs/site-kit/docs';
 
 	export let data;
 
@@ -10,24 +10,32 @@
 	$: prev = pages[index - 1];
 	$: next = pages[index + 1];
 
-	hovers.setup();
+	setupDocsHovers();
 </script>
 
 <svelte:head>
-	<title>{data.page.title} • Docs • Svelte</title>
+	<title>{data.page?.title} • Docs • Svelte</title>
 
-	<meta name="twitter:title" content="Svelte docs" />
+	<meta name="twitter:title" content="{data.page.title} • Docs • Svelte" />
 	<meta name="twitter:description" content="{data.page.title} • Svelte documentation" />
 	<meta name="Description" content="{data.page.title} • Svelte documentation" />
 </svelte:head>
 
 <div class="text" id="docs-content">
+	<a
+		class="edit"
+		href="https://github.com/sveltejs/svelte/edit/master/documentation/docs/{data.page.file}"
+	>
+		<Icon size={50} name="edit" /> Edit this page on GitHub
+	</a>
+
 	{@html data.page.content}
 </div>
 
 <div class="controls">
 	<div>
 		<span class:faded={!prev}>previous</span>
+
 		{#if prev}
 			<a href={prev.path}>{prev.title}</a>
 		{/if}
@@ -41,9 +49,25 @@
 	</div>
 </div>
 
-<OnThisPage details={data.page} />
+<DocsOnThisPage details={data.page} />
 
 <style>
+	.edit {
+		position: relative;
+		font-size: 1.4rem;
+		line-height: 1;
+		z-index: 2;
+	}
+
+	.edit :global(.icon) {
+		position: relative;
+		top: -0.1rem;
+		left: 0.3rem;
+		width: 1.4rem;
+		height: 1.4rem;
+		margin-right: 0.5rem;
+	}
+
 	.controls {
 		max-width: calc(var(--sk-line-max-width) + 1rem);
 		border-top: 1px solid var(--sk-back-4);

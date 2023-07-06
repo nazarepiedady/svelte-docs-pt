@@ -2,14 +2,13 @@
 	import { getContext } from 'svelte';
 	import { Icon } from '@sveltejs/site-kit/components';
 	import { ago } from '$lib/time';
-	import { goto, invalidate } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 
-	/** @type {import('./$types').PageData} */
 	export let data;
 
 	const { login, logout } = getContext('app');
 
-	const format = (str) => ago(new Date(str));
+	const format = /** @param {string} str */ (str) => ago(new Date(str));
 
 	let destroying = false;
 
@@ -35,7 +34,7 @@
 
 		if (res.ok) {
 			selected = [];
-			await invalidate();
+			await invalidateAll();
 
 			// this is a temporary fix because invalidation only works once
 			// TODO raise an issue
@@ -84,8 +83,8 @@
 			{:else}
 				<form
 					on:submit|preventDefault={(e) => {
-						const search = new FormData(e.target).get('search');
-						goto(search ? `/apps?search=${encodeURIComponent(search)}` : '/apps');
+						const search = new FormData(/** @type {HTMLFormElement} */ (e.target)).get('search');
+						goto(search ? `/apps?search=${encodeURIComponent(search.toString())}` : '/apps');
 					}}
 				>
 					<input
@@ -176,7 +175,6 @@
 
 	.controls {
 		position: sticky;
-		background: white;
 		top: 1rem;
 		display: flex;
 		align-items: center;
@@ -186,7 +184,7 @@
 		font-size: 1.6rem;
 		z-index: 2;
 		justify-content: space-between;
-		outline: 1rem solid white;
+		outline: 1rem solid var(--sk-back-1);
 	}
 
 	.controls::after {
@@ -195,7 +193,7 @@
 		width: 100%;
 		bottom: -2rem;
 		height: 2rem;
-		background: linear-gradient(to bottom, white 0%, white 50%, transparent);
+		background: linear-gradient(to bottom, var(--sk-back-1) 0%, var(--sk-back-1) 50%, transparent);
 	}
 
 	.controls form {
@@ -216,7 +214,7 @@
 		padding: 0.5rem 1rem;
 		line-height: 1;
 		display: flex;
-		border: 1px solid #eee;
+		border: 1px solid var(--sk-back-5);
 		border-radius: var(--sk-border-radius);
 		z-index: 2;
 	}
@@ -266,7 +264,7 @@
 
 	li span {
 		font-size: 12px;
-		color: rgba(0, 0, 0, 0.6);
+		color: var(--sk-text-3);
 	}
 
 	li label {
