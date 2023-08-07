@@ -17,7 +17,11 @@ If you're a library author, consider whether to only support Svelte 4 or if it's
 
 ## Browser conditions for bundlers
 
-Bundlers must now specify the browser condition when building a frontend bundle for the browser. SvelteKit and Vite will handle this automatically for you. For Rollup or webpack you may need to adjust your config to ensure it matches what is shown in the [`rollup-plugin-svelte`](https://github.com/sveltejs/rollup-plugin-svelte/#usage) and [`svelte-loader`](https://github.com/sveltejs/svelte-loader#usage) documentation. ([#8516](https://github.com/sveltejs/svelte/issues/8516))
+Bundlers must now specify the `browser` condition when building a frontend bundle for the browser. SvelteKit and Vite will handle this automatically for you. If you're using any others, you may observe lifecycle callbacks such as `onMount` not get called and you'll need to update the module resolution configuration.
+- For Rollup this is done within the `@rollup/plugin-node-resolve` plugin by setting `browser: true` in its options. See the [`rollup-plugin-svelte`](https://github.com/sveltejs/rollup-plugin-svelte/#usage) documentation for more details
+- For wepback this is done by adding `"browser"` to the `conditionNames` array. You may also have to update your `alias` config, if you have set it. See the [`svelte-loader`](https://github.com/sveltejs/svelte-loader#usage) documentation for more details
+
+([#8516](https://github.com/sveltejs/svelte/issues/8516))
 
 ## Removal of CJS related output
 
@@ -157,7 +161,72 @@ This makes slot bindings more consistent as the behavior is undefined when for e
 
 ## Preprocessors
 
-The order in which preprocessors are applied has changed. Now, preprocessors are executed in order, and within one group, the order is markup, script, style. Each preprocessor must also have a name. ([#8618](https://github.com/sveltejs/svelte/issues/8618))
+The order in which preprocessors are applied has changed. Now, preprocessors are executed in order, and within one group, the order is markup, script, style.
+
+```js
+// @errors: 2304
+import { preprocess } from 'svelte/compiler';
+
+const { code } = await preprocess(
+	source,
+	[
+		{
+			markup: () => {
+				console.log('markup-1');
+			},
+			script: () => {
+				console.log('script-1');
+			},
+			style: () => {
+				console.log('style-1');
+			}
+		},
+		{
+			markup: () => {
+				console.log('markup-2');
+			},
+			script: () => {
+				console.log('script-2');
+			},
+			style: () => {
+				console.log('style-2');
+			}
+		}
+	],
+	{
+		filename: 'App.svelte'
+	}
+);
+
+// Svelte 3 logs:
+// markup-1
+// markup-2
+// script-1
+// script-2
+// style-1
+// style-2
+
+// Svelte 4 logs:
+// markup-1
+// script-1
+// style-1
+// markup-2
+// script-2
+// style-2
+```
+
+This could affect you for example if you are using `MDsveX` - in which case you should make sure it comes before any script or style preprocessor.
+
+```diff
+preprocess: [
+-	vitePreprocess(),
+-	mdsvex(mdsvexConfig)
++	mdsvex(mdsvexConfig),
++	vitePreprocess()
+]
+```
+
+Each preprocessor must also have a name. ([#8618](https://github.com/sveltejs/svelte/issues/8618))
 
 ## New eslint package
 
