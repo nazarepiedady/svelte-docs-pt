@@ -35,18 +35,18 @@
 			</svelte:fragment>
 
 			<svelte:fragment slot="external-links">
-				<a href="https://learn.svelte.dev/">Tutorial</a>
+				<a href="https://learn.svelte.dev/">Iniciação</a>
 
 				<a href="https://kit.svelte.dev">SvelteKit</a>
 
 				<Separator />
 
-				<a href="/chat" title="Discord Chat">
+				<a href="/chat" title="Conversas da Discord">
 					<span class="small">Discord</span>
 					<span class="large"><Icon name="discord" /></span>
 				</a>
 
-				<a href="https://github.com/sveltejs/svelte" title="GitHub Repo">
+				<a href="https://github.com/sveltejs/svelte" title="Repositório da GitHub">
 					<span class="small">GitHub</span>
 					<span class="large"><Icon name="github" /></span>
 				</a>
