@@ -12,7 +12,7 @@
 
 	/** @type {import('@sveltejs/repl').default} */
 	let repl;
-	let name = 'loading...';
+	let name = 'carregando...';
 
 	let mounted = false;
 
@@ -75,7 +75,7 @@
 
 	$: if (mounted) load(gist, example);
 
-	$: if (embedded) document.title = `${name} • Svelte REPL`;
+	$: if (embedded) document.title = `${name} • REPL da Svelte`;
 
 	$: svelteUrl =
 		browser && version === 'local'
