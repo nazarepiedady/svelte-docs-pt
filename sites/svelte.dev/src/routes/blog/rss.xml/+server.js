@@ -28,9 +28,9 @@ const get_rss = (posts) =>
 <rss version="2.0">
 
 <channel>
-	<title>Svelte blog</title>
+	<title>Blogue da Svelte</title>
 	<link>https://svelte.dev/blog</link>
-	<description>News and information about the magical disappearing UI framework</description>
+	<description>Novidades e informação sobre o desaparecer mágico da abstração de interface de utilizador.</description>
 	<image>
 		<url>https://svelte.dev/favicon.png</url>
 		<title>Svelte</title>
