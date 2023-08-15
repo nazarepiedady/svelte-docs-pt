@@ -42,13 +42,13 @@ async function get_nav_list() {
 
 	return [
 		{
-			title: 'Docs',
+			title: 'Documentação',
 			prefix: 'docs',
 			pathname: '/docs/introduction',
 			sections: processed_docs_list
 		},
 		{
-			title: 'Examples',
+			title: 'Exemplos',
 			prefix: 'examples',
 			pathname: '/examples',
 			sections: processed_examples_list
@@ -59,7 +59,7 @@ async function get_nav_list() {
 			pathname: '/repl'
 		},
 		{
-			title: 'Blog',
+			title: 'Blogue',
 			prefix: 'blog',
 			pathname: '/blog',
 			sections: processed_blog_list
