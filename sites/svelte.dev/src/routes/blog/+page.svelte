@@ -3,25 +3,25 @@
 </script>
 
 <svelte:head>
-	<title>Blog • Svelte</title>
+	<title>Blogue • Svelte</title>
 	<link
 		rel="alternate"
 		type="application/rss+xml"
-		title="Svelte blog"
+		title="Blogue da Svelte"
 		href="https://svelte.dev/blog/rss.xml"
 	/>
 
-	<meta name="twitter:title" content="Svelte blog" />
-	<meta name="twitter:description" content="Articles about Svelte and UI development" />
-	<meta name="Description" content="Articles about Svelte and UI development" />
+	<meta name="twitter:title" content="Blogue da Svelte" />
+	<meta name="twitter:description" content="Artigos sobre a Svelte e o desenvolvimento de interface de utilizador" />
+	<meta name="Description" content="Artigos sobre a Svelte e o desenvolvimento de interface de utilizador" />
 </svelte:head>
 
-<h1 class="visually-hidden">Blog</h1>
+<h1 class="visually-hidden">Blogue</h1>
 <div class="posts stretch">
 	{#each data.posts as post}
 		{#if !post.draft}
 			<article class="post" data-pubdate={post.date}>
-				<a class="no-underline" href="/blog/{post.slug}" title="Read the article »">
+				<a class="no-underline" href="/blog/{post.slug}" title="Ler o artigo »">
 					<h2>{post.title}</h2>
 					<p>{post.description}</p>
 				</a>
