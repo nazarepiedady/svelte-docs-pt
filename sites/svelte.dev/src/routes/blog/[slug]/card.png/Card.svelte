@@ -3,7 +3,7 @@
 </script>
 
 <div class="card">
-	<img src="https://sveltejs.github.io/assets/artwork/svelte-machine.png" alt="Svelte Machine" />
+	<img src="https://sveltejs.github.io/assets/artwork/svelte-machine.png" alt="Máquina da Svelte" />
 
 	<div class="text">
 		<h1>{post.title}</h1>
