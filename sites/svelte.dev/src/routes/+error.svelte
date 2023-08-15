@@ -14,32 +14,26 @@
 <div class="container">
 	{#if online}
 		{#if $page.status === 404}
-			<h1>Not found!</h1>
+			<h1>Não encontrada!</h1>
 			<p>
-				If you were expecting to find something here, please drop by the
-				<a href="/chat"> Discord chatroom </a>
-				and let us know, or raise an issue on
-				<a href="https://github.com/sveltejs/sites">GitHub</a>. Thanks!
+				Se esperavas encontrar alguma coisa, visite a <a href="/chat">sala de conversação da Discord</a> e informe-nos, ou levante uma questão na <a href="https://github.com/sveltejs/sites">GitHub</a>. Obrigado!
 			</p>
 		{:else}
 			<h1>Yikes!</h1>
-			<p>Something went wrong when we tried to render this page.</p>
+			<p>Algo correu mal quando tentávamos processar esta página.</p>
 			{#if $page.error.message}
 				<p class="error">{$page.status}: {$page.error.message}</p>
 			{:else}
-				<p class="error">Encountered a {$page.status} error.</p>
+				<p class="error">Encontrou um erro {$page.status}.</p>
 			{/if}
-			<p>Please try reloading the page.</p>
+			<p>Tente recarregar a página.</p>
 			<p>
-				If the error persists, please drop by the
-				<a href="/chat"> Discord chatroom </a>
-				and let us know, or raise an issue on
-				<a href="https://github.com/sveltejs/sites">GitHub</a>. Thanks!
+				Se o erro persistir, visite a <a href="/chat">sala de conversas da Discord</a> e informe-nos, ou levante uma questão na <a href="https://github.com/sveltejs/sites">GitHub</a>. Obrigado!
 			</p>
 		{/if}
 	{:else}
-		<h1>It looks like you're offline</h1>
-		<p>Reload the page once you've found the internet.</p>
+		<h1>Parece que estás desligado da internet</h1>
+		<p>Recarregue a página quando ligares a internet.</p>
 	{/if}
 </div>
 
