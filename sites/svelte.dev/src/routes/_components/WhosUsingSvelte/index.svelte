@@ -7,17 +7,12 @@
 </script>
 
 <Section --background={$theme.current === 'light' ? 'var(--sk-back-4)' : '#222'}>
-	<h3>loved by developers</h3>
+	<h3>amada pelos programadores</h3>
 
 	<p>
-		We're proud that Svelte was recently voted the <a
-			href="https://survey.stackoverflow.co/2023/#section-admired-and-desired-web-frameworks-and-technologies"
-			>most admired JS web framework</a
-		>
-		in one industry survey while drawing the most interest in learning it in <a
-		href="https://tsh.io/state-of-frontend/#which-of-the-following-frameworks-would-you-like-to-learn-in-the-future"
-		>two</a> <a href="https://2022.stateofjs.com/en-US/libraries/front-end-frameworks/"
-		>others</a>. We think you'll love it too.
+		Estamos orgulhosos pelo fato da Svelte ter sido recentemente votada como a <a href="https://survey.stackoverflow.co/2023/#section-admired-and-desired-web-frameworks-and-technologies">abstração de Web de JavaScript mais admirada</a>
+		num inquérito da industria e ter suscitado o maior interesse em aprendê-la entre os <a href="https://2022.stateofjs.com/en-US/libraries/front-end-frameworks/"
+		>outros</a> <a href="https://tsh.io/state-of-frontend/#which-of-the-following-frameworks-would-you-like-to-learn-in-the-future">dois</a>. Nós pensamos que também a amarás.
 	</p>
 
 	<section class="whos-using-svelte-container" class:dark={$theme.current === 'dark'}>
