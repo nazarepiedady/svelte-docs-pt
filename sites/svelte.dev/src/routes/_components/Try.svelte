@@ -7,12 +7,9 @@
 	<Section --background="var(--background-2)">
 		<div class="grid" style="--columns: 2">
 			<div class="copy">
-				<h2>see for yourself</h2>
+				<h2>veja por ti mesmo</h2>
 				<div>
-					Try it locally, <a target="_blank" rel="noreferrer" href="https://sveltekit.new"
-						>on StackBlitz</a
-					>, or with
-					<a target="_blank" href="https://learn.svelte.dev">the interactive tutorial</a>.
+					Experimente-a localmente, <a target="_blank" rel="noreferrer" href="https://sveltekit.new">na StackBlitz</a>, ou com <a target="_blank" href="https://learn.svelte.dev">a iniciação interativa</a>.
 				</div>
 			</div>
 
