@@ -19,7 +19,7 @@
 			<a href="https://learn.svelte.dev" rel="external" class="cta">
 				iniciação<Icon name="external-link" size="1em" />
 			</a>
-			<a href="/docs/introduction" class="cta basic">leia a documentação</a>
+			<a href="/docs/introduction" class="cta basic">ler a documentação</a>
 		</div>
 	</div>
 
