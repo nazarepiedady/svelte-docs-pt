@@ -6,14 +6,14 @@
 
 <Section --background="var(--sk-back-2">
 	<p class="intro">
-		Svelte is made possible by the work of hundreds of supporters.
+		A Svelte é possível graças ao trabalho de centenas de apoiantes.
 	</p>
 
 	<div class="layout">
 		<div class="contributors blurb">
-			<h3>contributors</h3>
+			<h3>colaboradores</h3>
 			<p>
-				<a href="https://github.com/sveltejs/svelte/graphs/contributors">Join us on GitHub</a>
+				<a href="https://github.com/sveltejs/svelte/graphs/contributors">Junte-se a nós na GitHub</a>
 			</p>
 		</div>
 
@@ -30,8 +30,8 @@
 		</div>
 
 		<div class="donors blurb">
-			<h3>donors</h3>
-			<p><a href="https://opencollective.com/svelte">Support us on OpenCollective</a></p>
+			<h3>doadores</h3>
+			<p><a href="https://opencollective.com/svelte">Apoie-nos na OpenCollective</a></p>
 		</div>
 
 		<div class="donors grid">
