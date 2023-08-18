@@ -11,8 +11,8 @@
 	<title>Svelte • Aplicações de Web Ciberneticamente Melhoradas</title>
 
 	<meta name="twitter:title" content="Svelte" />
-	<meta name="twitter:description" content="Cybernetically enhanced web apps" />
-	<meta name="Description" content="Cybernetically enhanced web apps" />
+	<meta name="twitter:description" content="Aplicações de Web Ciberneticamente Melhoradas" />
+	<meta name="Description" content="Aplicações de Web Ciberneticamente Melhoradas" />
 </svelte:head>
 
 <h1 class="visually-hidden">Svelte</h1>
@@ -28,14 +28,14 @@
 	</div>
 
 	<div slot="two">
-		<h2>compacto</h2>
+		<h2>compacta</h2>
 		<p>
 			Escreva componentes concisos de cortar a respiração usando as linguagens que já conheces — HTML, CSS e JavaScript. Oh, e os pacotes da tua aplicação também serão pequenos.
 		</p>
 	</div>
 
 	<div slot="three">
-		<h2>completo</h2>
+		<h2>completa</h2>
 		<p>
 			Estilização isolada, gestão de estado, primitivos de movimento, vínculos de formulário embutidos e muito mais — não perca tempo a vasculhar a npm a procura do essencial. Está tudo aqui.
 		</p>
