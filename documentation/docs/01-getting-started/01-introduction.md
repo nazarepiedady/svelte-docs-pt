@@ -1,14 +1,14 @@
 ---
-title: Introduction
+title: Introdução
 ---
 
-Welcome to the Svelte reference documentation! This is intended as a resource for people who already have some familiarity with Svelte and want to learn more about using it.
+Bem-vindo à documentação de referência da Svelte! Esta está destinada como um recurso para pessoas que já têm alguma familiaridade com a Svelte e querem aprender mais sobre como usá-la.
 
-If that's not you (yet), you may prefer to visit the [interactive tutorial](https://learn.svelte.dev) or the [examples](/examples) before consulting this reference. You can try Svelte online using the [REPL](/repl). Alternatively, if you'd like a more fully-featured environment, you can try Svelte on [StackBlitz](https://sveltekit.new).
+Se não for o teu caso (ainda), podes preferir visitar o [seminário interativo](https://learn.svelte.dev) ou os [exemplos](/examples) antes de consultar esta referência. Tu podes testar a Svelte online usando a [REPL](/repl). Alternativamente, se gostarias de um ambiente mais completo, podes experimentar a Svelte na [StackBlitz](https://sveltekit.new).
 
-## Start a new project
+## Começar um novo projeto
 
-We recommend using [SvelteKit](https://kit.svelte.dev/), the official application framework from the Svelte team:
+Nós recomendamos usar a [SvelteKit](https://kit.svelte.dev/), a abstração de aplicação oficial da equipa da Svelte:
 
 ```
 npm create svelte@latest myapp
@@ -17,18 +17,18 @@ npm install
 npm run dev
 ```
 
-SvelteKit will handle calling [the Svelte compiler](https://www.npmjs.com/package/svelte) to convert your `.svelte` files into `.js` files that create the DOM and `.css` files that style it. It also provides all the other pieces you need to build a web application such as a development server, routing, deployment, and SSR support. [SvelteKit](https://kit.svelte.dev/) uses [Vite](https://vitejs.dev/) to build your code.
+SvelteKit encarregar-se-á de chamar [o compilador da Svelte](https://www.npmjs.com/package/svelte) para converter os teus ficheiros `.svelte` em ficheiros `.js` que cria o DOM e os ficheiros `.css` que o estilizam. Também fornece todos os outros pedaços que precisas para construir uma aplicação de Web como um servidor de desenvolvimento, roteamento, implementação em produção, suporte a interpretação no lado do servidor. A [SvelteKit](https://kit.svelte.dev/) usa a [Vite](https://pt.vitejs.dev/) para construir o teu código.
 
-### Alternatives to SvelteKit
+### Alternativas à SvelteKit
 
-If you don't want to use SvelteKit for some reason, you can also use Svelte with Vite (but without SvelteKit) by running `npm init vite` and selecting the `svelte` option. With this, `npm run build` will generate HTML, JS and CSS files inside the `dist` directory. In most cases, you will probably need to [choose a routing library](/faq#is-there-a-router) as well.
+Se não quiseres usar a SvelteKit por alguma razão, também podes usar a Svelte com a Vite (mas sem a SvelteKit) executando `npm init vite` e selecionado a opção `svelte`. Com isto, `npm run build` gerará os ficheiros de HTML, CSS e JavaScript dentro do diretório `dist`. Na maioria dos casos, provavelmente também precisarás de [escolher uma biblioteca de roteamento](/faq#is-there-a-router).
 
-Alternatively, there are [plugins for all the major web bundlers](https://sveltesociety.dev/tools#bundling) to handle Svelte compilation — which will output `.js` and `.css` that you can insert into your HTML — but most others won't handle SSR.
+Alternativamente, existem [extensões para todos os principais empacotadores da Web](https://sveltesociety.dev/tools#bundling) para lidar com a compilação da Svelte — que produzirá o `.js` e `.css` que podes inserir no teu HTML — mas a maioria dos outros não lidarão com a interpretação no lado do servidor.
 
-## Editor tooling
+## Ferramental de editor
 
-The Svelte team maintains a [VS Code extension](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode) and there are integrations with various other [editors](https://sveltesociety.dev/tools#editor-support) and tools as well.
+A equipa da Svelte mantém uma [extensão de VS Code](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode) e também existem integrações com vários outros [editores](https://sveltesociety.dev/tools#editor-support) e ferramentas.
 
-## Getting help
+## Pedindo ajuda
 
-Don't be shy about asking for help in the [Discord chatroom](https://svelte.dev/chat)! You can also find answers on [Stack Overflow](https://stackoverflow.com/questions/tagged/svelte).
+Não tenhas vergonha de pedir ajuda na [sala de conversas da Discord](https://svelte.dev/chat)! Tu também podes encontrar respostas na [Stack Overflow](https://stackoverflow.com/questions/tagged/svelte).
