@@ -51,13 +51,13 @@
 </script>
 
 <svelte:head>
-	<title>Your apps • Svelte</title>
+	<title>Tuas aplicações • Svelte</title>
 </svelte:head>
 
 <div class="apps">
 	{#if data.user}
 		<header>
-			<h1>Your apps</h1>
+			<h1>Tuas aplicações</h1>
 			<div class="user">
 				<img
 					class="avatar"
@@ -66,7 +66,7 @@
 				/>
 				<span>
 					{data.user.github_name || data.user.github_login}
-					(<a on:click|preventDefault={logout} href="/auth/logout">log out</a>)
+					(<a on:click|preventDefault={logout} href="/auth/logout">terminar sessão</a>)
 				</span>
 			</div>
 		</header>
@@ -75,11 +75,11 @@
 			{#if selected.length > 0}
 				<button class="delete" on:click={() => destroy_selected()} disabled={destroying}>
 					<Icon name="delete" />
-					Delete {selected.length}
+					Eliminar {selected.length}
 					{selected.length === 1 ? 'app' : 'apps'}
 				</button>
 
-				<button on:click={() => (selected = [])}>Clear selection</button>
+				<button on:click={() => (selected = [])}>Limpar a seleção</button>
 			{:else}
 				<form
 					on:submit|preventDefault={(e) => {
@@ -89,8 +89,8 @@
 				>
 					<input
 						type="search"
-						placeholder="Search"
-						aria-label="Search"
+						placeholder="Pesquisar"
+						aria-label="pesquisar"
 						name="search"
 						value={data.search}
 					/>
@@ -104,12 +104,12 @@
 					<li class:selected={selected.includes(gist.id)}>
 						<a href={selecting ? undefined : `/repl/${gist.id}`}>
 							<h2>{gist.name}</h2>
-							<span>updated {format(gist.updated_at || gist.created_at)}</span>
+							<span>atualizado {format(gist.updated_at || gist.created_at)}</span>
 						</a>
 
 						<label>
 							<input
-								aria-label="Select for delection"
+								aria-label="Selecionar para eliminação"
 								type="checkbox"
 								bind:group={selected}
 								value={gist.id}
@@ -125,16 +125,16 @@
 					<a
 						href="/apps?offset={data.next}{data.search
 							? `&search=${encodeURIComponent(data.search)}`
-							: ''}">Next page...</a
+							: ''}">Próxima página...</a
 					>
 				{/if}
 			</div>
 		{:else}
-			<p>No apps here. <a href="/repl">Go make one!</a></p>
+			<p>Não tens aplicações. <a href="/repl">Faça uma!</a></p>
 		{/if}
 	{:else}
 		<p>
-			Please <a on:click|preventDefault={login} href="/auth/login">log in</a> to see your saved apps.
+			<a on:click|preventDefault={login} href="/auth/login">Inicie a sessão</a> para veres as tuas aplicações guardadas.
 		</p>
 	{/if}
 </div>
