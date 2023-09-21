@@ -192,7 +192,7 @@ export default app;`
 	<input bind:value={name} on:focus={(e) => e.target.select()} use:enter={(e) => e.target.blur()} />
 
 	<div class="buttons">
-		<button class="icon" on:click={() => (zen_mode = !zen_mode)} title="fullscreen editor">
+		<button class="icon" on:click={() => (zen_mode = !zen_mode)} title="editor de tela cheia">
 			{#if zen_mode}
 				<Icon name="close" />
 			{:else}
@@ -200,11 +200,11 @@ export default app;`
 			{/if}
 		</button>
 
-		<button class="icon" disabled={downloading} on:click={download} title="download zip file">
+		<button class="icon" disabled={downloading} on:click={download} title="descarregar o ficheiro zip">
 			<Icon name="download" />
 		</button>
 
-		<button class="icon" disabled={saving || !user} on:click={() => fork(false)} title="fork">
+		<button class="icon" disabled={saving || !user} on:click={() => fork(false)} title="bifurcar">
 			{#if justForked}
 				<Icon name="check" />
 			{:else}
@@ -212,7 +212,7 @@ export default app;`
 			{/if}
 		</button>
 
-		<button class="icon" disabled={saving || !user} on:click={save} title="save">
+		<button class="icon" disabled={saving || !user} on:click={save} title="guardar">
 			{#if justSaved}
 				<Icon name="check" />
 			{:else}
@@ -228,7 +228,7 @@ export default app;`
 		{:else}
 			<button class="icon" on:click|preventDefault={login}>
 				<Icon name="log-in" />
-				<span>&nbsp;Log in to save</span>
+				<span>&nbsp;Iniciar sessão para guardar</span>
 			</button>
 		{/if}
 	</div>
