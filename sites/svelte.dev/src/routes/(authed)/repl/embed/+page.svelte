@@ -8,9 +8,9 @@
 <svelte:head>
 	<title>REPL • Svelte</title>
 
-	<meta name="twitter:title" content="Svelte REPL" />
-	<meta name="twitter:description" content="Cybernetically enhanced web apps" />
-	<meta name="Description" content="Interactive Svelte playground" />
+	<meta name="twitter:title" content="REPL da Svelte" />
+	<meta name="twitter:description" content="Aplicações da Web Ciberneticamente Melhoradas" />
+	<meta name="Description" content="Zona de Testes Interativos da Svelte" />
 </svelte:head>
 
 <div class="repl-outer">
