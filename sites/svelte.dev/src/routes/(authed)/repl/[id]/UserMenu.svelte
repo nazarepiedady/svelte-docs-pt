@@ -30,8 +30,8 @@
 
 	{#if showMenu}
 		<div class="menu">
-			<a href="/apps">Your saved apps</a>
-			<button on:click={logout}>Log out</button>
+			<a href="/apps">Tuas aplicações guardadas</a>
+			<button on:click={logout}>Terminar sessão</button>
 		</div>
 	{/if}
 </div>
