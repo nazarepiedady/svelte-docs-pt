@@ -14,11 +14,11 @@
 </script>
 
 <svelte:head>
-	<title>{data.page?.title} • Docs • Svelte</title>
+	<title>{data.page?.title} • Documentação • Svelte</title>
 
-	<meta name="twitter:title" content="{data.page.title} • Docs • Svelte" />
-	<meta name="twitter:description" content="{data.page.title} • Svelte documentation" />
-	<meta name="Description" content="{data.page.title} • Svelte documentation" />
+	<meta name="twitter:title" content="{data.page.title} • Documentação • Svelte" />
+	<meta name="twitter:description" content="{data.page.title} • Documentação da Svelte" />
+	<meta name="Description" content="{data.page.title} • Documentação da Svelte" />
 </svelte:head>
 
 <div class="text" id="docs-content">
@@ -26,7 +26,7 @@
 		class="edit"
 		href="https://github.com/sveltejs/svelte/edit/master/documentation/docs/{data.page.file}"
 	>
-		<Icon size={50} name="edit" /> Edit this page on GitHub
+		<Icon size={50} name="edit" /> Editar esta página na GitHub
 	</a>
 
 	{@html data.page.content}
@@ -34,7 +34,7 @@
 
 <div class="controls">
 	<div>
-		<span class:faded={!prev}>previous</span>
+		<span class:faded={!prev}>anterior</span>
 
 		{#if prev}
 			<a href={prev.path}>{prev.title}</a>
@@ -42,7 +42,7 @@
 	</div>
 
 	<div>
-		<span class:faded={!next}>next</span>
+		<span class:faded={!next}>próximo</span>
 		{#if next}
 			<a href={next.path}>{next.title}</a>
 		{/if}
