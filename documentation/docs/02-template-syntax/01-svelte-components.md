@@ -345,9 +345,9 @@ Neste caso, o marcador `<style>` será inserido tal como está no DOM, nenhum is
 ```svelte
 <div>
 	<style>
-		/* this style tag will be inserted as-is */
+		/* este marcador de estilo será inserido como está */
 		div {
-			/* this will apply to all `<div>` elements in the DOM */
+			/* isto aplicar-se-á à todos elementos `<div>` no DOM */
 			color: red;
 		}
 	</style>
