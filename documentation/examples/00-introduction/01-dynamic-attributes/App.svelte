@@ -3,5 +3,5 @@
 	let name = 'Rick Astley';
 </script>
 
-<!-- {src} is short for src={src} -->
+<!-- {src} é abreviação para src={src} -->
 <img {src} alt="{name} dancing" />
