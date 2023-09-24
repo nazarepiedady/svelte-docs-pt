@@ -1,7 +1,7 @@
 <script>
 	let count = 1;
 
-	// the `$:` means 're-run whenever these values change'
+	// o `$:` significa 're-executar sempre estes valores mudarem'
 	$: doubled = count * 2;
 	$: quadrupled = doubled * 2;
 
