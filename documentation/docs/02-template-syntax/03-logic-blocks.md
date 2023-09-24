@@ -1,5 +1,5 @@
 ---
-title: Logic blocks
+title: Blocos Lógicos
 ---
 
 ## {#if ...}
@@ -16,7 +16,7 @@ title: Logic blocks
 {#if expression}...{:else}...{/if}
 ```
 
-Content that is conditionally rendered can be wrapped in an if block.
+O conteúdo que é condicionalmente interpretado pode ser envolto num bloco `if`:
 
 ```svelte
 {#if answer === 42}
@@ -24,7 +24,7 @@ Content that is conditionally rendered can be wrapped in an if block.
 {/if}
 ```
 
-Additional conditions can be added with `{:else if expression}`, optionally ending in an `{:else}` clause.
+As condições adicionais podem ser adicionadas com `{:else if expression}`, opcionalmente terminado numa cláusula `{:else}`:
 
 ```svelte
 {#if porridge.temperature > 100}
@@ -36,7 +36,7 @@ Additional conditions can be added with `{:else if expression}`, optionally endi
 {/if}
 ```
 
-(Blocks don't have to wrap elements, they can also wrap text within elements!)
+(Os blocos não precisam envolver os elementos, também podem envolver texto dentro dos elementos!)
 
 ## {#each ...}
 
@@ -60,7 +60,7 @@ Additional conditions can be added with `{:else if expression}`, optionally endi
 {#each expression as name}...{:else}...{/each}
 ```
 
-Iterating over lists of values can be done with an each block.
+A iteração sobre as listas de valores podem ser feita com um bloco `each`:
 
 ```svelte
 <h1>Shopping list</h1>
@@ -71,9 +71,9 @@ Iterating over lists of values can be done with an each block.
 </ul>
 ```
 
-You can use each blocks to iterate over any array or array-like value — that is, any object with a `length` property.
+Nós podemos usar os blocos `each` para iterar sobre qualquer vetor ou valor parecido com um vetor — isto é, qualquer objeto com uma propriedade `length`.
 
-An each block can also specify an _index_, equivalent to the second argument in an `array.map(...)` callback:
+Um bloco `each` também pode especificar um _índice_, equivalente ao segundo argumento numa função de resposta de `array.map(...)`:
 
 ```svelte
 {#each items as item, i}
@@ -81,20 +81,20 @@ An each block can also specify an _index_, equivalent to the second argument in 
 {/each}
 ```
 
-If a _key_ expression is provided — which must uniquely identify each list item — Svelte will use it to diff the list when data changes, rather than adding or removing items at the end. The key can be any object, but strings and numbers are recommended since they allow identity to persist when the objects themselves change.
+Se uma expressão _chave_ for fornecida — a qual deve identificar unicamente cada item da lista — a Svelte a usará para diferenciar a lista quando os dados mudarem, ao invés de adicionar ou remover itens no final. A chave pode ser qualquer objeto, mas sequências de caracteres e números são recomendados visto que permitem a identidade persistir quando os próprios objetos mudarem:
 
 ```svelte
 {#each items as item (item.id)}
 	<li>{item.name} x {item.qty}</li>
 {/each}
 
-<!-- or with additional index value -->
+<!-- ou com o valor do índice adicional -->
 {#each items as item, i (item.id)}
 	<li>{i + 1}: {item.name} x {item.qty}</li>
 {/each}
 ```
 
-You can freely use destructuring and rest patterns in each blocks.
+Nós podemos usar livremente os padrões de desestruturação ou propagação nos blocos `each`:
 
 ```svelte
 {#each items as { id, name, qty }, i (id)}
@@ -110,7 +110,7 @@ You can freely use destructuring and rest patterns in each blocks.
 {/each}
 ```
 
-An each block can also have an `{:else}` clause, which is rendered if the list is empty.
+Um bloco `each` também podem ter uma cláusula `{:else}`, a qual é interpretada se a lista estiver vazia:
 
 ```svelte
 {#each todos as todo}
@@ -120,7 +120,7 @@ An each block can also have an `{:else}` clause, which is rendered if the list i
 {/each}
 ```
 
-Since Svelte 4 it is possible to iterate over iterables like `Map` or `Set`. Iterables need to be finite and static (they shouldn't change while being iterated over). Under the hood, they are transformed to an array using `Array.from` before being passed off to rendering. If you're writing performance-sensitive code, try to avoid iterables and use regular arrays as they are more performant.
+Desde a Svelte 4, é possível iterar sobre os iteráveis como `Map` ou `Set`. Os iteráveis precisam ser finitos e estáticos (não devem mudar enquanto são iterados). Nos bastidores, são transformados num vetor usando `Array.from` antes de ser passados à interpretação. Se estivermos a escrever um código sensível ao desempenho, devemos tentar evitar os iteráveis e usar vetores normais visto que são mais otimizados:
 
 ## {#await ...}
 
@@ -140,34 +140,34 @@ Since Svelte 4 it is possible to iterate over iterables like `Map` or `Set`. Ite
 {#await expression catch name}...{/await}
 ```
 
-Await blocks allow you to branch on the three possible states of a Promise — pending, fulfilled or rejected. In SSR mode, only the pending state will be rendered on the server.
+Os blocos `await` permitem-nos ramificar sobre os três estados possíveis duma promessa — pendente, concretizada ou rejeitada. No mode de interpretação no lado do servidor, apenas o estado pendente será interpretado no servidor:
 
 ```svelte
 {#await promise}
-	<!-- promise is pending -->
+	<!-- a promessa está pendente -->
 	<p>waiting for the promise to resolve...</p>
 {:then value}
-	<!-- promise was fulfilled -->
+	<!-- a promessa foi concretizada -->
 	<p>The value is {value}</p>
 {:catch error}
-	<!-- promise was rejected -->
+	<!-- a promessa foi rejeitada -->
 	<p>Something went wrong: {error.message}</p>
 {/await}
 ```
 
-The `catch` block can be omitted if you don't need to render anything when the promise rejects (or no error is possible).
+O bloco `catch` pode ser omitida se não precisarmos de interpretar qualquer coisa quando a promessa rejeitar (ou nenhum erro é possível):
 
 ```svelte
 {#await promise}
-	<!-- promise is pending -->
+	<!-- a promessa está pendente -->
 	<p>waiting for the promise to resolve...</p>
 {:then value}
-	<!-- promise was fulfilled -->
+	<!-- a promessa foi concretizada -->
 	<p>The value is {value}</p>
 {/await}
 ```
 
-If you don't care about the pending state, you can also omit the initial block.
+Se não nos importamos com o estado pendente, também podemos omitir o bloco inicial:
 
 ```svelte
 {#await promise then value}
@@ -175,7 +175,7 @@ If you don't care about the pending state, you can also omit the initial block.
 {/await}
 ```
 
-Similarly, if you only want to show the error state, you can omit the `then` block.
+De maneira semelhante, se apenas quisermos mostrar o estado de erro, podemos omitir o bloco `then`:
 
 ```svelte
 {#await promise catch error}
@@ -189,9 +189,9 @@ Similarly, if you only want to show the error state, you can omit the `then` blo
 {#key expression}...{/key}
 ```
 
-Key blocks destroy and recreate their contents when the value of an expression changes.
+Os blocos `key` destroem e recriam os seus conteúdos quando o valor duma expressão mudar.
 
-This is useful if you want an element to play its transition whenever a value changes.
+Isto é útil se quisermos que um elemento execute a sua transição sempre que um valor mudar:
 
 ```svelte
 {#key value}
@@ -199,7 +199,7 @@ This is useful if you want an element to play its transition whenever a value ch
 {/key}
 ```
 
-When used around components, this will cause them to be reinstantiated and reinitialised.
+Quando usada em torno dos componentes, isto os fará serem reinstanciados e reinicializados:
 
 ```svelte
 {#key value}
