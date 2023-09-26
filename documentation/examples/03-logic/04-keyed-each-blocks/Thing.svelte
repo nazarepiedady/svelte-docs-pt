@@ -1,8 +1,8 @@
 <script>
-	// `current` is updated whenever the prop value changes...
+	// `current` é atualizado sempre que o valor da propriedade mudar...
 	export let current;
 
-	// ...but `initial` is fixed upon initialisation
+	// ...mas `initial` é manipulada sobre a inicialização
 	const initial = current;
 </script>
 
