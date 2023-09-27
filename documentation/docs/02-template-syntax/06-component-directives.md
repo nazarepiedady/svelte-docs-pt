@@ -1,5 +1,5 @@
 ---
-title: Component directives
+title: Diretivas de Componente
 ---
 
 ## on:_eventname_
@@ -8,13 +8,13 @@ title: Component directives
 on:eventname={handler}
 ```
 
-Components can emit events using [createEventDispatcher](/docs/svelte#createeventdispatcher), or by forwarding DOM events. Listening for component events looks the same as listening for DOM events:
+Os componentes podem emitir eventos usando [`createEventDispatcher`](/docs/svelte#createeventdispatcher), ou expedindo os eventos do DOM. Ouvir os eventos do componente é parecido com o ouvir os eventos do DOM:
 
 ```svelte
 <SomeComponent on:whatever={handler} />
 ```
 
-As with DOM events, if the `on:` directive is used without a value, the component will _forward_ the event, meaning that a consumer of the component can listen for it.
+Tal como acontece com os eventos do DOM, se a diretiva `on:` for usada sem um valor, o componente _expedirá_ o evento, o que significa que um consumidor do componente pode ouvi-lo:
 
 ```svelte
 <SomeComponent on:whatever />
@@ -26,15 +26,15 @@ As with DOM events, if the `on:` directive is used without a value, the componen
 --style-props="anycssvalue"
 ```
 
-You can also pass styles as props to components for the purposes of theming, using CSS custom properties.
+Nós também podemos passar estilos como propriedades aos componentes para propósitos de criação de temas, usando propriedades personalizadas de CSS.
 
-Svelte's implementation is essentially syntactic sugar for adding a wrapper element. This example:
+A implementação da Svelte é essencialmente um açúcar sintático para adicionar um elemento envolvedor. Este exemplo:
 
 ```svelte
 <Slider bind:value min={0} --rail-color="black" --track-color="rgb(0, 0, 255)" />
 ```
 
-Desugars to this:
+Compila-se para isto:
 
 ```svelte
 <div style="display: contents; --rail-color: black; --track-color: rgb(0, 0, 255)">
@@ -42,9 +42,9 @@ Desugars to this:
 </div>
 ```
 
-**Note**: Since this is an extra `<div>`, beware that your CSS structure might accidentally target this. Be mindful of this added wrapper element when using this feature.
+**Nota**: Uma vez que isto é um `<div>` adicional, devemos estar ciente de que a estrutura do nosso CSS pode acidentalmente atingir isto. Devemos estar atentos a este elemento envolvedor adicionado quando usamos esta funcionalidade.
 
-For SVG namespace, the example above desugars into using `<g>` instead:
+Para o espaço de nome da SVG, o exemplo acima compila-se usando `<g>`:
 
 ```svelte
 <g style="--rail-color: black; --track-color: rgb(0, 0, 255)">
@@ -52,9 +52,9 @@ For SVG namespace, the example above desugars into using `<g>` instead:
 </g>
 ```
 
-**Note**: Since this is an extra `<g>`, beware that your CSS structure might accidentally target this. Be mindful of this added wrapper element when using this feature.
+**Nota**: Uma vez que isto é um `<g>` adicional, devemos estar ciente de que a estrutura do nosso CSS pode acidentalmente atingir isto. Devemos estar atentos a este elemento envolvedor adicionado quando usamos esta funcionalidade.
 
-Svelte's CSS Variables support allows for easily themeable components:
+O suporte de Variáveis de CSS da Svelte permite facilmente a criação de componentes de temas:
 
 ```svelte
 <!-- Slider.svelte -->
@@ -65,7 +65,7 @@ Svelte's CSS Variables support allows for easily themeable components:
 </style>
 ```
 
-So you can set a high-level theme color:
+Então podemos definir uma cor de tema de alto nível:
 
 ```css
 /* global.css */
@@ -74,7 +74,7 @@ html {
 }
 ```
 
-Or override it at the consumer level:
+Ou a sobrepor no nível do consumidor:
 
 ```svelte
 <Slider --rail-color="goldenrod" />
@@ -86,7 +86,7 @@ Or override it at the consumer level:
 bind:property={variable}
 ```
 
-You can bind to component props using the same syntax as for elements.
+Nós podemos vincular às propriedades do componente usando a mesma sintaxe para os elementos:
 
 ```svelte
 <Keypad bind:value={pin} />
@@ -98,9 +98,9 @@ You can bind to component props using the same syntax as for elements.
 bind:this={component_instance}
 ```
 
-Components also support `bind:this`, allowing you to interact with component instances programmatically.
+Os componentes também suportam `bind:this`, permitindo-nos interagir com as instâncias do componente programaticamente.
 
-> Note that we can't do `{cart.empty}` since `cart` is `undefined` when the button is first rendered and throws an error.
+> Nota que não podemos fazer `{cart.empty}` uma vez que `cart` é `undefined` quando o botão for interpretado pela primeira vez e lança um erro.
 
 ```svelte
 <ShoppingCart bind:this={cart} />
