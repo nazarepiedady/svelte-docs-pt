@@ -2,7 +2,7 @@
 	let files;
 
 	$: if (files) {
-		// Note that `files` is of type `FileList`, not an Array:
+		// Nota que `files` é do tipo `FileList`, não um vetor:
 		// https://developer.mozilla.org/en-US/docs/Web/API/FileList
 		console.log(files);
 
