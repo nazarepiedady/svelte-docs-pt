@@ -1,5 +1,5 @@
 <script>
-	// These values are bound to properties of the video
+	// Estes valores estão vinculados às propriedades do vídeo
 	let time = 0;
 	let duration;
 	let paused = true;
@@ -7,26 +7,26 @@
 	let showControls = true;
 	let showControlsTimeout;
 
-	// Used to track time of last mouse down event
+	// Usada para rastrear o tempo do último evento pressão do rato
 	let lastMouseDown;
 
 	function handleMove(e) {
-		// Make the controls visible, but fade out after
-		// 2.5 seconds of inactivity
+		// Tornar os controlos visíveis, mas desvanecem-se
+		// depois de 2.5 segundos de inatividade
 		clearTimeout(showControlsTimeout);
 		showControlsTimeout = setTimeout(() => (showControls = false), 2500);
 		showControls = true;
 
-		if (!duration) return; // video not loaded yet
-		if (e.type !== 'touchmove' && !(e.buttons & 1)) return; // mouse not down
+		if (!duration) return; // vídeo ainda não foi carregado
+		if (e.type !== 'touchmove' && !(e.buttons & 1)) return; // rato não pressionado
 
 		const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
 		const { left, right } = this.getBoundingClientRect();
 		time = (duration * (clientX - left)) / (right - left);
 	}
 
-	// we can't rely on the built-in click event, because it fires
-	// after a drag — we have to listen for clicks ourselves
+	// Nós não podemos depender do evento de clique embutido, porque
+	// dispara-se depois dum arrastar — nós mesmos temos de ouvir os cliques
 	function handleMousedown(e) {
 		lastMouseDown = new Date();
 	}
