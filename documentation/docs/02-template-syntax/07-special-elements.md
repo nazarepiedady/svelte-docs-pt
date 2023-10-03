@@ -1,24 +1,24 @@
 ---
-title: Special elements
+title: Elementos Especiais
 ---
 
 ## `<slot>`
 
 ```svelte
-<slot><!-- optional fallback --></slot>
+<slot><!-- retrocesso opcional --></slot>
 ```
 
 ```svelte
-<slot name="x"><!-- optional fallback --></slot>
+<slot name="x"><!-- retrocesso opcional --></slot>
 ```
 
 ```svelte
 <slot prop={value} />
 ```
 
-Components can have child content, in the same way that elements can.
+Os componentes podem ter conteúdo filho, da mesma maneira que os elementos podem.
 
-The content is exposed in the child component using the `<slot>` element, which can contain fallback content that is rendered if no children are provided.
+O conteúdo é exposto no componente filho usando o elemento `<slot>`, que pode conter conteúdo de retrocesso que é interpretado se nenhum filho for fornecido:
 
 ```svelte
 <!-- Widget.svelte -->
@@ -30,18 +30,18 @@ The content is exposed in the child component using the `<slot>` element, which 
 
 <!-- App.svelte -->
 <Widget />
-<!-- this component will render the default content -->
+<!-- este componente interpretará o conteúdo padrão -->
 
 <Widget>
 	<p>this is some child content that will overwrite the default slot content</p>
 </Widget>
 ```
 
-Note: If you want to render regular `<slot>` element, You can use `<svelte:element this="slot" />`.
+Nota: Se quisermos interpretar o elemento `<slot>`, podemos usar `<svelte:element this="slot" />`.
 
 ### `<slot name="`_name_`">`
 
-Named slots allow consumers to target specific areas. They can also have fallback content.
+As ranhuras nomeadas permite os consumidores migrar áreas específicas. Eles também pode ter conteúdo de retrocesso:
 
 ```svelte
 <!-- Widget.svelte -->
@@ -58,8 +58,7 @@ Named slots allow consumers to target specific areas. They can also have fallbac
 </Widget>
 ```
 
-Components can be placed in a named slot using the syntax `<Component slot="name" />`.
-In order to place content in a slot without using a wrapper element, you can use the special element `<svelte:fragment>`.
+Os componentes podem ser colocados numa ranhura nomeada usando a sintaxe `<Component slot="name" />`. No sentido de colocar o conteúdo numa ranhura sem usar um elemento envolvente, podemos usar o elemento especial `<svelte:fragment>`:
 
 ```svelte
 <!-- Widget.svelte -->
@@ -81,16 +80,17 @@ In order to place content in a slot without using a wrapper element, you can use
 
 ### $$slots
 
-`$$slots` is an object whose keys are the names of the slots passed into the component by the parent. If the parent does not pass in a slot with a particular name, that name will not be present in `$$slots`. This allows components to render a slot (and other elements, like wrappers for styling) only if the parent provides it.
+`$$slots` é um objeto cujas chaves são os nomes das ranhuras passados ao componente pelo pai. Se o pai não passar uma ranhura com um nome particular, que o nome estará presente no `$$slots`. Isto permite os componentes interpretar uma ranhura (e outros elementos, como envolvedores para estilização) apenas se o pai o fornecer.
 
-Note that explicitly passing in an empty named slot will add that slot's name to `$$slots`. For example, if a parent passes `<div slot="title" />` to a child component, `$$slots.title` will be truthy within the child.
+Nota que passar explicitamente um ranhura nomeada vazia adicionará o nome desta ranhura ao `$$slots`. Por exemplo, se um pai passar `<div slot="title" />` à um componente filho, `$$slots.title` será verdadeiro dentro do filho:
 
 ```svelte
 <!-- Card.svelte -->
 <div>
 	<slot name="title" />
 	{#if $$slots.description}
-		<!-- This <hr> and slot will render only if a slot named "description" is provided. -->
+		<!-- Este <hr> e a ranhura interpretará apenas
+				se uma ranhura nomeada "description" for fornecida. -->
 		<hr />
 		<slot name="description" />
 	{/if}
@@ -99,15 +99,16 @@ Note that explicitly passing in an empty named slot will add that slot's name to
 <!-- App.svelte -->
 <Card>
 	<h1 slot="title">Blog Post Title</h1>
-	<!-- No slot named "description" was provided so the optional slot will not be rendered. -->
+	<!-- Nenhuma ranhura nomeada "description" foi fornecida
+			assim a ranhura opcional não será interpretada. -->
 </Card>
 ```
 
 ### `<slot key={`_value_`}>`
 
-Slots can be rendered zero or more times and can pass values _back_ to the parent using props. The parent exposes the values to the slot template using the `let:` directive.
+As ranhuras podem ser interpretadas zero ou mais vezes e podem passar valores de _volta_ para o pai usando propriedades. O pai expõe os valores ao modelo de marcação da ranhura usando a diretiva `let:`.
 
-The usual shorthand rules apply — `let:item` is equivalent to `let:item={item}`, and `<slot {item}>` is equivalent to `<slot item={item}>`.
+As regras de abreviação habituais aplicam-se — `let:item` é equivalente ao `let:item={item}`, e `<slot {item}>` é equivalente ao `<slot item={item}>`:
 
 ```svelte
 <!-- FancyList.svelte -->
@@ -125,7 +126,7 @@ The usual shorthand rules apply — `let:item` is equivalent to `let:item={item}
 </FancyList>
 ```
 
-Named slots can also expose values. The `let:` directive goes on the element with the `slot` attribute.
+As ranhuras nomeadas também podem expor valores. A diretiva `let:` liga-se ao elemento com o atributo `slot`:
 
 ```svelte
 <!-- FancyList.svelte -->
@@ -148,9 +149,9 @@ Named slots can also expose values. The `let:` directive goes on the element wit
 
 ## `<svelte:self>`
 
-The `<svelte:self>` element allows a component to include itself, recursively.
+O elemento `<svelte:self>` permite um componente incluir-se a si mesmo, recursivamente.
 
-It cannot appear at the top level of your markup; it must be inside an if or each block or passed to a component's slot to prevent an infinite loop.
+Ele não pode aparecer no alto nível da nossa marcação; deve estar dentro dum bloco `if` ou `each` ou passado à uma ranhura do componente para evitar um laço de repetição infinito:
 
 ```svelte
 <script>
@@ -172,9 +173,9 @@ It cannot appear at the top level of your markup; it must be inside an if or eac
 <svelte:component this={expression} />
 ```
 
-The `<svelte:component>` element renders a component dynamically, using the component constructor specified as the `this` property. When the property changes, the component is destroyed and recreated.
+O elemento `<svelte:component>` interpreta um componente dinamicamente, usando o construtor do componente especificado como a propriedade `this`. Quando a propriedade muda, o componente é destruído e recriado:
 
-If `this` is falsy, no component is rendered.
+Se `this` for falso, nenhum componente é interpretado:
 
 ```svelte
 <svelte:component this={currentSelection.component} foo={bar} />
@@ -186,13 +187,13 @@ If `this` is falsy, no component is rendered.
 <svelte:element this={expression} />
 ```
 
-The `<svelte:element>` element lets you render an element of a dynamically specified type. This is useful for example when displaying rich text content from a CMS. Any properties and event listeners present will be applied to the element.
+O elemento `<svelte:element>` permite-nos interpretar um elemento dum tipo especificado dinamicamente. Isto é útil por exemplo quando exibimos conteúdo de texto rico a partir dum sistema de gestão de conteúdo. Quaisquer propriedades e ouvintes de evento presentes serão aplicados ao elemento.
 
-The only supported binding is `bind:this`, since the element type-specific bindings that Svelte does at build time (e.g. `bind:value` for input elements) do not work with a dynamic tag type.
+O único vínculo suportado é o `bind:this`, uma vez que os vínculos específicos do tipo de elemento que a Svelte faz em tempo de construção (por exemplo, `bind:value` para os elementos de entrada) não funcionam com um tipo de marcador dinâmico.
 
-If `this` has a nullish value, the element and its children will not be rendered.
+Se `this` tiver um valor nulo, o elemento e seus filhos não serão interpretados.
 
-If `this` is the name of a [void element](https://developer.mozilla.org/en-US/docs/Glossary/Void_element) (e.g., `br`) and `<svelte:element>` has child elements, a runtime error will be thrown in development mode.
+Se `this` for o nome dum [elemento nulo](https://developer.mozilla.org/en-US/docs/Glossary/Void_element) (por exemplo, `br`) e `<svelte:element>` tiver elementos filho, um erro de tempo de execução será lançado no modo de desenvolvimento:
 
 ```svelte
 <script>
@@ -215,9 +216,9 @@ If `this` is the name of a [void element](https://developer.mozilla.org/en-US/do
 <svelte:window bind:prop={value} />
 ```
 
-The `<svelte:window>` element allows you to add event listeners to the `window` object without worrying about removing them when the component is destroyed, or checking for the existence of `window` when server-side rendering.
+O elemento `<svelte:window>` permite-nos adicionar ouvintes de evento ao objeto `window` sem preocupar-se com a remoção dos mesmos quando o componente for destruído, ou verificar pela existência do `window` quando interpretar a partir do servidor.
 
-Unlike `<svelte:self>`, this element may only appear at the top level of your component and must never be inside a block or element.
+Ao contrário de `<svelte:self>`, este elemento apenas pode aparecer no alto nível do nosso componente e nunca deve estar dentro dum bloco ou elemento:
 
 ```svelte
 <script>
@@ -230,7 +231,7 @@ Unlike `<svelte:self>`, this element may only appear at the top level of your co
 <svelte:window on:keydown={handleKeydown} />
 ```
 
-You can also bind to the following properties:
+Noś também podemos vincular às seguintes propriedades:
 
 - `innerWidth`
 - `innerHeight`
@@ -238,16 +239,16 @@ You can also bind to the following properties:
 - `outerHeight`
 - `scrollX`
 - `scrollY`
-- `online` — an alias for `window.navigator.onLine`
+- `online` — um pseudónimo para `window.navigator.onLine`
 - `devicePixelRatio`
 
-All except `scrollX` and `scrollY` are readonly.
+Todos exceto `scrollX` e `scrollY` são de apenas leitura:
 
 ```svelte
 <svelte:window bind:scrollY={y} />
 ```
 
-> Note that the page will not be scrolled to the initial value to avoid accessibility issues. Only subsequent changes to the bound variable of `scrollX` and `scrollY` will cause scrolling. However, if the scrolling behaviour is desired, call `scrollTo()` in `onMount()`.
+> Nota que a página não será deslocada para o valor inicial para evitar problemas de acessibilidade. Apenas mudanças subsequentes à variável vinculada de `scrollX` e `scrollY` causarão deslocamento. No entanto, se o comportamento de deslocamento for desejado, podemos chamar `scrollTo()` na `onMount()`.
 
 ## `<svelte:document>`
 
@@ -259,20 +260,21 @@ All except `scrollX` and `scrollY` are readonly.
 <svelte:document bind:prop={value} />
 ```
 
-Similarly to `<svelte:window>`, this element allows you to add listeners to events on `document`, such as `visibilitychange`, which don't fire on `window`. It also lets you use [actions](/docs/element-directives#use-action) on `document`.
+De maneira semelhante ao `<svelte:window>`, este elemento permite-nos adicionar ouvintes aos eventos sobre o `document`, tais como `visibilitychange`, os quais não disparam sobre o `window`. Ele também permite-nos usar [ações](/docs/element-directives#use-action) sobre o `document`.
 
-As with `<svelte:window>`, this element may only appear the top level of your component and must never be inside a block or element.
+Tal como acontece com `<svelte:window>`, este elemento apenas pode aparecer no alto nível do nosso componente e nunca deve estar dentro dum bloco ou elemento:
 
 ```svelte
 <svelte:document on:visibilitychange={handleVisibilityChange} use:someAction />
 ```
 
-You can also bind to the following properties:
+Nós também podemos vincular às seguintes propriedades:
 
 - `fullscreenElement`
 - `visibilityState`
 
 All are readonly.
+Todas são de apenas leitura.
 
 ## `<svelte:body>`
 
@@ -280,9 +282,9 @@ All are readonly.
 <svelte:body on:event={handler} />
 ```
 
-Similarly to `<svelte:window>`, this element allows you to add listeners to events on `document.body`, such as `mouseenter` and `mouseleave`, which don't fire on `window`. It also lets you use [actions](/docs/element-directives#use-action) on the `<body>` element.
+De maneira semelhante ao `<svelte:window>`, este elemento permite-nos adicionar ouvintes aos eventos sobre o `document.body`, tais como `mouseenter` e `mouseleave`, os quais não disparam-se sobre o `window`. Ele também permite-nos usar [ações](/docs/element-directives#use-action) sobre o elemento `<body>`.
 
-As with `<svelte:window>` and `<svelte:document>`, this element may only appear the top level of your component and must never be inside a block or element.
+Tal como acontece com `<svelte:window>` e `<svelte:document>`, este elemento apenas pode aparecer no alto nível do nosso componente e não deve estar dentro dum bloco ou elemento:
 
 ```svelte
 <svelte:body on:mouseenter={handleMouseenter} on:mouseleave={handleMouseleave} use:someAction />
@@ -294,9 +296,9 @@ As with `<svelte:window>` and `<svelte:document>`, this element may only appear 
 <svelte:head>...</svelte:head>
 ```
 
-This element makes it possible to insert elements into `document.head`. During server-side rendering, `head` content is exposed separately to the main `html` content.
+Este elemento torna possível inserir elementos no `document.head`. Durante a interpretação no lado do servidor, o conteúdo do `head` é exposto separadamente ao conteúdo de `html` principal.
 
-As with `<svelte:window>`, `<svelte:document>` and `<svelte:body>`, this element may only appear at the top level of your component and must never be inside a block or element.
+Tal como acontece com `<svelte:window>`, `<svelte:document>` e `<svelte:body>`, este elemento apenas pode aparecer no alto nível do nosso componente e nunca deve estar dentro dum bloco ou elemento:
 
 ```svelte
 <svelte:head>
@@ -311,14 +313,14 @@ As with `<svelte:window>`, `<svelte:document>` and `<svelte:body>`, this element
 <svelte:options option={value} />
 ```
 
-The `<svelte:options>` element provides a place to specify per-component compiler options, which are detailed in the [compiler section](/docs/svelte-compiler#compile). The possible options are:
+O elemento `<svelte:options>` fornece um lugar para especificar opções do compilador por componente, as quais são detalhadas na [seção do compilador](/docs/svelte-compiler#compile). As possíveis opções são:
 
-- `immutable={true}` — you never use mutable data, so the compiler can do simple referential equality checks to determine if values have changed
-- `immutable={false}` — the default. Svelte will be more conservative about whether or not mutable objects have changed
-- `accessors={true}` — adds getters and setters for the component's props
-- `accessors={false}` — the default
-- `namespace="..."` — the namespace where this component will be used, most commonly "svg"; use the "foreign" namespace to opt out of case-insensitive attribute names and HTML-specific warnings
-- `customElement="..."` — the name to use when compiling this component as a custom element
+- `immutable={true}` — nunca usamos dados mutáveis, então o compilador pode fazer verificações de igualdade referencial simples para determinar se os valores mudaram.
+- `immutable={false}` — o padrão. A Svelte será mais conservadora sobre se ou não os objetos mutáveis mudaram.
+- `accessors={true}` — adiciona recuperadores e definidores para as propriedades do componente.
+- `accessors={false}` — o padrão.
+- `namespace="..."` — o espaço nominal onde este componente será usado, mais comummente "svg"; usamos o espaço nominal "foreign" para abandonar os nomes de atributo insensíveis a caixa e os avisos específicos de HTML.
+- `customElement="..."` — o nome à usar quando compilamos este componente como um elemento personalizado.
 
 ```svelte
 <svelte:options customElement="my-custom-element" />
@@ -326,7 +328,7 @@ The `<svelte:options>` element provides a place to specify per-component compile
 
 ## `<svelte:fragment>`
 
-The `<svelte:fragment>` element allows you to place content in a [named slot](/docs/special-elements#slot-slot-name-name) without wrapping it in a container DOM element. This keeps the flow layout of your document intact.
+O elemento `<svelte:fragment>` permite-nos colocar conteúdo numa [ranhura nomeada](/docs/special-elements#slot-slot-name-name) sem envolvê-la num elemento de DOM contentor. Isto preserva a disposição do fluxo do nosso componente intacto:
 
 ```svelte
 <!-- Widget.svelte -->
