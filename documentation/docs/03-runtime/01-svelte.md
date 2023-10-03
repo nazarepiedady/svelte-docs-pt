@@ -2,15 +2,15 @@
 title: svelte
 ---
 
-The `svelte` package exposes [lifecycle functions](https://learn.svelte.dev/tutorial/onmount) and the [context API](https://learn.svelte.dev/tutorial/context-api).
+O pacote `svelte` expõe as [funções do ciclo de vida](https://learn.svelte.dev/tutorial/onmount) e a [API de contexto](https://learn.svelte.dev/tutorial/context-api).
 
 ## `onMount`
 
 > EXPORT_SNIPPET: svelte#onMount
 
-The `onMount` function schedules a callback to run as soon as the component has been mounted to the DOM. It must be called during the component's initialisation (but doesn't need to live _inside_ the component; it can be called from an external module).
+A função `onMount` agenda uma função de resposta à executar logo que o componente tiver sido montado ao DOM. Esta deve ser chamada durante a inicialização do componente (mas não precisa morar _dentro_ do componente; pode ser chamada a partir dum módulo externo).
 
-`onMount` does not run inside a [server-side component](/docs/server-side-component-api).
+`onMount` não executa dentro dum [componente do lado do servidor](/docs/server-side-component-api):
 
 ```svelte
 <script>
@@ -22,7 +22,7 @@ The `onMount` function schedules a callback to run as soon as the component has 
 </script>
 ```
 
-If a function is returned from `onMount`, it will be called when the component is unmounted.
+Se uma função for retornada a partir de `onMount`, será chamada quando o componente for desmontado:
 
 ```svelte
 <script>
@@ -38,15 +38,15 @@ If a function is returned from `onMount`, it will be called when the component i
 </script>
 ```
 
-> This behaviour will only work when the function passed to `onMount` _synchronously_ returns a value. `async` functions always return a `Promise`, and as such cannot _synchronously_ return a function.
+> Este comportamento apenas funcionará quando a função passada à `onMount` retornar _de maneira síncrona_ um valor. As funções `async` sempre retornam uma `Promise`, e como tal não podem retornar _de maneira síncrona_ uma função.
 
 ## `beforeUpdate`
 
 > EXPORT_SNIPPET: svelte#beforeUpdate
 
-Schedules a callback to run immediately before the component is updated after any state change.
+Agenda uma função de resposta à executar imediatamente antes do componente ser atualizado depois de qualquer mudança.
 
-> The first time the callback runs will be before the initial `onMount`
+> A primeira vez que a função de resposta executar será antes da `onMount` inicial
 
 ```svelte
 <script>
@@ -62,9 +62,9 @@ Schedules a callback to run immediately before the component is updated after an
 
 > EXPORT_SNIPPET: svelte#afterUpdate
 
-Schedules a callback to run immediately after the component has been updated.
+Agenda uma função de resposta à executar imediatamente depois do componente tiver sido atualizado.
 
-> The first time the callback runs will be after the initial `onMount`
+> A primeira vez que a função de resposta executar será depois da `onMount` inicial
 
 ```svelte
 <script>
@@ -80,9 +80,9 @@ Schedules a callback to run immediately after the component has been updated.
 
 > EXPORT_SNIPPET: svelte#onDestroy
 
-Schedules a callback to run immediately before the component is unmounted.
+Agenda uma função de resposta à executar imediatamente antes do componente ser desmontado.
 
-Out of `onMount`, `beforeUpdate`, `afterUpdate` and `onDestroy`, this is the only one that runs inside a server-side component.
+Fora a `onMount`, `beforeUpdate`, `afterUpdate` e `onDestroy`, esta é a única que executa dentro dum componente do lado do servidor:
 
 ```svelte
 <script>
@@ -98,7 +98,7 @@ Out of `onMount`, `beforeUpdate`, `afterUpdate` and `onDestroy`, this is the onl
 
 > EXPORT_SNIPPET: svelte#tick
 
-Returns a promise that resolves once any pending state changes have been applied, or in the next microtask if there are none.
+Retorna uma promessa que resolve assim que quaisquer mudanças de estado pendentes tiverem sido aplicadas, ou na próxima micro-tarefa se não existirem nenhuma mudança a ser aplicada:
 
 ```svelte
 <script>
@@ -116,9 +116,9 @@ Returns a promise that resolves once any pending state changes have been applied
 
 > EXPORT_SNIPPET: svelte#setContext
 
-Associates an arbitrary `context` object with the current component and the specified `key` and returns that object. The context is then available to children of the component (including slotted content) with `getContext`.
+Associa um objeto `context` arbitrário com o componente atual e a `key` especificada e retorna este objeto. O contexto está então disponível aos filhos do componente (incluindo conteúdo isolado) com a `getContext`.
 
-Like lifecycle functions, this must be called during component initialisation.
+Tal como as funções do ciclo de vida, esta deve ser chamada durante a inicialização do componente:
 
 ```svelte
 <script>
@@ -128,13 +128,13 @@ Like lifecycle functions, this must be called during component initialisation.
 </script>
 ```
 
-> Context is not inherently reactive. If you need reactive values in context then you can pass a store into context, which _will_ be reactive.
+> O contexto não é inerentemente reativo. Se precisarmos de valores reativos no contexto então podemos passar uma memória ao contexto, que _será_ reativo.
 
 ## `getContext`
 
 > EXPORT_SNIPPET: svelte#getContext
 
-Retrieves the context that belongs to the closest parent component with the specified `key`. Must be called during component initialisation.
+Recupera o contexto que pertence ao componente pai mais próximo com a `key` especificada. Deve ser chamada durante a inicialização do componente:
 
 ```svelte
 <script>
@@ -148,14 +148,14 @@ Retrieves the context that belongs to the closest parent component with the spec
 
 > EXPORT_SNIPPET: svelte#hasContext
 
-Checks whether a given `key` has been set in the context of a parent component. Must be called during component initialisation.
+Verifica se uma dada `key` foi definida no contexto dum componente pai. Deve ser chamada durante a inicialização do componente:
 
 ```svelte
 <script>
 	import { hasContext } from 'svelte';
 
 	if (hasContext('answer')) {
-		// do something
+		// fazer algo
 	}
 </script>
 ```
@@ -164,7 +164,7 @@ Checks whether a given `key` has been set in the context of a parent component. 
 
 > EXPORT_SNIPPET: svelte#getAllContexts
 
-Retrieves the whole context map that belongs to the closest parent component. Must be called during component initialisation. Useful, for example, if you programmatically create a component and want to pass the existing context to it.
+Recupera o mapa do contexto inteiro que pertence ao componente pai mais próximo. Deve ser chamada durante a inicialização do componente. Útil, por exemplo, se criarmos programaticamente um componente e quisermos passar o contexto existente à ele:
 
 ```svelte
 <script>
@@ -178,9 +178,9 @@ Retrieves the whole context map that belongs to the closest parent component. Mu
 
 > EXPORT_SNIPPET: svelte#createEventDispatcher
 
-Creates an event dispatcher that can be used to dispatch [component events](/docs/component-directives#on-eventname). Event dispatchers are functions that can take two arguments: `name` and `detail`.
+Cria um despachador de evento que pode ser usado para despachar [eventos do componente](/docs/component-directives#on-eventname). Os despachadores de evento são funções que podem receber dois argumentos `name` e `detail`.
 
-Component events created with `createEventDispatcher` create a [CustomEvent](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent). These events do not [bubble](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events#Event_bubbling_and_capture). The `detail` argument corresponds to the [CustomEvent.detail](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/detail) property and can contain any type of data.
+Os eventos do componente criados com `createEventDispatcher` criam um [`CustomEvent`](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent). Estes eventos não [transbordam](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events#Event_bubbling_and_capture). O argumento `detail` corresponde à propriedade [`CustomEvent.detail`](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/detail) e pode conter qualquer tipo de dado:
 
 ```svelte
 <script>
@@ -192,7 +192,7 @@ Component events created with `createEventDispatcher` create a [CustomEvent](htt
 <button on:click={() => dispatch('notify', 'detail value')}>Fire Event</button>
 ```
 
-Events dispatched from child components can be listened to in their parent. Any data provided when the event was dispatched is available on the `detail` property of the event object.
+Os eventos despachados a partir dos componentes filhos podem ser ouvidos nos seus pais. Qualquer dado fornecido quando o evento foi despachado está disponível na propriedade `detail` do objeto do evento:
 
 ```svelte
 <script>
@@ -204,7 +204,7 @@ Events dispatched from child components can be listened to in their parent. Any 
 <Child on:notify={callbackFunction} />
 ```
 
-Events can be cancelable by passing a third parameter to the dispatch function. The function returns `false` if the event is cancelled with `event.preventDefault()`, otherwise it returns `true`.
+Os eventos podem ser canceláveis passando um terceiro parâmetro à função de despacho. A função retorna `false` se o evento for cancelado com `event.preventDefault()`, de outro modo retorna `true`:
 
 ```svelte
 <script>
@@ -215,16 +215,16 @@ Events can be cancelable by passing a third parameter to the dispatch function. 
 	function notify() {
 		const shouldContinue = dispatch('notify', 'detail value', { cancelable: true });
 		if (shouldContinue) {
-			// no one called preventDefault
+			// ninguém chamou `preventDefault`
 		} else {
-			// a listener called preventDefault
+			// um ouvinte chamou `preventDefault`
 		}
 	}
 </script>
 ```
 
-You can type the event dispatcher to define which events it can receive. This will make your code more type safe both within the component (wrong calls are flagged) and when using the component (types of the events are now narrowed). See [here](typescript#script-lang-ts-events) how to do it.
+Nós podemos tipificar o despachador de evento para definir quais eventos pode receber. Isto tornará o nosso código mais seguro no que diz respeito a tipo tanto dentro do componente (chamadas erradas são sinalizadas) como quando usarmos o componente (tipos de eventos agora são reduzidos). Consulte [neste material](typescript#script-lang-ts-events) como fazer isto.
 
-## Types
+## Tipos
 
 > TYPES: svelte
