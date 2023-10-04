@@ -32,7 +32,7 @@
 <svelte:window on:resize={resize} />
 
 <svg bind:this={svg}>
-	<!-- y axis -->
+	<!-- eixo y -->
 	<g class="axis y-axis">
 		{#each yTicks as tick}
 			<g class="tick tick-{tick}" transform="translate(0, {yScale(tick)})">
@@ -42,7 +42,7 @@
 		{/each}
 	</g>
 
-	<!-- x axis -->
+	<!-- eixo x -->
 	<g class="axis x-axis">
 		{#each xTicks as tick}
 			<g class="tick" transform="translate({xScale(tick)},0)">
@@ -52,7 +52,7 @@
 		{/each}
 	</g>
 
-	<!-- data -->
+	<!-- dados -->
 	{#each points as point}
 		<circle cx={xScale(point.x)} cy={yScale(point.y)} r="5" />
 	{/each}
