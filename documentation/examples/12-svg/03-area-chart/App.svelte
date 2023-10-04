@@ -31,7 +31,7 @@
 
 <div class="chart" bind:clientWidth={width} bind:clientHeight={height}>
 	<svg>
-		<!-- y axis -->
+		<!-- eixo y -->
 		<g class="axis y-axis" transform="translate(0, {padding.top})">
 			{#each yTicks as tick}
 				<g class="tick tick-{tick}" transform="translate(0, {yScale(tick) - padding.bottom})">
@@ -41,7 +41,7 @@
 			{/each}
 		</g>
 
-		<!-- x axis -->
+		<!-- eixo x -->
 		<g class="axis x-axis">
 			{#each xTicks as tick}
 				<g class="tick tick-{tick}" transform="translate({xScale(tick)},{height})">
@@ -51,7 +51,7 @@
 			{/each}
 		</g>
 
-		<!-- data -->
+		<!-- dados -->
 		<path class="path-area" d={area} />
 		<path class="path-line" d={path} />
 	</svg>
