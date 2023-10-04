@@ -3,8 +3,8 @@
 
 	let time = new Date();
 
-	// these automatically update when `time`
-	// changes, because of the `$:` prefix
+	// estes atualizam-se automaticamente quando
+	// `time` muda, por causa do prefixo `$:`
 	$: hours = time.getHours();
 	$: minutes = time.getMinutes();
 	$: seconds = time.getSeconds();
@@ -23,7 +23,7 @@
 <svg viewBox="-50 -50 100 100">
 	<circle class="clock-face" r="48" />
 
-	<!-- markers -->
+	<!-- indicadores -->
 	{#each [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55] as minute}
 		<line class="major" y1="35" y2="45" transform="rotate({30 * minute})" />
 
@@ -32,13 +32,13 @@
 		{/each}
 	{/each}
 
-	<!-- hour hand -->
+	<!-- ponteiro de hora -->
 	<line class="hour" y1="2" y2="-20" transform="rotate({30 * hours + minutes / 2})" />
 
-	<!-- minute hand -->
+	<!-- ponteiro de minuto -->
 	<line class="minute" y1="4" y2="-30" transform="rotate({6 * minutes + seconds / 10})" />
 
-	<!-- second hand -->
+	<!-- ponteiro de segundo -->
 	<g transform="rotate({6 * seconds})">
 		<line class="second" y1="10" y2="-38" />
 		<line class="second-counterweight" y1="10" y2="2" />
