@@ -1,34 +1,34 @@
-[![Cybernetically enhanced web apps: Svelte](https://sveltejs.github.io/assets/banner.png)](https://svelte.dev)
+[![Aplicações de Web Ciberneticamente Aprimoradas: Svelte](https://sveltejs.github.io/assets/banner.png)](https://svelte.dev)
 
-[![license](https://img.shields.io/npm/l/svelte.svg)](LICENSE.md) [![Chat](https://img.shields.io/discord/457912077277855764?label=chat&logo=discord)](https://svelte.dev/chat)
+[![Licença](https://img.shields.io/npm/l/svelte.svg)](LICENSE.md) [![Conversa](https://img.shields.io/discord/457912077277855764?label=chat&logo=discord)](https://svelte.dev/chat)
 
-## What is Svelte?
+## O Que é Svelte?
 
-Svelte is a new way to build web applications. It's a compiler that takes your declarative components and converts them into efficient JavaScript that surgically updates the DOM.
+Svelte é uma nova maneira de construir aplicações de Web. É um compilador que recebe os nossos componentes declarativos e converte-os em JavaScript eficiente que atualiza o maneira cirúrgica o DOM.
 
-Learn more at the [Svelte website](https://svelte.dev), or stop by the [Discord chatroom](https://svelte.dev/chat).
+Saiba mais na [página da Svelte (em Português)](https://svelte-docs-pt.vercel.app), passe pelo [fórum de discussão da Discord](https://svelte.dev/chat).
 
-## Supporting Svelte
+## Apoiando a Svelte
 
-Svelte is an MIT-licensed open source project with its ongoing development made possible entirely by fantastic volunteers. If you'd like to support their efforts, please consider:
+Svelte é um projeto de código-aberto licenciado pela MIT com seu desenvolvimento em curso tornado possível inteiramente pelos fantásticos voluntários. Se gostarias de apoiar os seus esforços, considere:
 
-- [Becoming a backer on Open Collective](https://opencollective.com/svelte).
+- [Tornar-se um financiador na Open Collective](https://opencollective.com/svelte).
 
-Funds donated via Open Collective will be used for compensating expenses related to Svelte's development such as hosting costs. If sufficient donations are received, funds may also be used to support Svelte's development more directly.
+Os fundos doados através da Open Collective será usado para compensar as despesas relacionadas ao desenvolvimento da Svelte tais como custos de hospedagem. Se doações suficientes forem recebidas, os fundos também podem ser usados para apoiar o desenvolvimento da Svelte mais diretamente.
 
-## Roadmap
+## Mapa de Estradas
 
-You may view [our roadmap](https://svelte.dev/roadmap) if you'd like to see what we're currently working on.
+É possível visualizar [o nosso mapa de estradas](https://svelte.dev/roadmap) para saberes o que estamos a trabalhar atualmente.
 
-## Contributing
+## Contribuição
 
-Please see the [Contributing Guide](CONTRIBUTING.md) and [svelte package](packages/svelte) for contributing to Svelte.
+Consulte o [Guia de Contribuição] e [pacote da svelte](packages/svelte) por contribuições à Svelte.
 
-### Development
+### Desenvolvimento
 
-Pull requests are encouraged and always welcome. [Pick an issue](https://github.com/sveltejs/svelte/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc) and help us out!
+Os pedidos de atualização de repositório são encorajados e sempre bem-vindos. [Escolha um problema](https://github.com/sveltejs/svelte/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc) e ajude-nos!
 
-To install and work on Svelte locally:
+Para instalar e trabalhar na Svelte localmente:
 
 ```bash
 git clone https://github.com/sveltejs/svelte.git
@@ -36,29 +36,29 @@ cd svelte
 pnpm install
 ```
 
-> Do not use Yarn to install the dependencies, as the specific package versions in `pnpm-lock.json` are used to build and test Svelte.
+> Não usar a Yarn para instalar as dependências, uma vez que versões de pacotes específicas na `pnpm-lock.json` são usadas para construir e testar a Svelte.
 
-To build the compiler and all the other modules included in the package:
+Para construir o compilador e todos os outros módulos incluídos no pacote:
 
 ```bash
 pnpm build
 ```
 
-To watch for changes and continually rebuild the package (this is useful if you're using [`pnpm link`](https://pnpm.io/cli/link) to test out changes in a project locally):
+Para observar por mudanças e reconstruir o pacote continuamente (isto é útil se estivermos usando [`pnpm link`](https://pnpm.io/cli/link) para testar as mudanças num projeto localmente):
 
 ```bash
 pnpm dev
 ```
 
-The compiler is written in JavaScript and uses [JSDoc](https://jsdoc.app/index.html) comments for type-checking.
+O compilador é escrito em JavaScript e usa os comentários da [JSDoc](https://jsdoc.app/index.html) para verificação de tipo.
 
-### Running Tests
+### Executando Testes
 
 ```bash
 pnpm test
 ```
 
-To filter tests, use `-g` (aka `--grep`). For example, to only run tests involving transitions:
+Para filtrar testes, usamos `-g` (vulgo `--grep`). Por exemplo, para apenas executar os testes envolvendo as transições:
 
 ```bash
 pnpm test -- -g transition
@@ -66,12 +66,12 @@ pnpm test -- -g transition
 
 ### svelte.dev
 
-The source code for https://svelte.dev lives in the [sites](https://github.com/sveltejs/sites) repository, with all the documentation in the [site/content](site/content) directory. The site is built with [SvelteKit](https://kit.svelte.dev).
+O código-fonte para [svelte.dev](https://svelte.dev) mora no repositório [sites](https://github.com/sveltejs/sites), com toda a documentação no diretório [`site/content`](site/content). O sítio foi construído com a [SvelteKit](https://sveltekit-docs-pt.vercel.app/).
 
-## Is svelte.dev down?
+## svelte.dev está em baixo?
 
-Probably not, but it's possible. If you can't seem to access any `.dev` sites, check out [this SuperUser question and answer](https://superuser.com/q/1413402).
+Provavelmente não, mas é possível. Se parece que não podemos acessar quaisquer sítios `.dev`, consulte [esta questão e resposta da SuperUser](https://superuser.com/q/1413402).
 
-## License
+## Licença
 
 [MIT](LICENSE.md)
