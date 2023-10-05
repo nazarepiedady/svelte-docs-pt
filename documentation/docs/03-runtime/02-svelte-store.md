@@ -2,21 +2,21 @@
 title: 'svelte/store'
 ---
 
-The `svelte/store` module exports functions for creating [readable](/docs/svelte-store#readable), [writable](/docs/svelte-store#writable) and [derived](/docs/svelte-store#derived) stores.
+O módulo `svelte/store` exporta funções para a criação de memórias [legíveis](/docs/svelte-store#readable), [graváveis](/docs/svelte-store#writable), [derivadas](/docs/svelte-store#derived).
 
-Keep in mind that you don't _have_ to use these functions to enjoy the [reactive `$store` syntax](/docs/svelte-components#script-4-prefix-stores-with-$-to-access-their-values) in your components. Any object that correctly implements `.subscribe`, unsubscribe, and (optionally) `.set` is a valid store, and will work both with the special syntax, and with Svelte's built-in [`derived` stores](/docs/svelte-store#derived).
+Temos que lembrar-nos de que não _precisamos_ usar estas funções para desfrutar da [sintaxe `$store` reativa](/docs/svelte-components#script-4-prefix-stores-with-$-to-access-their-values) nos nossos componentes. Qualquer objeto que implementa corretamente a `.subscribe`, a anulação de subscrição, e (opcionalmente) a `.set` é uma memória válida, e funcionará com ambas sintaxe especial e com as [memórias `derived`](/docs/svelte-store#derived) embutidas da Svelte.
 
-This makes it possible to wrap almost any other reactive state handling library for use in Svelte. Read more about the [store contract](/docs/svelte-components#script-4-prefix-stores-with-$-to-access-their-values) to see what a correct implementation looks like.
+Isto torna possível envolver quase qualquer outra biblioteca de manipulação de estado reativo para usar na Svelte. Leia mais sobre o [contrato de memória](/docs/svelte-components#script-4-prefix-stores-with-$-to-access-their-values) para ver como uma implementação correta se parece.
 
 ## `writable`
 
 > EXPORT_SNIPPET: svelte/store#writable
 
-Function that creates a store which has values that can be set from 'outside' components. It gets created as an object with additional `set` and `update` methods.
+Função que cria uma memória que tem valores que podem ser definidos a partir dos componentes 'de fora'. É criada como um objeto com métodos `set` e `update` adicionais.
 
-`set` is a method that takes one argument which is the value to be set. The store value gets set to the value of the argument if the store value is not already equal to it.
+`set` é um método que recebe um argumento que é o valor à ser definido. O valor da memória é definido ao valor do argumento se o valor da memória já não for igual a ele.
 
-`update` is a method that takes one argument which is a callback. The callback takes the existing store value as its argument and returns the new value to be set to the store.
+`update` é um método que recebe um argumento que é uma função de resposta. A função de resposta recebe o valor da memória existente como seu argumento e retorna o novo valor à ser definido à memória:
 
 ```js
 /// file: store.js
@@ -26,14 +26,14 @@ const count = writable(0);
 
 count.subscribe((value) => {
 	console.log(value);
-}); // logs '0'
+}); // regista '0'
 
-count.set(1); // logs '1'
+count.set(1); // regista '1'
 
-count.update((n) => n + 1); // logs '2'
+count.update((n) => n + 1); // regista '2'
 ```
 
-If a function is passed as the second argument, it will be called when the number of subscribers goes from zero to one (but not from one to two, etc). That function will be passed a `set` function which changes the value of the store, and an `update` function which works like the `update` method on the store, taking a callback to calculate the store's new value from its old value. It must return a `stop` function that is called when the subscriber count goes from one to zero.
+Se uma função for passada como segundo argumento, será chamada quando o número de subscritores segue de zero à um (mas não de um à dois, etc). Esta função será passada uma função `set` que muda o valor da memória, e uma função `update` que funciona tal como o método `update` na memória, recebendo uma função de resposta para calcular o novo valor da memória a partir do antigo valor. Ela deve retornar uma função `stop` que é chamada quando a contagem do subscritor segue de um à zero:
 
 ```js
 /// file: store.js
@@ -44,22 +44,22 @@ const count = writable(0, () => {
 	return () => console.log('no more subscribers');
 });
 
-count.set(1); // does nothing
+count.set(1); // não faz nada
 
 const unsubscribe = count.subscribe((value) => {
 	console.log(value);
-}); // logs 'got a subscriber', then '1'
+}); // regista 'got a subscriber', depois '1'
 
-unsubscribe(); // logs 'no more subscribers'
+unsubscribe(); // regista 'no more subscribers'
 ```
 
-Note that the value of a `writable` is lost when it is destroyed, for example when the page is refreshed. However, you can write your own logic to sync the value to for example the `localStorage`.
+Nota que o valor duma `writable` é perdido quando for destruída, por exemplo quando a página é atualizada. No entanto, podemos escrever a nossa própria lógica para sincronizar o valor ao por exemplo a `localStorage`.
 
 ## `readable`
 
 > EXPORT_SNIPPET: svelte/store#readable
 
-Creates a store whose value cannot be set from 'outside', the first argument is the store's initial value, and the second argument to `readable` is the same as the second argument to `writable`.
+Cria uma memória cujo valor não pode ser definido a partir do 'lado de fora', o primeiro argumento é o valor inicial da memória, e o segundo argumento para `readable` é o mesmo segundo argumento para `writable`:
 
 ```js
 <!--- file: App.svelte --->
@@ -89,9 +89,9 @@ const ticktock = readable('tick', (set, update) => {
 
 > EXPORT_SNIPPET: svelte/store#derived
 
-Derives a store from one or more other stores. The callback runs initially when the first subscriber subscribes and then whenever the store dependencies change.
+Deriva uma memória a partir duma ou mais outras memórias. A função de resposta executa inicialmente quando o primeiro subscritor subscrever-se e depois sempre que as dependências da memória mudarem.
 
-In the simplest version, `derived` takes a single store, and the callback returns a derived value.
+Na versão mais simples, `derived` recebe uma única memória, e a função de resposta retorna um valor derivado:
 
 ```ts
 // @filename: ambient.d.ts
@@ -110,9 +110,9 @@ import { derived } from 'svelte/store';
 const doubled = derived(a, ($a) => $a * 2);
 ```
 
-The callback can set a value asynchronously by accepting a second argument, `set`, and an optional third argument, `update`, calling either or both of them when appropriate.
+A função de resposta pode definir um valor de maneira assíncrona aceitando um segundo argumento, `set`, e um terceiro argumento opcional, `update`, chamando nenhum ou ambos quando apropriado.
 
-In this case, you can also pass a third argument to `derived` — the initial value of the derived store before `set` or `update` is first called. If no initial value is specified, the store's initial value will be `undefined`.
+Neste caso, também podemos passar um terceiro argumento à `derived` — o valor inicial da memória derivada antes de `set` ou `update` é chamado primeiro. Se nenhum valor inicial for especificado, o valor inicial da memória será `undefined`:
 
 ```js
 // @filename: ambient.d.ts
@@ -136,12 +136,12 @@ const delayed = derived(a, ($a, set) => {
 const delayedIncrement = derived(a, ($a, set, update) => {
 	set($a);
 	setTimeout(() => update(x => x + 1), 1000);
-	// every time $a produces a value, this produces two
-	// values, $a immediately and then $a + 1 a second later
+	// toda vez que `$a` produzir um valor, esta produz dois
+	// valores, `$a` imediatamente e depois `$a + 1` um segundo depois
 });
 ```
 
-If you return a function from the callback, it will be called when a) the callback runs again, or b) the last subscriber unsubscribes.
+Se retornarmos uma função a partir da função de resposta, será chamada quando a) a função de resposta executar novamente, ou b) o último subscritor anular a subscrição:
 
 ```js
 // @filename: ambient.d.ts
@@ -172,7 +172,7 @@ const tick = derived(
 );
 ```
 
-In both cases, an array of arguments can be passed as the first argument instead of a single store.
+Em ambos casos, um vetor de argumentos pode ser passado como primeiro argumento ao invés duma única memória:
 
 ```ts
 // @filename: ambient.d.ts
@@ -201,7 +201,7 @@ const delayed = derived([a, b], ([$a, $b], set) => {
 
 > EXPORT_SNIPPET: svelte/store#readonly
 
-This simple helper function makes a store readonly. You can still subscribe to the changes from the original one using this new readable store.
+Esta função auxiliar simples torna uma memória disponível apenas para leitura. Nós ainda podemos subscrever às mudanças a partir do original usando esta nova memória legível:
 
 ```js
 import { readonly, writable } from 'svelte/store';
@@ -220,9 +220,9 @@ readableStore.set(2); // ERROR
 
 > EXPORT_SNIPPET: svelte/store#get
 
-Generally, you should read the value of a store by subscribing to it and using the value as it changes over time. Occasionally, you may need to retrieve the value of a store to which you're not subscribed. `get` allows you to do so.
+Geralmente, devemos ler o valor duma memória subscrevendo à ela e usando o valor a medida que mudar ao longo do tempo. Ocasionalmente, podemos precisar de recuperar o valor duma memória para qual não estamos subscritos. `get` permite-nos fazer isto.
 
-> This works by creating a subscription, reading the value, then unsubscribing. It's therefore not recommended in hot code paths.
+> Isto funciona criando uma subscrição, lendo o valor, depois anulando a subscrição. Portanto não é recomendado nos caminhos de código de última hora.
 
 ```js
 // @filename: ambient.d.ts
@@ -241,6 +241,6 @@ import { get } from 'svelte/store';
 const value = get(store);
 ```
 
-## Types
+## Tipos
 
 > TYPES: svelte/store
