@@ -18,7 +18,7 @@ Todas as três seções — `<script>` (o programa), `<style>` (o estilo), e a m
 </style>
 ```
 
-## &lt;script&gt;
+## `<script>`
 
 Um bloco `<script>` contém JavaScript que executa-se quando uma instância de componente é criada. As variáveis declaradas (ou importadas) no alto nível estão 'visíveis' a partir da marcação do componente. Existem quatro regras adicionais:
 
@@ -255,7 +255,7 @@ Nós podemos criar as nossas próprias memórias sem depender da [`svelte/store`
 
 Para interoperabilidade com os observáveis de RxJS, o método `.subscribe` também está permitido retornar um objeto com um  método `.unsubscribe`, ao invés de retornar a função de anulação de subscrição diretamente. Nota, no entanto, que a menos que `.subscribe` chame de maneira síncrona a subscrição (o que não é exigido pela especificação do Observável), a Svelte verá o valor da memória como `undefined` até que isto aconteça.
 
-## &lt;script context="module"&gt;
+## `<script context="module">`
 
 Um marcador `<script>` com um atributo `context="module"` é executado uma vez quando o módulo é avaliado pela primeira vez, e nãp para cada instância do componente. Os valores declarados neste bloco são acessíveis a partir dum `<script>` normal (e a marcação do componente), mas não vice-versa.
 
@@ -282,7 +282,7 @@ Nós não podemos fazer `export default`, visto que a exportação padrão é o 
 </script>
 ```
 
-## &lt;style&gt;
+## `<style>`
 
 A CSS dentro dum bloco `<style>` será isolada para este componente.
 
