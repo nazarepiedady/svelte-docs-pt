@@ -6,7 +6,7 @@ Bem-vindo à documentação de referência da Svelte! Esta está destinada como 
 
 Se não for o teu caso (ainda), podes preferir visitar o [seminário interativo](https://learn.svelte.dev) ou os [exemplos](/examples) antes de consultar esta referência. Tu podes testar a Svelte online usando a [REPL](/repl). Alternativamente, se gostarias de um ambiente mais completo, podes experimentar a Svelte na [StackBlitz](https://sveltekit.new).
 
-## Começar um novo projeto
+## Começar Um Novo Projeto
 
 Nós recomendamos usar a [SvelteKit](https://kit.svelte.dev/), a abstração de aplicação oficial da equipa da Svelte:
 
@@ -29,6 +29,6 @@ Alternativamente, existem [extensões para todos os principais empacotadores da 
 
 A equipa da Svelte mantém uma [extensão de VS Code](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode) e também existem integrações com vários outros [editores](https://sveltesociety.dev/tools#editor-support) e ferramentas.
 
-## Pedindo ajuda
+## Pedindo Ajuda
 
 Não precisamos ter vergonha na hora de pedir ajuda, e pare isto temos a [sala de conversas da Discord](https://svelte.dev/chat)! Também é possível encontrar respostas na [Stack Overflow](https://stackoverflow.com/questions/tagged/svelte).
