@@ -2,7 +2,7 @@
 title: Blocos Lógicos
 ---
 
-## {#if ...}
+## `{#if ...}`
 
 ```svelte
 {#if expression}...{/if}
@@ -38,7 +38,7 @@ As condições adicionais podem ser adicionadas com `{:else if expression}`, opc
 
 (Os blocos não precisam envolver os elementos, também podem envolver texto dentro dos elementos!)
 
-## {#each ...}
+## `{#each ...}`
 
 ```svelte
 {#each expression as name}...{/each}
@@ -122,7 +122,7 @@ Um bloco `each` também podem ter uma cláusula `{:else}`, a qual é interpretad
 
 Desde a Svelte 4, é possível iterar sobre os iteráveis como `Map` ou `Set`. Os iteráveis precisam ser finitos e estáticos (não devem mudar enquanto são iterados). Nos bastidores, são transformados num vetor usando `Array.from` antes de ser passados à interpretação. Se estivermos a escrever um código sensível ao desempenho, devemos tentar evitar os iteráveis e usar vetores normais visto que são mais otimizados:
 
-## {#await ...}
+## `{#await ...}`
 
 ```svelte
 {#await expression}...{:then name}...{:catch name}...{/await}
@@ -183,7 +183,7 @@ De maneira semelhante, se apenas quisermos mostrar o estado de erro, podemos omi
 {/await}
 ```
 
-## {#key ...}
+## `{#key ...}`
 
 ```svelte
 {#key expression}...{/key}
