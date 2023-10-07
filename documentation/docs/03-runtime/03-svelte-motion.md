@@ -2,24 +2,24 @@
 title: 'svelte/motion'
 ---
 
-The `svelte/motion` module exports two functions, `tweened` and `spring`, for creating writable stores whose values change over time after `set` and `update`, rather than immediately.
+O módulo `svelte/motion` exporta duas funções, `tweened` e `spring`, para criação de memórias graváveis cujos valores mudam ao longo do tempo depois de `set` e `update`, ao invés de imediatamente.
 
 ## `tweened`
 
 > EXPORT_SNIPPET: svelte/motion#tweened
 
-Tweened stores update their values over a fixed duration. The following options are available:
+As memórias intercaladas atualizam seus valores sobre uma duração fixada. As seguintes opções estão disponíveis:
 
-- `delay` (`number`, default 0) — milliseconds before starting
-- `duration` (`number` | `function`, default 400) — milliseconds the tween lasts
-- `easing` (`function`, default `t => t`) — an [easing function](/docs/svelte-easing)
-- `interpolate` (`function`) — see below
+- `delay` (`number`, predefine 0) — milissegundos antes de começar
+- `duration` (`number` | `function`, predefine 400) — milissegundos que a intercalação dura
+- `easing` (`function`, predefine `t => t`) — uma [função de atenuação](/docs/svelte-easing)
+- `interpolate` (`function`) — consulte abaixo
 
-`store.set` and `store.update` can accept a second `options` argument that will override the options passed in upon instantiation.
+`store.set` e `store.update` podem aceitar um segundo argumento `options` que sobreporão as opções passadas sobre a instância.
 
-Both functions return a Promise that resolves when the tween completes. If the tween is interrupted, the promise will never resolve.
+Ambas funções retornam uma promessa que resolve quando a intercalação terminar. Se a intercalação for interrompida a promessa nunca resolverá.
 
-Out of the box, Svelte will interpolate between two numbers, two arrays or two objects (as long as the arrays and objects are the same 'shape', and their 'leaf' properties are also numbers).
+Fora da caixa, a Svelte interpolará entre dois números, dois vetores ou dois objetos (enquanto os vetores e objetos forem da mesma 'forma' e suas propriedades 'folha' também forem números):
 
 ```svelte
 <script>
@@ -32,7 +32,7 @@ Out of the box, Svelte will interpolate between two numbers, two arrays or two o
 	});
 
 	function handleClick() {
-		// this is equivalent to size.update(n => n + 1)
+		// isto é equivalente ao `size.update(n => n + 1)`
 		$size += 1;
 	}
 </script>
@@ -42,7 +42,7 @@ Out of the box, Svelte will interpolate between two numbers, two arrays or two o
 </button>
 ```
 
-If the initial value is `undefined` or `null`, the first value change will take effect immediately. This is useful when you have tweened values that are based on props, and don't want any motion when the component first renders.
+Se o valor inicial for `undefined` ou `null`, a mudança do primeiro valor surtirá efeito imediatamente. Isto é útil quando temos valores intercalados que são baseados nas propriedades, e não queremos nenhum movimento quando o componente interpretar em primeiro lugar:
 
 ```ts
 // @filename: ambient.d.ts
@@ -65,7 +65,7 @@ const size = tweened(undefined, {
 $: $size = big ? 100 : 10;
 ```
 
-The `interpolate` option allows you to tween between _any_ arbitrary values. It must be an `(a, b) => t => value` function, where `a` is the starting value, `b` is the target value, `t` is a number between 0 and 1, and `value` is the result. For example, we can use the [d3-interpolate](https://github.com/d3/d3-interpolate) package to smoothly interpolate between two colours.
+A opção `interpolate` permite-nos intercalar entre _quaisquer_ valores arbitrários. Deve ser uma função `(a, b) => t => value`, onde `a` é o valor inicial, `b` é o valor objetivo, `t` é um número entre 0 e 1, e `value` é o resultado. Por exemplo, podemos usar o pacote [`d3-interpolate`](https://github.com/d3/d3-interpolate) para interpolar suavemente entre duas cores:
 
 ```svelte
 <script>
@@ -93,13 +93,13 @@ The `interpolate` option allows you to tween between _any_ arbitrary values. It 
 
 > EXPORT_SNIPPET: svelte/motion#spring
 
-A `spring` store gradually changes to its target value based on its `stiffness` and `damping` parameters. Whereas `tweened` stores change their values over a fixed duration, `spring` stores change over a duration that is determined by their existing velocity, allowing for more natural-seeming motion in many situations. The following options are available:
+Uma memória `spring` muda gradualmente para o seu valor objetivo baseada no seus parâmetros `stiffness` e `damping`. Visto que as memórias `tweened` mudam seus valores sobre uma duração fixada, as memórias `spring` mudam sobre uma duração que é determinada por sua velocidade, permitindo movimentação de aparência mais natural em muitas situações. As seguintes opções estão disponíveis:
 
-- `stiffness` (`number`, default `0.15`) — a value between 0 and 1 where higher means a 'tighter' spring
-- `damping` (`number`, default `0.8`) — a value between 0 and 1 where lower means a 'springier' spring
-- `precision` (`number`, default `0.01`) — determines the threshold at which the spring is considered to have 'settled', where lower means more precise
+- `stiffness` (`number`, predefine `0.15`) — um valor entre 0 e 1 onde mais alto significa um salto 'mais apertado'.
+- `damping` (`number`, predefine `0.8`) — um valor entre 0 e 1 onde mais baixo significa um salto 'mais enérgico'.
+- `precision` (`number`, predefine `0.01`) — determina o limiar no qual o salto é considerado ter 'acalmado', onde mais baixo significa mais preciso.
 
-All of the options above can be changed while the spring is in motion, and will take immediate effect.
+Todos as opções acima podem ser mudadas enquanto o salto estiver em movimento, e surtirão efeito imediato:
 
 ```js
 import { spring } from 'svelte/motion';
@@ -110,17 +110,17 @@ size.damping = 0.4;
 size.precision = 0.005;
 ```
 
-As with [`tweened`](/docs/svelte-motion#tweened) stores, `set` and `update` return a Promise that resolves if the spring settles.
+Tal como acontece com as memórias [`tweened`](/docs/svelte-motion#tweened), `set` e `update` retornam uma promessa que resolve se o salto acalmar-se.
 
-Both `set` and `update` can take a second argument — an object with `hard` or `soft` properties. `{ hard: true }` sets the target value immediately; `{ soft: n }` preserves existing momentum for `n` seconds before settling. `{ soft: true }` is equivalent to `{ soft: 0.5 }`.
+Ambas `set` e `update` podem receber um segundo argumento — um objeto com as propriedades `hard` ou `soft`. `{ hard: true }` define o valor do alvo imediatamente; `{ soft: n }` preserva a velocidade existente por `n` segundos antes de acalmar. `{ soft: true }` é equivalente ao `{ soft: 0.5 }`:
 
 ```js
 import { spring } from 'svelte/motion';
 
 const coords = spring({ x: 50, y: 50 });
-// updates the value immediately
+// atualiza o valor imediatamente
 coords.set({ x: 100, y: 200 }, { hard: true });
-// preserves existing momentum for 1s
+// preserva a velocidade existente por 1s
 coords.update(
 	(target_coords, coords) => {
 		return { x: target_coords.x, y: coords.y };
@@ -129,7 +129,7 @@ coords.update(
 );
 ```
 
-[See a full example on the spring tutorial.](https://learn.svelte.dev/tutorial/springs)
+[Consulte um exemplo completo no seminário de salto.](https://learn.svelte.dev/tutorial/springs)
 
 ```svelte
 <script>
@@ -145,7 +145,7 @@ coords.update(
 </script>
 ```
 
-If the initial value is `undefined` or `null`, the first value change will take effect immediately, just as with `tweened` values (see above).
+Se o valor inicial for `undefined` ou `null`, a mudança do primeiro valor surtirá efeito imediatamente, tal como acontece com os valores `tweened` (consulte acima):
 
 ```ts
 // @filename: ambient.d.ts
@@ -164,6 +164,6 @@ const size = spring();
 $: $size = big ? 100 : 10;
 ```
 
-## Types
+## Tipos
 
 > TYPES: svelte/motion
