@@ -2,18 +2,18 @@
 title: svelte/action
 ---
 
-Actions are functions that are called when an element is created. They can return an object with a `destroy` method that is called after the element is unmounted:
+As ações são funções que são chamadas quando um elemento é criado. Elas podem retornar um objeto com um método `destroy` que é chamado depois do elemento ser desmontado:
 
 ```svelte
 <!--- file: App.svelte --->
 <script>
 	/** @type {import('svelte/action').Action}  */
 	function foo(node) {
-		// the node has been mounted in the DOM
+		// o nó foi montado no DOM
 
 		return {
 			destroy() {
-				// the node has been removed from the DOM
+				// o nó foi removido do DOM
 			}
 		};
 	}
@@ -22,9 +22,9 @@ Actions are functions that are called when an element is created. They can retur
 <div use:foo />
 ```
 
-An action can have a parameter. If the returned value has an `update` method, it will be called immediately after Svelte has applied updates to the markup whenever that parameter changes.
+Uma ação pode ter um parâmetro. Se o valor retornado tiver um método `update`, será chamado imediatamente depois da Svelter ter aplicado atualizações à marcação sempre que este parâmetro mudar.
 
-> Don't worry that we're redeclaring the `foo` function for every component instance — Svelte will hoist any functions that don't depend on local state out of the component definition.
+> Não temos que preocupar-nos com o fato de estarmos a redeclarar a função `foo` para toda instância do componente — a Svelte içará quaisquer funções que não dependem do estado local para fora da definição do componente.
 
 ```svelte
 <!--- file: App.svelte --->
@@ -34,15 +34,15 @@ An action can have a parameter. If the returned value has an `update` method, it
 
 	/** @type {import('svelte/action').Action<HTMLElement, string>}  */
 	function foo(node, bar) {
-		// the node has been mounted in the DOM
+		// o nó foi montado no DOM
 
 		return {
 			update(bar) {
-				// the value of `bar` has changed
+				// o valor de `bar` foi mudado
 			},
 
 			destroy() {
-				// the node has been removed from the DOM
+				// o nó foi removido do DOM
 			}
 		};
 	}
@@ -51,9 +51,9 @@ An action can have a parameter. If the returned value has an `update` method, it
 <div use:foo={bar} />
 ```
 
-## Attributes
+## Atributos
 
-Sometimes actions emit custom events and apply custom attributes to the element they are applied to. To support this, actions typed with `Action` or `ActionReturn` type can have a last parameter, `Attributes`:
+Algumas vezes as ações emitem eventos e aplicam atributos personalizados aos elementos nos quais são aplicadas. Para suportar isto, as ações tipadas com o tipo `Action` ou `ActionReturn` podem ter um último parâmetro, `Attributes`:
 
 ```svelte
 <!--- file: App.svelte --->
@@ -62,14 +62,14 @@ Sometimes actions emit custom events and apply custom attributes to the element 
 	 * @type {import('svelte/action').Action<HTMLDivElement, { prop: any }, { 'on:emit': (e: CustomEvent<string>) => void }>}
 	 */
 	function foo(node, { prop }) {
-		// the node has been mounted in the DOM
+		// o nó foi montado no DOM
 
-		//...LOGIC
+		//...LÓGICA
 		node.dispatchEvent(new CustomEvent('emit', { detail: 'hello' }));
 
 		return {
 			destroy() {
-				// the node has been removed from the DOM
+				// o nó foi removido do DOM
 			}
 		};
 	}
@@ -78,6 +78,6 @@ Sometimes actions emit custom events and apply custom attributes to the element 
 <div use:foo={{ prop: 'someValue' }} on:emit={handleEmit} />
 ```
 
-## Types
+## Tipos
 
 > TYPES: svelte/action
