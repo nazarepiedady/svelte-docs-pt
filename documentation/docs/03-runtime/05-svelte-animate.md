@@ -2,7 +2,7 @@
 title: 'svelte/animate'
 ---
 
-The `svelte/animate` module exports one function for use with Svelte [animations](/docs/element-directives#animate-fn).
+O módulo `svelte/animate` exporta uma função para usar com as [animações](/docs/element-directives#animate-fn) da Svelte.
 
 ## `flip`
 
@@ -12,20 +12,20 @@ The `svelte/animate` module exports one function for use with Svelte [animations
 animate:flip={params}
 ```
 
-The `flip` function calculates the start and end position of an element and animates between them, translating the `x` and `y` values. `flip` stands for [First, Last, Invert, Play](https://aerotwist.com/blog/flip-your-animations/).
+A função `flip` calcula a posição inicial e final dum elemento e anima entre elas, passando os valores de `x` e `y`. `flip` significa [First (Primeiro), Last (Último), Invert (Inverter), Play (Tocar)](https://aerotwist.com/blog/flip-your-animations/).
 
-`flip` accepts the following parameters:
+`flip` aceita os seguintes parâmetros:
 
-- `delay` (`number`, default 0) — milliseconds before starting
-- `duration` (`number` | `function`, default `d => Math.sqrt(d) * 120`) — see below
-- `easing` (`function`, default `cubicOut`) — an [easing function](/docs/svelte-easing)
+- `delay` (`number`, predefine 0) — milissegundos antes de começar
+- `duration` (`number` | `function`, predefine `d => Math.sqrt(d) * 120`) — consulte abaixo
+- `easing` (`function`, predefine `cubicOut`) — uma [função de atenuação](/docs/svelte-easing)
 
-`duration` can be provided as either:
+`duration` pode ser fornecido ou como:
 
-- a `number`, in milliseconds.
-- a function, `distance: number => duration: number`, receiving the distance the element will travel in pixels and returning the duration in milliseconds. This allows you to assign a duration that is relative to the distance travelled by each element.
+- um `number`, em milissegundos.
+- uma função, `distance: number => duration: number`, recebendo a distância que o elemento percorrerá em píxeis e retornando a duração em milissegundos. Isto permite-nos atribuir uma duração que é relativa à distância percorrida por cada elemento.
 
-You can see a full example on the [animations tutorial](https://learn.svelte.dev/tutorial/animate).
+Nós podemos consultar um exemplo completo no [seminário de animações](https://learn.svelte.dev/tutorial/animate):
 
 ```svelte
 <script>
@@ -42,6 +42,6 @@ You can see a full example on the [animations tutorial](https://learn.svelte.dev
 {/each}
 ```
 
-## Types
+## Tipos
 
 > TYPES: svelte/animate
