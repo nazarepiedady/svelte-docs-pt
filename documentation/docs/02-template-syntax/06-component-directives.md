@@ -1,5 +1,5 @@
 ---
-title: Diretivas de Componente
+title: Diretivas do Componente
 ---
 
 ## on:_eventname_
