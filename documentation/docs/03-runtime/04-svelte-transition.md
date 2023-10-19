@@ -2,7 +2,7 @@
 title: 'svelte/transition'
 ---
 
-The `svelte/transition` module exports seven functions: `fade`, `blur`, `fly`, `slide`, `scale`, `draw` and `crossfade`. They are for use with Svelte [`transitions`](/docs/element-directives#transition-fn).
+O módulo `svelte/transition` exporta sente funções: `fade`, `blur`, `fly`, `slide`, `scale`, `draw` e `crossfade`. Elas são para usar com as [`transitions`](/docs/element-directives#transition-fn) da Svelte.
 
 ## `fade`
 
@@ -20,15 +20,15 @@ in:fade={params}
 out:fade={params}
 ```
 
-Animates the opacity of an element from 0 to the current opacity for `in` transitions and from the current opacity to 0 for `out` transitions.
+Anima a opacidade dum elemento de 0 à opacidade atual para as transições de `in` e da opacidade atual à 0 para as transições de `out`.
 
-`fade` accepts the following parameters:
+`fade` aceita os seguintes parâmetros:
 
-- `delay` (`number`, default 0) — milliseconds before starting
-- `duration` (`number`, default 400) — milliseconds the transition lasts
-- `easing` (`function`, default `linear`) — an [easing function](/docs/svelte-easing)
+- `delay` (`number`, predefinido como `0`) — milissegundos antes de começar
+- `duration` (`number`, predefinido como `400`) — milissegundos que a transição dura
+- `easing` (`function`, predefinido como `linear`) — uma [função de atenuação](/docs/svelte-easing)
 
-You can see the `fade` transition in action in the [transition tutorial](https://learn.svelte.dev/tutorial/transition).
+Nós podemos ver a transição de `fade` em ação no [seminário interativo da transição](https://learn.svelte.dev/tutorial/transition):
 
 ```svelte
 <script>
@@ -56,15 +56,15 @@ in:blur={params}
 out:blur={params}
 ```
 
-Animates a `blur` filter alongside an element's opacity.
+Anima um filtro de `blur` em conjunto da opacidade dum elemento.
 
-`blur` accepts the following parameters:
+`blur` aceita os seguintes parâmetros:
 
-- `delay` (`number`, default 0) — milliseconds before starting
-- `duration` (`number`, default 400) — milliseconds the transition lasts
-- `easing` (`function`, default `cubicInOut`) — an [easing function](/docs/svelte-easing)
-- `opacity` (`number`, default 0) - the opacity value to animate out to and in from
-- `amount` (`number | string`, default 5) - the size of the blur. Supports css units (for example: `"4rem"`). The default unit is `px`
+- `delay` (`number`, predefinido como `0`) — milissegundos antes de começar
+- `duration` (`number`, predefinido como `400`) — milissegundos que a transição dura
+- `easing` (`function`, predefinido como `cubicInOut`) — uma [função de atenuação](/docs/svelte-easing)
+- `opacity` (`number`, predefinido como `0`) - o valor de opacidade para qual e de onde animar
+- `amount` (`number | string`, predefinido como `5`) - o tamanho da névoa. Suporta unidades de CSS (por exemplo: `"4rem"`). A unidade padrão é `px`.
 
 ```svelte
 <script>
@@ -92,19 +92,18 @@ in:fly={params}
 out:fly={params}
 ```
 
-Animates the x and y positions and the opacity of an element. `in` transitions animate from the provided values, passed as parameters to the element's default values. `out` transitions animate from the element's default values to the provided values.
+Anima as posições x e y e a opacidade dum elemento. As transições de `in` animam a partir dos valores fornecidos, passados como parâmetros aos valores padrão do elemento. As transições de `out` animam a partir dos valores padrão do elemento ao valores fornecidos.
 
-`fly` accepts the following parameters:
+`fly` aceita os seguintes parâmetros:
 
-- `delay` (`number`, default 0) — milliseconds before starting
-- `duration` (`number`, default 400) — milliseconds the transition lasts
-- `easing` (`function`, default `cubicOut`) — an [easing function](/docs/svelte-easing)
-- `x` (`number | string`, default 0) - the x offset to animate out to and in from
-- `y` (`number | string`, default 0) - the y offset to animate out to and in from
-- `opacity` (`number`, default 0) - the opacity value to animate out to and in from
+- `delay` (`number`, predefinido como `0`) — milissegundos antes de começar
+- `duration` (`number`, predefinido como `400`) — milissegundos que a transição dura
+- `easing` (`function`, predefinido como `cubicOut`) — uma [função de atenuação](/docs/svelte-easing)
+- `x` (`number | string`, predefinido como `0`) - a distância `x` para qual e de onde animar
+- `y` (`number | string`, predefinido como `0`) - a distância `y` para qual e de onde animar
+- `opacity` (`number`, predefinido como `0`) - o valor de opacidade para qual e de onde animar
 
-x and y use `px` by default but support css units, for example `x: '100vw'` or `y: '50%'`.
-You can see the `fly` transition in action in the [transition tutorial](https://learn.svelte.dev/tutorial/adding-parameters-to-transitions).
+`x` e `y` usam `px` por padrão mas suportam unidades de CSS, por exemplo `x: '100vw'` ou `y: '50%'`. Nós podemos ver a transição de `fly` em ação no [seminário interativo de transição](https://learn.svelte.dev/tutorial/adding-parameters-to-transitions).
 
 ```svelte
 <script>
@@ -137,15 +136,15 @@ in:slide={params}
 out:slide={params}
 ```
 
-Slides an element in and out.
+Desliza um elemento para dentro e fora.
 
-`slide` accepts the following parameters:
+`slide` aceita os seguintes parâmetros:
 
-- `delay` (`number`, default 0) — milliseconds before starting
-- `duration` (`number`, default 400) — milliseconds the transition lasts
-- `easing` (`function`, default `cubicOut`) — an [easing function](/docs/svelte-easing)
+- `delay` (`number`, predefinido como `0`) — milissegundos antes de começar
+- `duration` (`number`, predefinido como `400`) — milissegundos que a transição dura
+- `easing` (`function`, predefinido como `cubicOut`) — uma [função de atenuação](/docs/svelte-easing)
 
-* `axis` (`x` | `y`, default `y`) — the axis of motion along which the transition occurs
+* `axis` (`x` | `y`, predefinido como `y`) — o eixo do movimento ao longo de qual transição ocorre
 
 ```svelte
 <script>
@@ -176,15 +175,15 @@ in:scale={params}
 out:scale={params}
 ```
 
-Animates the opacity and scale of an element. `in` transitions animate from an element's current (default) values to the provided values, passed as parameters. `out` transitions animate from the provided values to an element's default values.
+Anima a opacidade e escala dum elemento. As transições de `in` animam a partir dos valores (padrão) atuais dum elemento aos valores fornecidos, passados como parâmetros. As transições de `out` anima a partir dos valores fornecidos aos valores padrão dum elemento.
 
-`scale` accepts the following parameters:
+`scale` aceita os seguintes parâmetros:
 
-- `delay` (`number`, default 0) — milliseconds before starting
-- `duration` (`number`, default 400) — milliseconds the transition lasts
-- `easing` (`function`, default `cubicOut`) — an [easing function](/docs/svelte-easing)
-- `start` (`number`, default 0) - the scale value to animate out to and in from
-- `opacity` (`number`, default 0) - the opacity value to animate out to and in from
+- `delay` (`number`, predefinido como `0`) — milissegundos antes de começar
+- `duration` (`number`, predefinido como `400`) — milissegundos que a transição dura
+- `easing` (`function`, predefinido como `cubicOut`) — uma [função de atenuação](/docs/svelte-easing)
+- `start` (`number`, predefinido como `0`) - o valor de escala para qual e de onde animar
+- `opacity` (`number`, predefinido como `0`) - o valor de opacidade para qual e de onde animar
 
 ```svelte
 <script>
@@ -215,16 +214,16 @@ in:draw={params}
 out:draw={params}
 ```
 
-Animates the stroke of an SVG element, like a snake in a tube. `in` transitions begin with the path invisible and draw the path to the screen over time. `out` transitions start in a visible state and gradually erase the path. `draw` only works with elements that have a `getTotalLength` method, like `<path>` and `<polyline>`.
+Anima a traço dum elemento de SVG, tal como cobra num tubo. As transições de `in` começam com o caminho invisível e desenham o caminho ao ecrã durante o tempo. As transições de `out` começam num estado visível e apagam gradualmente o caminho. `draw` apenas funciona com elementos que têm um método `getTotalLength`, tais como `<path>` e `<polyline>`.
 
-`draw` accepts the following parameters:
+`draw` aceita os seguintes parâmetros:
 
-- `delay` (`number`, default 0) — milliseconds before starting
-- `speed` (`number`, default undefined) - the speed of the animation, see below.
-- `duration` (`number` | `function`, default 800) — milliseconds the transition lasts
-- `easing` (`function`, default `cubicInOut`) — an [easing function](/docs/svelte-easing)
+- `delay` (`number`, predefinido como `0`) — milissegundos antes de começar
+- `speed` (`number`, predefinido como `undefined`) - a velocidade da animação, consultar abaixo.
+- `duration` (`number` | `function`, predefinido como `800`) — milissegundos que a transição dura
+- `easing` (`function`, predefinido como `cubicInOut`) — uma [função de atenuação](/docs/svelte-easing)
 
-The `speed` parameter is a means of setting the duration of the transition relative to the path's length. It is a modifier that is applied to the length of the path: `duration = length / speed`. A path that is 1000 pixels with a speed of 1 will have a duration of `1000ms`, setting the speed to `0.5` will double that duration and setting it to `2` will halve it.
+O parâmetro `speed` é um meio de definir a duração da transição relativa ao comprimento do caminho. É um modificador que é aplicado ao comprimento do caminho: `duration = length / speed`. Um caminho que é de 1000 píxeis com uma velocidade de 1 terá a duração de `1000ms`, definir a velocidade para `0.5` dobrará esta duração e defini-la para `2` a reduzirá a metade.
 
 ```svelte
 <script>
@@ -250,14 +249,14 @@ The `speed` parameter is a means of setting the duration of the transition relat
 
 > EXPORT_SNIPPET: svelte/transition#crossfade
 
-The `crossfade` function creates a pair of [transitions](/docs/element-directives#transition-fn) called `send` and `receive`. When an element is 'sent', it looks for a corresponding element being 'received', and generates a transition that transforms the element to its counterpart's position and fades it out. When an element is 'received', the reverse happens. If there is no counterpart, the `fallback` transition is used.
+A função `crossfade` cria um par de [transições](/docs/element-directives#transition-fn) chamados de `send` e `receive`. Quando um elemento é 'enviado', procura por um elemento correspondente sendo 'recebido', e gera uma transição que transforma o elemento para a posição do seu equivalente e o desvanece. Quando um elemento é 'recebido', o inverso acontece. Se não existir nenhum equivalente, a transição de `fallback` é usada.
 
-`crossfade` accepts the following parameters:
+`crossfade` aceita os seguintes parâmetros:
 
-- `delay` (`number`, default 0) — milliseconds before starting
-- `duration` (`number` | `function`, default 800) — milliseconds the transition lasts
-- `easing` (`function`, default `cubicOut`) — an [easing function](/docs/svelte-easing)
-- `fallback` (`function`) — A fallback [transition](/docs/element-directives#transition-fn) to use for send when there is no matching element being received, and for receive when there is no element being sent.
+- `delay` (`number`, predefinido como `0`) — milissegundos antes de começar
+- `duration` (`number` | `function`, predefinido como `800`) — milissegundos que a transição dura
+- `easing` (`function`, predefinido como `cubicOut`) — uma [função de atenuação](/docs/svelte-easing)
+- `fallback` (`function`) — Uma [transição](/docs/element-directives#transition-fn) de retrocesso à usar para enviar quando não existir nenhum elemento correspondente sendo recebido, e para receber quando não existir nenhum elemento sendo enviado.
 
 ```svelte
 <script>
@@ -277,6 +276,6 @@ The `crossfade` function creates a pair of [transitions](/docs/element-directive
 {/if}
 ```
 
-## Types
+## Tipos
 
 > TYPES: svelte/transition
