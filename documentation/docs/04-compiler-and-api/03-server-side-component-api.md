@@ -1,5 +1,5 @@
 ---
-title: 'Server-side component API'
+title: 'API do Componente do Lado do Servidor'
 ---
 
 ```js
@@ -7,11 +7,11 @@ title: 'Server-side component API'
 const result = Component.render(...)
 ```
 
-Unlike client-side components, server-side components don't have a lifespan after you render them — their whole job is to create some HTML and CSS. For that reason, the API is somewhat different.
+Diferente dos componentes do lado do cliente, os componentes do lado do servidor não têm um período de validade depois de desenhá-los — o seu trabalho todo é criar algum HTML e CSS. Por esta razão, a API é um tanto diferente.
 
-A server-side component exposes a `render` method that can be called with optional props. It returns an object with `head`, `html`, and `css` properties, where `head` contains the contents of any `<svelte:head>` elements encountered.
+Um componente do lado do servidor expõe um método `render` que pode ser chamado com as propriedades opcionais. Ele retorna um objeto com as propriedades `head`, `html`, e css, onde `head` contém o conteúdo de quaisquer elementos `<svelte:head>` encontrados.
 
-You can import a Svelte component directly into Node using [`svelte/register`](/docs/svelte-register).
+Nós podemos importar um componente da Svelte diretamente num Nó usando [`svelte/register`](/docs/svelte-register):
 
 ```js
 // @noErrors
@@ -24,25 +24,25 @@ const { head, html, css } = App.render({
 });
 ```
 
-The `.render()` method accepts the following parameters:
+O método `.render()` aceita os seguintes parâmetros:
 
-| parameter | default | description                                        |
+| parâmetro | padrão | descrição                                        |
 | --------- | ------- | -------------------------------------------------- |
-| `props`   | `{}`    | An object of properties to supply to the component |
-| `options` | `{}`    | An object of options                               |
+| `props`   | `{}`    | Um objeto de propriedades à fornecer ao componente |
+| `options` | `{}`    | Um objeto de opções                                |
 
-The `options` object takes in the following options:
+O objeto `options` recebe as seguintes opções:
 
-| option    | default     | description                                                              |
+| opção    | padrão     | descrição                                                              |
 | --------- | ----------- | ------------------------------------------------------------------------ |
-| `context` | `new Map()` | A `Map` of root-level context key-value pairs to supply to the component |
+| `context` | `new Map()` | Um `Map` de pares de chave-valor de contexto de nível de raiz à fornecer ao componente |
 
 ```js
 // @noErrors
 const { head, html, css } = App.render(
-	// props
+	// propriedades
 	{ answer: 42 },
-	// options
+	// opções
 	{
 		context: new Map([['context-key', 'context-value']])
 	}
