@@ -1,13 +1,13 @@
 ---
-title: 'Custom elements API'
+title: 'API dos Elementos Personalizados'
 ---
 
-Svelte components can also be compiled to custom elements (aka web components) using the `customElement: true` compiler option. You should specify a tag name for the component using the `<svelte:options>` [element](/docs/special-elements#svelte-options).
+Os componentes da Svelte também podem ser compilados para elementos personalizados (vulgo, componentes da Web) usando a opção do compilador `customElement: true`. Nós devemos especificar um nome de marcador para o componente usando o [elemento](/docs/special-elements#svelte-options) `<svelte:options>`:
 
 ```svelte
 <svelte:options customElement="my-element" />
 
-<!-- in Svelte 3, do this instead:
+<!-- na Svelte 3, fazemos isto:
 <svelte:options tag="my-element" />
 -->
 
@@ -19,18 +19,18 @@ Svelte components can also be compiled to custom elements (aka web components) u
 <slot />
 ```
 
-You can leave out the tag name for any of your inner components which you don't want to expose and use them like regular Svelte components. Consumers of the component can still name it afterwards if needed, using the static `element` property which contains the custom element constructor and which is available when the `customElement` compiler option is `true`.
+Nós podemos omitir o nome do marcador para qualquer um dos nossos componentes internos que não queremos expor e usá-los como componentes de Svelte normais. Os consumidores do componente ainda podem nomeá-lo mais tarde se necessário, usando a propriedade `element` estática que contém o construtor do elemento personalizado e que está disponível quando a opção do compilador `customElement` for `true`:
 
 ```js
 // @noErrors
 import MyElement from './MyElement.svelte';
 
 customElements.define('my-element', MyElement.element);
-// In Svelte 3, do this instead:
+// Na Svelte 3, fazemos isto:
 // customElements.define('my-element', MyElement);
 ```
 
-Once a custom element has been defined, it can be used as a regular DOM element:
+Assim que um elemento personalizado for definido, pode ser usado como um elemento de DOM normal:
 
 ```js
 document.body.innerHTML = `
@@ -40,28 +40,28 @@ document.body.innerHTML = `
 `;
 ```
 
-By default, custom elements are compiled with `accessors: true`, which means that any [props](/docs/basic-markup#attributes-and-props) are exposed as properties of the DOM element (as well as being readable/writable as attributes, where possible).
+Por padrão, os elementos personalizados são compilados com `accessors: true`, o que significa que quaisquer [propriedades](/docs/basic-markup#attributes-and-props) são expostas como propriedades do elemento de DOM (bem como sendo legíveis ou graváveis como atributos, onde possível).
 
-To prevent this, add `accessors={false}` to `<svelte:options>`.
+Para evitar isto, adicionamos `accessors={false}` ao `<svelte:options>`:
 
 ```js
 // @noErrors
 const el = document.querySelector('my-element');
 
-// get the current value of the 'name' prop
+// receber o valor atual da propriedade 'name'
 console.log(el.name);
 
-// set a new value, updating the shadow DOM
+// definir um novo valor, atualizando o DOM de sombra
 el.name = 'everybody';
 ```
 
-## Component options
+## Opções do Componente
 
-When constructing a custom element, you can tailor several aspects by defining `customElement` as an object within `<svelte:options>` since Svelte 4. This object comprises a mandatory `tag` property for the custom element's name, an optional `shadow` property that can be set to `"none"` to forgo shadow root creation (note that styles are then no longer encapsulated, and you can't use slots), and a `props` option, which offers the following settings:
+Quando construímos um elemento personalizado, podemos adaptar vários aspetos definindo `customElement` como um objeto dentro de `<svelte:options>` desde a Svelte 4. Este objeto inclui uma propriedade `tag` obrigatória para o nome do elemento personalizado, uma propriedade `shadow` opcional que pode ser definida para `"none"` para abster-se da criação da raiz da sombra (nota que os estilos já não são encapsulados, e não podemos usar as ranhuras), e uma opção `props`, que oferece as seguintes definições:
 
-- `attribute: string`: To update a custom element's prop, you have two alternatives: either set the property on the custom element's reference as illustrated above or use an HTML attribute. For the latter, the default attribute name is the lowercase property name. Modify this by assigning `attribute: "<desired name>"`.
-- `reflect: boolean`: By default, updated prop values do not reflect back to the DOM. To enable this behavior, set `reflect: true`.
-- `type: 'String' | 'Boolean' | 'Number' | 'Array' | 'Object'`: While converting an attribute value to a prop value and reflecting it back, the prop value is assumed to be a `String` by default. This may not always be accurate. For instance, for a number type, define it using `type: "Number"`
+- `attribute: string`: Para atualizar uma propriedade do elemento personalizado, temos duas alternativas: ou definir a propriedade sobre a referência do elemento personalizado como ilustrado acima ou usar um atributo de HTML. Para o último, o nome do atributo padrão é o nome da propriedade com letras minúsculas. Modificamos isto atribuindo `attribute: "<desired name>"`.
+- `reflect: boolean`: Por padrão, os valores da propriedade atualizada não refletem de volta ao DOM. Para ativar este comportamento, definimos `reflect: true`.
+- `type: 'String' | 'Boolean' | 'Number' | 'Array' | 'Object'`: Enquanto convertemos um valor de atributo à um valor de propriedade e o refletimos de volta, o valor da propriedade é suposto ser uma `String` por padrão. Isto pode nem sempre ser exato. Por exemplo, para um tipo de número, o definimos usando `type: "Number"`.
 
 ```svelte
 <svelte:options
@@ -81,15 +81,15 @@ When constructing a custom element, you can tailor several aspects by defining `
 ...
 ```
 
-## Caveats and limitations
+## Advertências e Limitações
 
-Custom elements can be a useful way to package components for consumption in a non-Svelte app, as they will work with vanilla HTML and JavaScript as well as [most frameworks](https://custom-elements-everywhere.com/). There are, however, some important differences to be aware of:
+Os elementos personalizados podem ser uma maneira útil de empacotar os componentes para consumo numa aplicação que não é de Svelte, visto que funcionarão com o HTML e JavaScript puros bem como com a [maioria das abstrações](https://custom-elements-everywhere.com/). Existem, no entanto, algumas diferenças importantes a tomar consciência de que:
 
-- Styles are _encapsulated_, rather than merely _scoped_ (unless you set `shadow: "none"`). This means that any non-component styles (such as you might have in a `global.css` file) will not apply to the custom element, including styles with the `:global(...)` modifier
-- Instead of being extracted out as a separate .css file, styles are inlined into the component as a JavaScript string
-- Custom elements are not generally suitable for server-side rendering, as the shadow DOM is invisible until JavaScript loads
-- In Svelte, slotted content renders _lazily_. In the DOM, it renders _eagerly_. In other words, it will always be created even if the component's `<slot>` element is inside an `{#if ...}` block. Similarly, including a `<slot>` in an `{#each ...}` block will not cause the slotted content to be rendered multiple times
-- The `let:` directive has no effect, because custom elements do not have a way to pass data to the parent component that fills the slot
-- Polyfills are required to support older browsers
+- Os estilos são _encapsulados_, ao invés de meramente _isolados_ (a menos que definamos `shadow: "none"`). Isto significa que quaisquer estilos que não são do componente (tais como podemos ter num ficheiro `global.css`) não aplicar-se-ão ao elemento personalizado, incluindo os estilos com o modificador `:global(...)`
+- Ao invés de serem extraídas como um ficheiro `.css` separado, os estilos são incorporados no componente como uma sequência de caracteres de JavaScript
+- Os elementos personalizados não são geralmente adequados para a interpretação do lado do servidor, visto que o DOM de sombra é invisível até o JavaScript carregar
+- Na Svelte, o conteúdo encaixado interpreta-se _preguiçosamente_. No DOM, interpreta-se _ansiosamente_. Em outras palavras, sempre será criado mesmo se o elemento `<slot>` do componente estiver dentro dum bloco `{#if ...}`. De maneira semelhante, incluir um `<slot>` num bloco `{#each ...}` não fará com que o conteúdo encaixado seja interpretado várias vezes.
+- A diretiva `let:` não tem nenhum efeito, porque os elementos personalizados não têm numa maneira de passar os dados ao componente pai que preenche a ranhura
+- Os tapadores de buracos de funcionalidades são obrigatórios para suportar navegadores mais antigos.
 
-When a custom element written with Svelte is created or updated, the shadow dom will reflect the value in the next tick, not immediately. This way updates can be batched, and DOM moves which temporarily (but synchronously) detach the element from the DOM don't lead to unmounting the inner component.
+Quando um elemento personalizado escrito com a Svelte for criado ou atualizado, o DOM de sombra refletirá o valor no próximo tiquetaque, não imediatamente. Desta maneira as atualizações podem ser organizadas por grupos, e o DOM move-se o que temporariamente (mas de maneira síncrona) separa o elemento do DOM não leva à desmontar o componente interno.
