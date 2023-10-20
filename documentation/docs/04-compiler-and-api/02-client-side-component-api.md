@@ -1,8 +1,8 @@
 ---
-title: 'Client-side component API'
+title: 'API de Componente do Lado do Cliente'
 ---
 
-## Creating a component
+## Criando um Componente
 
 ```ts
 // @errors: 2554
@@ -20,7 +20,7 @@ declare global {
 const component = new Component(options);
 ```
 
-A client-side component — that is, a component compiled with `generate: 'dom'` (or the `generate` option left unspecified) is a JavaScript class.
+Um componente do lado do cliente — isto é, um componente compilado com `generate: 'dom'` (ou com a opção `generate` deixada indeterminada) é uma classe de JavaScript:
 
 ```ts
 // @errors: 2554
@@ -40,31 +40,31 @@ import App from './App.svelte';
 const app = new App({
 	target: document.body,
 	props: {
-		// assuming App.svelte contains something like
+		// assumindo que `App.svelte` tenha algo como
 		// `export let answer`:
 		answer: 42
 	}
 });
 ```
 
-The following initialisation options can be provided:
+As seguintes opções de inicialização podem ser fornecidas:
 
-| option    | default     | description                                                                                          |
+| opção    | padrão     | descrição                                                                                          |
 | --------- | ----------- | ---------------------------------------------------------------------------------------------------- |
-| `target`  | **none**    | An `HTMLElement` or `ShadowRoot` to render to. This option is required                               |
-| `anchor`  | `null`      | A child of `target` to render the component immediately before                                       |
-| `props`   | `{}`        | An object of properties to supply to the component                                                   |
-| `context` | `new Map()` | A `Map` of root-level context key-value pairs to supply to the component                             |
-| `hydrate` | `false`     | See below                                                                                            |
-| `intro`   | `false`     | If `true`, will play transitions on initial render, rather than waiting for subsequent state changes |
+| `target`  | **none**    | Um `HTMLElement` ou `ShadowRoot` para qual interpretar. Esta opção é obrigatória.                               |
+| `anchor`  | `null`      | Um filho de `target` para interpretar o componente imediatamente antes                                       |
+| `props`   | `{}`        | Um objeto de propriedades à fornecer ao componente                                                   |
+| `context` | `new Map()` | Um `Map` de pares de chave-valor do contexto de nível de raiz à fornecer ao componente                             |
+| `hydrate` | `false`     | Consulte abaixo                                                                                            |
+| `intro`   | `false`     | Se for `true`, reproduzirá as transições na interpretação inicial, no lugar de esperar pelas mudanças de estado subsequentes |
 
-Existing children of `target` are left where they are.
+Os filhos existentes do `target` são deixados onde estão.
 
-The `hydrate` option instructs Svelte to upgrade existing DOM (usually from server-side rendering) rather than creating new elements. It will only work if the component was compiled with the [`hydratable: true` option](/docs/svelte-compiler#compile). Hydration of `<head>` elements only works properly if the server-side rendering code was also compiled with `hydratable: true`, which adds a marker to each element in the `<head>` so that the component knows which elements it's responsible for removing during hydration.
+A opção `hydrate` instrui a Svelte à atualizar o DOM existente (normalmente a partir da interpretação do lado do servidor) ao invés de criar novos elementos. Isto apenas funcionará se o componente foi compilado com a [opção `hydratable: true`](/docs/svelte-compiler#compile). A hidratação dos elementos `<head>` apenas funciona apropriadamente se o código da interpretação do lado do servidor também foi compilado com `hydratable: true`, o que adiciona um marcador à cada elemento no `<head>` para que o componente saiba quais elementos é responsável por remover durante a hidratação.
 
-Whereas children of `target` are normally left alone, `hydrate: true` will cause any children to be removed. For that reason, the `anchor` option cannot be used alongside `hydrate: true`.
+Considerado que os filhos do `target` são normalmente deixados sozinhos, `hydrate: true` fará quaisquer filhos serem removidos. Por esta razão, a opção `anchor` não pode ser usada ao lado de `hydrate: true`.
 
-The existing DOM doesn't need to match the component — Svelte will 'repair' the DOM as it goes.
+O DOM existente não precisa de corresponder o componente — a Svelte 'reparará' o DOM conforme ir:
 
 ```ts
 // @filename: ambient.d.ts
@@ -105,9 +105,9 @@ export {};
 component.$set(props);
 ```
 
-Programmatically sets props on an instance. `component.$set({ x: 1 })` is equivalent to `x = 1` inside the component's `<script>` block.
+Define programaticamente as propriedades sobre uma instância. `component.set({ x: 1 })` é equivalente ao `x = 1` dentro do bloco `<script>` do componente.
 
-Calling this method schedules an update for the next microtask — the DOM is _not_ updated synchronously.
+Chamar este método agenda uma atualização para a próxima micro-tarefa — o DOM _não_ é atualizado de maneira síncrona:
 
 ```ts
 // @filename: ambient.d.ts
@@ -145,9 +145,9 @@ export {};
 component.$on(ev, callback);
 ```
 
-Causes the `callback` function to be called whenever the component dispatches an `event`.
+Faz a função `callback` ser chamada sempre que o componente despachar um `event`.
 
-A function is returned that will remove the event listener when called.
+Uma função é retornada que removerá o ouvinte de evento quando for chamada:
 
 ```ts
 // @filename: ambient.d.ts
@@ -187,9 +187,9 @@ export {}
 component.$destroy();
 ```
 
-Removes a component from the DOM and triggers any `onDestroy` handlers.
+Remove um componente do DOM e aciona quaisquer manipuladores de `onDestroy`.
 
-## Component props
+## Propriedades do Componente
 
 ```js
 // @filename: ambient.d.ts
@@ -226,9 +226,9 @@ export {}
 component.prop = value;
 ```
 
-If a component is compiled with `accessors: true`, each instance will have getters and setters corresponding to each of the component's props. Setting a value will cause a _synchronous_ update, rather than the default async update caused by `component.$set(...)`.
+Se um componente for compilado com `accessors: true`, cada instância terá recuperadores e definidores correspondendo à cada uma das propriedades do componente. Definir um valor causará uma atualização _síncrona_, ao invés da atualização assíncrona padrão causada pela `component.$set(...)`.
 
-By default, `accessors` is `false`, unless you're compiling as a custom element.
+Por padrão, `accessors` é `false`, ao menos que estejamos a compilar como um elemento personalizado:
 
 ```js
 // @filename: ambient.d.ts
