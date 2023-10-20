@@ -2,9 +2,9 @@
 title: 'svelte/register'
 ---
 
-> This API is removed in Svelte 4. `require` hooks are deprecated and current Node versions understand ESM. Use a bundler like Vite or our full-stack framework [SvelteKit](https://kit.svelte.dev) instead to create JavaScript modules from Svelte components.
+> Esta API foi removida na Svelte 4. Os gatilhos de `require` foram depreciados e as versões da Node atuais entendem o Módulo de ECMAScript. Use um empacotador como a Vite ou a nossa abstração de pilha completa [SvelteKit](https://sveltekit-docs-pt.vercel.app) no lugar de criar módulos de JavaScript a partir dos componentes da Svelte.
 
-To render Svelte components in Node.js without bundling, use `require('svelte/register')`. After that, you can use `require` to include any `.svelte` file.
+Para desenhar componentes de Svelte na Node.js sem empacotamento, usamos `require('svelte/register')`. Depois disto, podemos usar `require` para incluir qualquer ficheiro `.svelte`:
 
 ```js
 // @noErrors
@@ -17,14 +17,14 @@ const App = require('./App.svelte').default;
 const { html, css, head } = App.render({ answer: 42 });
 ```
 
-> The `.default` is necessary because we're converting from native JavaScript modules to the CommonJS modules recognised by Node. Note that if your component imports JavaScript modules, they will fail to load in Node and you will need to use a bundler instead.
+> O `.default` é necessário porque convertemos a partir dos módulos de JavaScript nativos para os módulos de CommonJS reconhecidos pela Node. Nota que se o nosso componente importa os módulos de JavaScript, falhará em carregar na Node e precisaremos de usar um empacotador.
 
-To set compile options, or to use a custom file extension, call the `register` hook as a function:
+Para definir as opções de compilação, ou usar um extensão de ficheiro personalizada, chamamos o gatilho `register` como uma função:
 
 ```js
 // @noErrors
 require('svelte/register')({
-	extensions: ['.customextension'], // defaults to ['.html', '.svelte']
+	extensions: ['.customextension'], // predefinido para ['.html', '.svelte']
 	preserveComments: true
 });
 ```
