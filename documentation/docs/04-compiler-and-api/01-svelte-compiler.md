@@ -2,15 +2,15 @@
 title: 'svelte/compiler'
 ---
 
-Typically, you won't interact with the Svelte compiler directly, but will instead integrate it into your build system using a bundler plugin. The bundler plugin that the Svelte team most recommends and invests in is [vite-plugin-svelte](https://github.com/sveltejs/vite-plugin-svelte). The [SvelteKit](https://kit.svelte.dev/) framework provides a setup leveraging `vite-plugin-svelte` to build applications as well as a [tool for packaging Svelte component libraries](https://kit.svelte.dev/docs/packaging). Svelte Society maintains a list of [other bundler plugins](https://sveltesociety.dev/tools/#bundling) for additional tools like Rollup and Webpack.
+Normalmente, não interagiremos com o compilador da Svelte diretamente, mas o integraremos no nosso sistema de construção usando uma extensão de empacotador. A extensão de empacotador que a equipa da Svelte mais recomenda e investe é a [`vite-plugin-svelte`](https://github.com/sveltejs/vite-plugin-svelte). A abstração [SvelteKit](https://sveltekit-docs-pt.vercel.app/) fornece uma configuração influenciando a `vite-plugin-svelte` à construir aplicações bem como uma [ferramenta para empacotar as bibliotecas de componente de Svelte](https://sveltekit-docs-pt.vercel.app/docs/packaging). A Sociedade da Svelte mantém uma lista de [outras extensões de empacotador](https://sveltesociety.dev/tools/#bundling) para ferramentas adicionais como a Rollup e Webpack.
 
-Nonetheless, it's useful to understand how to use the compiler, since bundler plugins generally expose compiler options to you.
+Contudo, é útil entender como usar o compilador, uma vez que as extensões de empacotador geralmente expõem as opções do compilador à nós.
 
-## compile
+## `compile`
 
 > EXPORT_SNIPPET: svelte/compiler#compile
 
-This is where the magic happens. `svelte.compile` takes your component source code, and turns it into a JavaScript module that exports a class.
+Isto é onde a magia acontece. `svelte.compile` recebe o código-fonte do nosso componente, e transforma-o num módulo de JavaScript que exporta uma classe:
 
 ```js
 // @filename: ambient.d.ts
@@ -25,13 +25,13 @@ export {}
 import { compile } from 'svelte/compiler';
 
 const result = compile(source, {
-	// options
+	// opções
 });
 ```
 
-Refer to [CompileOptions](#types-compileoptions) for all the available options.
+Consulte a [`CompileOptions`](#types-compileoptions) por todas as opções disponíveis.
 
-The returned `result` object contains the code for your component, along with useful bits of metadata.
+O objeto `result` retornado contém o código para o nosso componente, juntamente com bocados úteis de metadados:
 
 ```ts
 // @filename: ambient.d.ts
@@ -47,13 +47,13 @@ import { compile } from 'svelte/compiler';
 const { js, css, ast, warnings, vars, stats } = compile(source);
 ```
 
-Refer to [CompileResult](#types-compileresult) for a full description of the compile result.
+Consulte a [`CompileResult`](#types-compileresult) por uma descrição completa do resultado da compilação.
 
-## parse
+## `parse`
 
 > EXPORT_SNIPPET: svelte/compiler#parse
 
-The `parse` function parses a component, returning only its abstract syntax tree. Unlike compiling with the `generate: false` option, this will not perform any validation or other analysis of the component beyond parsing it. Note that the returned AST is not considered public API, so breaking changes could occur at any point in time.
+A função `parse` analisa sintaticamente um componente, retornando apenas sua árvore de sintaxe abstrata. Diferente da compilação com a opção `generate: false`, esta não realizará quaisquer validação ou outras analises do componente além analisá-lo sintaticamente. Nota que a árvore de sintaxe abstrata retornada não é considerada API pública, assim mudanças rutura poderiam ocorrer a qualquer momento no tempo:
 
 ```js
 // @filename: ambient.d.ts
@@ -70,25 +70,25 @@ import { parse } from 'svelte/compiler';
 const ast = parse(source, { filename: 'App.svelte' });
 ```
 
-## preprocess
+## `preprocess`
 
 > EXPORT_SNIPPET: svelte/compiler#preprocess
 
-A number of [official and community-maintained preprocessing plugins](https://sveltesociety.dev/tools#preprocessors) are available to allow you to use Svelte with tools like TypeScript, PostCSS, SCSS, and Less.
+Um número de [extensões de pré-processamento mantidas pela comunidade e oficiais](https://sveltesociety.dev/tools#preprocessors) estão disponíveis para permitir-nos usar a Svelte com ferramentas como TypeScript, PostCSS, SCSS, e Less.
 
-You can write your own preprocessor using the `svelte.preprocess` API.
+Nós podemos escrever o nosso próprio processador usando a API `svelte.preprocess`.
 
-The `preprocess` function provides convenient hooks for arbitrarily transforming component source code. For example, it can be used to convert a `<style lang="sass">` block into vanilla CSS.
+A função `preprocess` fornece gatilhos convenientes para transformar de maneira arbitrária o código-fonte do componente. Por exemplo, pode ser usada para converter um bloco `<style lang="sass">` em CSS puro.
 
-The first argument is the component source code. The second is an array of _preprocessors_ (or a single preprocessor, if you only have one), where a preprocessor is an object with a `name` which is required, and `markup`, `script` and `style` functions, each of which is optional.
+O primeiro argumento é o código-fonte do componente. O segundo é um vetor de _pré-processadores_ (ou um único pré-processador, se apenas tivermos um), onde um pré-processador é um objeto com uma `name` que é obrigatória, e funções `markup`, `script` e `style`, cada uma das quais é opcional.
 
-The `markup` function receives the entire component source text, along with the component's `filename` if it was specified in the third argument.
+A função `markup` recebe o texto do código-fonte do componente inteiro, juntamente com o `filename` do componente se fora especificado no terceiro argumento.
 
-The `script` and `style` functions receive the contents of `<script>` and `<style>` elements respectively (`content`) as well as the entire component source text (`markup`). In addition to `filename`, they get an object of the element's attributes.
+As funções `script` e `style` recebem o conteúdo dos elementos `<script>` e `<style>` respetivamente (`content`) bem como o texto do código-fonte do componente inteiro (`markup`). Além do `filename`, recebem um objeto dos atributos do elemento.
 
-Each `markup`, `script` or `style` function must return an object (or a Promise that resolves to an object) with a `code` property, representing the transformed source code. Optionally they can return an array of `dependencies` which represents files to watch for changes, and a `map` object which is a sourcemap mapping back the transformation to the original code. `script` and `style` preprocessors can optionally return a record of attributes which represent the updated attributes on the script/style tag.
+Cada função `markup`, `script` ou `style` deve retornar um objeto (ou uma promessa que resolve para um objeto) com uma propriedade `code`, representando o código-fonte transformado. Opcionalmente podem retornar um vetor de `dependencies` que representa os ficheiros à observar por mudanças, e um objeto `map` que é um mapa de código-fonte mapeando de volta a transformação ao código original. Os pré-processadores de `script` e `style` podem opcionalmente retornar um registo de atributos que representam os atributos atualizados no marcador de `script` e `style`.
 
-> Preprocessor functions should return a `map` object whenever possible or else debugging becomes harder as stack traces can't link to the original code correctly.
+> As funções pré-processadoras devem retornar um objeto `map` sempre que possível ou senão a depuração torna-se mais difícil uma vez que os rastos da pilha não podem ligar-se ao código original corretamente.
 
 ```js
 // @filename: ambient.d.ts
@@ -125,9 +125,9 @@ const { code } = await preprocess(
 );
 ```
 
-The `script` and `style` functions receive the contents of `<script>` and `<style>` elements respectively (`content`) as well as the entire component source text (`markup`). In addition to `filename`, they get an object of the element's attributes.
+As funções `script` e `style` recebem o conteúdo dos elementos `<script>` e `<style>` respetivamente (`content`) bem como o texto do código-fonte do componente inteiro (`markup`). Além do `filename`, recebem um objeto dos atributos do elemento.
 
-If a `dependencies` array is returned, it will be included in the result object. This is used by packages like [vite-plugin-svelte](https://github.com/sveltejs/vite-plugin-svelte) and [rollup-plugin-svelte](https://github.com/sveltejs/rollup-plugin-svelte) to watch additional files for changes, in the case where your `<style>` tag has an `@import` (for example).
+Se um vetor de `dependencies` for retornado, será incluído no objeto do resultado. Isto é usado por pacotes como [`vite-plugin-svelte`](https://github.com/sveltejs/vite-plugin-svelte) e [`rollup-plugin-svelte`](https://github.com/sveltejs/rollup-plugin-svelte) para observar ficheiros adicionais por mudanças, no caso onde o nosso marcador `<style>` tiver um `@import` (por exemplo):
 
 ```ts
 // @filename: ambient.d.ts
@@ -151,14 +151,15 @@ const { code } = await preprocess(
 	{
 		name: 'my-fancy-preprocessor',
 		markup: ({ content, filename }) => {
-			// Return code as is when no foo string present
+			// Retornar o código como está quando nenhuma
+			// sequência de caracteres `foo` estiver presente
 			const pos = content.indexOf('foo');
 			if (pos < 0) {
 				return;
 			}
 
-			// Replace foo with bar using MagicString which provides
-			// a source map along with the changed code
+			// Substituir `foo` por `bar` usando `MagicString` que fornece
+			// um mapa de código-fonte juntamente com o código mudado
 			const s = new MagicString(content, { filename });
 			s.overwrite(pos, pos + 3, 'bar', { storeName: true });
 
@@ -168,7 +169,7 @@ const { code } = await preprocess(
 			};
 		},
 		style: async ({ content, attributes, filename }) => {
-			// only process <style lang="sass">
+			// apenas processar o <style lang="sass">
 			if (attributes.lang !== 'sass') return;
 
 			const { css, stats } = await new Promise((resolve, reject) =>
@@ -185,7 +186,7 @@ const { code } = await preprocess(
 				)
 			);
 
-			// remove lang attribute from style tag
+			// remover o atributo `lang` do marcador `style`
 			delete attributes.lang;
 
 			return {
@@ -201,9 +202,9 @@ const { code } = await preprocess(
 );
 ```
 
-Multiple preprocessors can be used together. The output of the first becomes the input to the second. Within one preprocessor, `markup` runs first, then `script` and `style`.
+Vários pré-processadores podem ser usados juntos. A saída do primeiro torna-se a entrada ao segundo. Com um pré-processador, `markup` executa primeiro, depois `script` e `style`.
 
-> In Svelte 3, all `markup` functions ran first, then all `script` and then all `style` preprocessors. This order was changed in Svelte 4.
+> Na Svelte 3, todas as funções de `markup` executavam primeiro, depois todas de `script` e depois todos os pré-processadores de `style`. Esta ordem foi mudada na Svelte 4.
 
 ```js
 // @errors: 2322
@@ -248,13 +249,13 @@ const { code } = await preprocess(source, [
 });
 ```
 
-## walk
+## `walk`
 
 > EXPORT_SNIPPET: svelte/compiler#walk
 
-The `walk` function provides a way to walk the abstract syntax trees generated by the parser, using the compiler's own built-in instance of [estree-walker](https://github.com/Rich-Harris/estree-walker).
+A função `walk` fornece uma maneira de percorrer as árvores de sintaxe abstrata geradas pelo analisador sintático, usando a própria instância embutida do compilador de [`estree-walker`](https://github.com/Rich-Harris/estree-walker).
 
-The walker takes an abstract syntax tree to walk and an object with two optional methods: `enter` and `leave`. For each node, `enter` is called (if present). Then, unless `this.skip()` is called during `enter`, each of the children are traversed, and then `leave` is called on the node.
+O caminhante recebe uma árvore de sintaxe abstrata à percorrer e um objeto com dois métodos opcionais: `enter` e `leave`. Para cada nó, `enter` é chamado (se estiver presente). Depois, a menos que `this.skip()` seja chamado durante `enter`, cada um dos filhos é percorrido, e depois `leave` é chamado sobre o nó:
 
 ```js
 // @filename: ambient.d.ts
@@ -285,17 +286,17 @@ walk(ast, {
 });
 ```
 
-## VERSION
+## `VERSION`
 
 > EXPORT_SNIPPET: svelte/compiler#VERSION
 
-The current version, as set in package.json.
+A versão atual, como definida no `package.json`.
 
 ```js
 import { VERSION } from 'svelte/compiler';
 console.log(`running svelte version ${VERSION}`);
 ```
 
-## Types
+## Tipos
 
 > TYPES: svelte/compiler
