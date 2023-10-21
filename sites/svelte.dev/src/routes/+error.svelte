@@ -16,7 +16,7 @@
 		{#if $page.status === 404}
 			<h1>Não encontrada!</h1>
 			<p>
-				Se esperavas encontrar alguma coisa, visite a <a href="/chat">sala de conversação da Discord</a> e informe-nos, ou levante uma questão na <a href="https://github.com/sveltejs/sites">GitHub</a>. Obrigado!
+				Se esperavas encontrar alguma coisa, visite a <a href="/chat">sala de conversas da Discord</a> e informe-nos, ou levante uma questão na <a href="https://github.com/sveltejs/sites">GitHub</a>. Obrigado!
 			</p>
 		{:else}
 			<h1>Yikes!</h1>
@@ -32,7 +32,7 @@
 			</p>
 		{/if}
 	{:else}
-		<h1>Parece que estás desligado da internet</h1>
+		<h1>Parece que não estás ligado à internet</h1>
 		<p>Recarregue a página quando ligares a internet.</p>
 	{/if}
 </div>
