@@ -16,8 +16,8 @@
 			<span style="white-space: nowrap;">Aplicações de Web</span> <br /> Ciberneticamente Melhoradas
 		</strong>
 		<div class="buttons">
-			<a href="https://learn.svelte.dev" rel="external" class="cta">
-				iniciação<Icon name="external-link" size="1em" />
+			<a href="https://learn-svelte-pt.vercel.app" rel="external" class="cta">
+				seminário interativo<Icon name="external-link" size="1em" />
 			</a>
 			<a href="/docs/introduction" class="cta basic">ler a documentação</a>
 		</div>
