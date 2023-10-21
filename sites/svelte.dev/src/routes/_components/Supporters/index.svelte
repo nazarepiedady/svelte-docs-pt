@@ -13,7 +13,7 @@
 		<div class="contributors blurb">
 			<h3>colaboradores</h3>
 			<p>
-				<a href="https://github.com/sveltejs/svelte/graphs/contributors">Junte-se a nós na GitHub</a>
+				<a href="https://github.com/sveltejs/svelte/graphs/contributors">Junte-te a nós na GitHub</a>
 			</p>
 		</div>
 
