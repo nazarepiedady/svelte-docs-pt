@@ -8,11 +8,11 @@
 </script>
 
 <svelte:head>
-	<title>Svelte • Aplicações de Web Ciberneticamente Melhoradas</title>
+	<title>Svelte • Aplicações da Web Ciberneticamente Melhoradas</title>
 
 	<meta name="twitter:title" content="Svelte" />
-	<meta name="twitter:description" content="Aplicações de Web Ciberneticamente Melhoradas" />
-	<meta name="Description" content="Aplicações de Web Ciberneticamente Melhoradas" />
+	<meta name="twitter:description" content="Aplicações da Web Ciberneticamente Melhoradas" />
+	<meta name="Description" content="Aplicações da Web Ciberneticamente Melhoradas" />
 </svelte:head>
 
 <h1 class="visually-hidden">Svelte</h1>
@@ -56,7 +56,7 @@
 		<div class="links">
 			<h4>recursos</h4>
 			<a href="/docs">documentação</a>
-			<a href="/tutorial">iniciação</a>
+			<a href="/tutorial">seminário interativo</a>
 			<a href="/examples">exemplos</a>
 			<a href="/blog">blogue</a>
 		</div>
@@ -71,7 +71,7 @@
 			© 2023 <a href="https://github.com/sveltejs/svelte/graphs/contributors">colaboradores da Svelte</a>
 		</div>
 		<div class="open-source">
-			Svelte é um <a href="https://github.com/sveltejs/svelte">gratuito e de código-aberto</a> lançado sob a licença MIT
+			Svelte é um projeto <a href="https://github.com/sveltejs/svelte">gratuito e de código-aberto</a> lançado sob a licença MIT
 		</div>
 	</footer>
 </section>
