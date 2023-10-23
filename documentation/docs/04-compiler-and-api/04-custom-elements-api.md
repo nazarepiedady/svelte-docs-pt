@@ -1,5 +1,5 @@
 ---
-title: 'API dos Elementos Personalizados'
+title: 'API - Elementos Personalizados'
 ---
 
 Os componentes da Svelte também podem ser compilados para elementos personalizados (vulgo, componentes da Web) usando a opção do compilador `customElement: true`. Nós devemos especificar um nome de marcador para o componente usando o [elemento](/docs/special-elements#svelte-options) `<svelte:options>`:
