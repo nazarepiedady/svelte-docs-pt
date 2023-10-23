@@ -1,5 +1,5 @@
 ---
-title: 'API de Componente do Lado do Cliente'
+title: 'API - Componente do Lado do Cliente'
 ---
 
 ## Criando um Componente
