@@ -1,5 +1,5 @@
 ---
-title: 'API do Componente do Lado do Servidor'
+title: 'API - Componente do Lado do Servidor'
 ---
 
 ```js
