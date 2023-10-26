@@ -18,11 +18,11 @@ Os fundos doados através da Open Collective será usado para compensar as despe
 
 ## Mapa de Estradas
 
-É possível visualizar [o nosso mapa de estradas](https://svelte.dev/roadmap) para saberes o que estamos a trabalhar atualmente.
+É possível visualizar [o nosso mapa de estradas](https://svelte.dev/roadmap) para saberes sobre o que estamos a trabalhar atualmente.
 
 ## Contribuição
 
-Consulte o [Guia de Contribuição] e [pacote da svelte](packages/svelte) por contribuições à Svelte.
+Consulte o [Guia de Contribuição](CONTRIBUTING.md) e [pacote da svelte](packages/svelte) por contribuições à Svelte.
 
 ### Desenvolvimento
 
@@ -66,7 +66,7 @@ pnpm test -- -g transition
 
 ### svelte.dev
 
-O código-fonte para [svelte.dev](https://svelte.dev) mora no repositório [sites](https://github.com/sveltejs/sites), com toda a documentação no diretório [`site/content`](site/content). O sítio foi construído com a [SvelteKit](https://sveltekit-docs-pt.vercel.app/).
+O código-fonte para [svelte.dev](https://svelte-docs-pt.vercel.app) mora no repositório [sites](sites), com toda a documentação no diretório [`documentation/docs`](documentation/docs). O sítio foi construído com a [SvelteKit](https://sveltekit-docs-pt.vercel.app/).
 
 ## svelte.dev está em baixo?
 
