@@ -2,7 +2,7 @@
 title: Marcadores Especiais
 ---
 
-## {@html ...}
+## `{@html ...}`
 
 ```svelte
 {@html expression}
@@ -21,7 +21,7 @@ A expressão deve ser HTML autónomo válido — `{@html "<div>"}content{@html "
 </div>
 ```
 
-## {@debug ...}
+## `{@debug ...}`
 
 ```svelte
 {@debug}
@@ -62,7 +62,7 @@ O marcador `{@debug ...}` oferece uma alternativa à `console.log(...)`. Ele reg
 
 O marcador `{@debug}` sem quaisquer arguments inserirão uma declaração `debugger` que é acionada quando _qualquer_ estado mudar, como oposto às variáveis especificadas.
 
-## {@const ...}
+## `{@const ...}`
 
 ```svelte
 {@const assignment}
