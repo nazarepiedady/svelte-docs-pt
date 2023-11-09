@@ -17,7 +17,7 @@
 		</strong>
 		<div class="buttons">
 			<a href="https://learn-svelte-pt.vercel.app" rel="external" class="cta">
-				seminário interativo<Icon name="external-link" size="1em" />
+				tutorial<Icon name="external-link" size="1em" />
 			</a>
 			<a href="/docs/introduction" class="cta basic">ler a documentação</a>
 		</div>
