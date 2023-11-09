@@ -1,6 +1,8 @@
 ---
-title: 'API - Componente do Lado do Cliente'
+title: 'Componente do Cliente'
 ---
+
+> Nesta seção apresentaremos a API do Componente do Lado do Cliente.
 
 ## Criando um Componente
 
