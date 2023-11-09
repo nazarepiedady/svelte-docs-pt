@@ -35,7 +35,7 @@
 			</svelte:fragment>
 
 			<svelte:fragment slot="external-links">
-				<a href="https://learn-svelte-pt.vercel.app">Seminário</a>
+				<a href="https://learn-svelte-pt.vercel.app">Tutorial</a>
 
 				<a href="https://sveltekit-docs-pt.vercel.app">SvelteKit</a>
 
