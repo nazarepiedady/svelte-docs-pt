@@ -28,7 +28,7 @@ Anima a opacidade dum elemento de 0 à opacidade atual para as transições de `
 - `duration` (`number`, predefinido como `400`) — milissegundos que a transição dura
 - `easing` (`function`, predefinido como `linear`) — uma [função de atenuação](/docs/svelte-easing)
 
-Nós podemos ver a transição de `fade` em ação no [seminário interativo da transição](https://learn.svelte.dev/tutorial/transition):
+Nós podemos ver a transição de `fade` em ação no [tutorial de transição](https://learn-svelte-pt.vercel.app/tutorial/transition):
 
 ```svelte
 <script>
@@ -103,7 +103,7 @@ Anima as posições x e y e a opacidade dum elemento. As transições de `in` an
 - `y` (`number | string`, predefinido como `0`) - a distância `y` para qual e de onde animar
 - `opacity` (`number`, predefinido como `0`) - o valor de opacidade para qual e de onde animar
 
-`x` e `y` usam `px` por padrão mas suportam unidades de CSS, por exemplo `x: '100vw'` ou `y: '50%'`. Nós podemos ver a transição de `fly` em ação no [seminário interativo de transição](https://learn.svelte.dev/tutorial/adding-parameters-to-transitions).
+`x` e `y` usam `px` por padrão mas suportam unidades de CSS, por exemplo `x: '100vw'` ou `y: '50%'`. Nós podemos ver a transição de `fly` em ação no [tutorial de transição](https://learn.svelte.dev/tutorial/adding-parameters-to-transitions).
 
 ```svelte
 <script>
