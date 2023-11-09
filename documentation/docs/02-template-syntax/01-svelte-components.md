@@ -101,7 +101,7 @@ As atualizações de expressão (`count += 1`) e atribuições de propriedade (`
 </script>
 ```
 
-Uma vez que a reatividade da Svelte está baseada nas atribuições, o uso de métodos de vetor como `.push()` e `.splice()` não acionará automaticamente as atualizações. Uma atribuição subsequente é necessária para acionar a atualização. Este e mais detalhes podem ser encontrados no [seminário](https://learn-svelte-pt.vercel.app/tutorial/updating-arrays-and-objects):
+Uma vez que a reatividade da Svelte está baseada nas atribuições, o uso de métodos de vetor como `.push()` e `.splice()` não acionará automaticamente as atualizações. Uma atribuição subsequente é necessária para acionar a atualização. Este e mais detalhes podem ser encontrados no [tutorial](https://learn-svelte-pt.vercel.app/tutorial/updating-arrays-and-objects):
 
 ```svelte
 <script>
