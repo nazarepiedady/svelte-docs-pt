@@ -25,7 +25,7 @@ A função `flip` calcula a posição inicial e final dum elemento e anima entre
 - um `number`, em milissegundos.
 - uma função, `distance: number => duration: number`, recebendo a distância que o elemento percorrerá em píxeis e retornando a duração em milissegundos. Isto permite-nos atribuir uma duração que é relativa à distância percorrida por cada elemento.
 
-Nós podemos consultar um exemplo completo no [seminário de animações](https://learn.svelte.dev/tutorial/animate):
+Nós podemos consultar um exemplo completo no [tutorial de animações](https://learn.svelte.dev/tutorial/animate):
 
 ```svelte
 <script>
