@@ -1,6 +1,8 @@
 ---
-title: 'API - Componente do Lado do Servidor'
+title: 'Componente do Servidor'
 ---
+
+> Nesta seção apresentaremos a API do Componente do Lado do Servidor.
 
 ```js
 // @noErrors
