@@ -129,7 +129,7 @@ coords.update(
 );
 ```
 
-[Consulte um exemplo completo no seminário de salto.](https://learn.svelte.dev/tutorial/springs)
+[Consulte um exemplo completo no tutorial de salto.](https://learn-svelte-pt.vercel.app/tutorial/springs)
 
 ```svelte
 <script>
