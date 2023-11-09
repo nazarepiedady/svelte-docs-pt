@@ -56,7 +56,7 @@
 		<div class="links">
 			<h4>recursos</h4>
 			<a href="/docs">documentação</a>
-			<a href="/tutorial">seminário interativo</a>
+			<a href="/tutorial">tutorial</a>
 			<a href="/examples">exemplos</a>
 			<a href="/blog">blogue</a>
 		</div>
