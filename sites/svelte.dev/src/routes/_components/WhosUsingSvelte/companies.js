@@ -2,7 +2,7 @@ export const companies = [
 	{
 		href: 'https://1password.com',
 		filename: '1password.svg',
-		alt: '1Password logo',
+		alt: 'Logótipo da 1Password',
 		width: 364,
 		height: 68
 	},
@@ -10,7 +10,7 @@ export const companies = [
 		href: 'https://www.alaskaair.com/',
 		// style: 'background-color: black',
 		filename: 'alaskaairlines.svg',
-		alt: 'Alaska Airlines logo',
+		alt: 'Logótipo da Alaska Airlines',
 		// invert: true,
 		width: 113,
 		height: 48
@@ -18,14 +18,14 @@ export const companies = [
 	{
 		href: 'https://avast.com',
 		filename: 'avast.svg',
-		alt: 'Avast logo',
+		alt: 'Logótipo da Avast',
 		width: 300,
 		height: 95
 	},
 	{
 		href: 'https://chess.com',
 		filename: 'chess.svg',
-		alt: 'Chess.com logo',
+		alt: 'Logótipo da Chess.com',
 
 		width: 300,
 		height: 85
@@ -33,49 +33,49 @@ export const companies = [
 	{
 		href: 'https://fusioncharts.com',
 		filename: 'fusioncharts.svg',
-		alt: 'FusionCharts logo',
+		alt: 'Logótipo da FusionCharts',
 		width: 735,
 		height: 115
 	},
 	{
 		href: 'https://godaddy.com',
 		filename: 'godaddy.svg',
-		alt: 'GoDaddy logo',
+		alt: 'Logótipo da GoDaddy',
 		width: 300,
 		height: 84
 	},
 	{
 		href: 'https://www.ibm.com/',
 		filename: 'ibm.svg',
-		alt: 'IBM logo',
+		alt: 'Logótipo da IBM',
 		width: 1000,
 		height: 400
 	},
 	{
 		href: 'https://media.lesechos.fr/infographie',
 		filename: 'les-echos.svg',
-		alt: 'Les Echos',
+		alt: 'Logótipo da Les Echos',
 		width: 142,
 		height: 33
 	},
 	{
 		href: 'https://www.philips.co.uk',
 		filename: 'philips.svg',
-		alt: 'Philips logo',
+		alt: 'Logótipo da Philips',
 		width: 140,
 		height: 30
 	},
 	{
 		href: 'https://global.rakuten.com/corp/',
 		filename: 'rakuten.svg',
-		alt: 'Rakuten logo',
+		alt: 'Logótipo da Rakuten',
 		width: 300,
 		height: 89
 	},
 	{
 		href: 'https://razorpay.com',
 		filename: 'razorpay.svg',
-		alt: 'Razorpay logo',
+		alt: 'Logótipo da Razorpay',
 		width: 316,
 		height: 67
 	},
@@ -89,21 +89,21 @@ export const companies = [
 	{
 		href: 'https://squareup.com',
 		filename: 'square.svg',
-		alt: 'Square',
+		alt: 'Logótipo da Square',
 		width: 144,
 		height: 36
 	},
 	{
 		href: 'https://nytimes.com',
 		filename: 'nyt.svg',
-		alt: 'The New York Times logo',
+		alt: 'Logótipo da The New York Times',
 		width: 300,
 		height: 49
 	},
 	{
 		href: 'https://transloadit.com',
 		filename: 'transloadit.svg',
-		alt: 'Transloadit',
+		alt: 'Logótipo da Transloadit',
 		width: 239,
 		height: 60
 	}
