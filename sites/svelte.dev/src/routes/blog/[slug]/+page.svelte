@@ -32,7 +32,7 @@
 </article>
 
 <!-- the crawler doesn't understand twitter:image etc, so we have to add this hack. TODO fix in sveltekit -->
-<img hidden src="/blog/{$page.params.slug}/card.png" alt="Social card for {data.post.title}" />
+<img hidden src="/blog/{$page.params.slug}/card.png" alt="Cartão Social para {data.post.title}" />
 
 <style>
 	.post {
