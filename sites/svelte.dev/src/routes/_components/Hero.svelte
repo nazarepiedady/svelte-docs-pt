@@ -11,7 +11,7 @@
 
 <div class="hero">
 	<div class="hero-content">
-		<img alt="Svelte logotype" class="logotype" src={SvelteLogotype} />
+		<img alt="Logótipo da Svelte" class="logotype" src={SvelteLogotype} />
 		<strong>
 			<span style="white-space: nowrap;">Aplicações de Web</span> <br /> Ciberneticamente Melhoradas
 		</strong>
@@ -42,7 +42,7 @@
 		<source srcset={srcset(MachineMobile.sources.avif)} type="image/avif" />
 		<source srcset={srcset(MachineMobile.sources.webp)} type="image/webp" />
 		<source srcset={srcset(MachineMobile.sources.png)} type="image/png" />
-		<img alt="The Svelte compiler packaging up your component code" src={MachineMobile.img.src} />
+		<img alt="O compilador da Svelte empacotando o código do nosso componente" src={MachineMobile.img.src} />
 	</picture>
 </div>
 
