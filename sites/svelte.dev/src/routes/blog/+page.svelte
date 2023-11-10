@@ -8,7 +8,7 @@
 		rel="alternate"
 		type="application/rss+xml"
 		title="Blogue da Svelte"
-		href="https://svelte.dev/blog/rss.xml"
+		href="https://svelte-docs-pt.vercel.app/blog/rss.xml"
 	/>
 
 	<meta name="twitter:title" content="Blogue da Svelte" />
