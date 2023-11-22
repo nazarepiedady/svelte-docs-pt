@@ -2,15 +2,15 @@
 title: TypeScript
 ---
 
-You can use TypeScript within Svelte components. IDE extensions like the [Svelte VSCode extension](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode) will help you catch errors right in your editor, and [`svelte-check`](https://www.npmjs.com/package/svelte-check) does the same on the command line, which you can integrate into your CI.
+Nós podemos usar a TypeScript dentro dos componentes da Svelte. Extensões de ambiente de desenvolvimento integrado como a [extensão de VSCode da Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode) ajudar-nos-á a capturar os erros diretamente no nosso editor, e o [`svelte-check`](https://www.npmjs.com/package/svelte-check) faz o mesmo na linha de comando, o qual podemos integrar na nossa integração continua.
 
-## Setup
+## Configuração
 
-To use TypeScript within Svelte components, you need to add a preprocessor that will turn TypeScript into JavaScript.
+Para usarmos a TypeScript dentro dos componentes da Svelte, precisamos adicionar um pré-processador que transformará a TypeScript em JavaScript.
 
-### Using SvelteKit or Vite
+### Usando a SvelteKit ou a Vite
 
-The easiest way to get started is scaffolding a new SvelteKit project by typing `npm create svelte@latest`, following the prompts and choosing the TypeScript option.
+A maneira mais fácil de começar é estruturando um novo projeto de SvelteKit digitando `npm create svelte@latest`, seguindo os prontos e escolhendo a opção TypeScript:
 
 ```ts
 /// file: svelte.config.js
@@ -24,7 +24,7 @@ const config = {
 export default config;
 ```
 
-If you don't need or want all the features SvelteKit has to offer, you can scaffold a Svelte-flavoured Vite project instead by typing `npm create vite@latest` and selecting the `svelte-ts` option.
+Se não precisamos ou queremos todas as funcionalidades que a SvelteKit tem a oferecer, podemos estruturar um projeto de Vite temperado com a Svelte digitando `npm create vite@latest` e selecionando a opção `svelte-ts`:
 
 ```ts
 /// file: svelte.config.js
@@ -37,17 +37,17 @@ const config = {
 export default config;
 ```
 
-In both cases, a `svelte.config.js` with `vitePreprocess` will be added. Vite/SvelteKit will read from this config file.
+Em ambos casos, um `svelte.config.js` com `vitePreprocess` será adicionado. A Vite ou a SvelteKit lerá a partir deste ficheiro de configuração.
 
-### Other build tools
+### Outras Ferramentas de Construção
 
-If you're using tools like Rollup or Webpack instead, install their respective Svelte plugins. For Rollup that's [rollup-plugin-svelte](https://github.com/sveltejs/rollup-plugin-svelte) and for Webpack that's [svelte-loader](https://github.com/sveltejs/svelte-loader). For both, you need to install `typescript` and `svelte-preprocess` and add the preprocessor to the plugin config (see the respective READMEs for more info). If you're starting a new project, you can also use the [rollup](https://github.com/sveltejs/template) or [webpack](https://github.com/sveltejs/template-webpack) template to scaffold the setup from a script.
+Se estivermos usando ferramentas como a Rollup ou a Webpack, instalamos as suas respetivas extensões de Svelte. Para a Rollup é [`rollup-plugin-svelte`](https://github.com/sveltejs/rollup-plugin-svelte) e para a Webpack é [`svelte-loader`](https://github.com/sveltejs/svelte-loader). Para ambas, precisamos instalar a `typescript` e a `svelte-preprocess` e adicionar o pré-processador à configuração da extensão (consulte as respetivas READMEs por mais informação). Se estivermos começando um novo projeto, também podemos usar o modelo de projeto da [`rollup`](https://github.com/sveltejs/template) ou da [`webpack`](https://github.com/sveltejs/template-webpack) para estruturar a configuração a partir dum programa.
 
-> If you're starting a new project, we recommend using SvelteKit or Vite instead
+> Se estivermos a começar um novo projeto, recomendamos usar a SvelteKit ou Vite
 
 ## `<script lang="ts">`
 
-To use TypeScript inside your Svelte components, add `lang="ts"` to your `script` tags:
+Para usarmos a TypeScript dentro dos nossos componentes da Svelte, adicionamos `lang="ts"` aos nossos marcadores de `script`:
 
 ```svelte
 <script lang="ts">
@@ -59,9 +59,9 @@ To use TypeScript inside your Svelte components, add `lang="ts"` to your `script
 </script>
 ```
 
-### Props
+### Propriedades
 
-Props can be typed directly on the `export let` statement:
+As propriedades podem ser tipificadas diretamente sobre a declaração `export let`:
 
 ```svelte
 <script lang="ts">
@@ -69,9 +69,9 @@ Props can be typed directly on the `export let` statement:
 </script>
 ```
 
-### Slots
+### Ranhuras
 
-Slot and slot prop types are inferred from the types of the slot props passed to them:
+A ranhura e os tipos da propriedades do `slot` são inferidos a partir dos tipos das propriedades da ranhura passadas às mesmas:
 
 ```svelte
 <script lang="ts">
@@ -80,25 +80,25 @@ Slot and slot prop types are inferred from the types of the slot props passed to
 
 <slot {name} />
 
-<!-- Later -->
+<!-- Depois -->
 <Comp let:name>
-	<!--    ^ Inferred as string -->
+	<!--    ^ Inferido como sequência de caracteres -->
 	{name}
 </Comp>
 ```
 
-### Events
+### Eventos
 
-Events can be typed with `createEventDispatcher`:
+Os eventos podem ser tipificados com `createEventDispatcher`:
 
 ```svelte
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher<{
-		event: null; // does not accept a payload
-		click: string; // has a required string payload
-		type: string | null; // has an optional string payload
+		event: null; // não aceita uma carga
+		click: string; // tem uma carga de sequência de caracteres obrigatória
+		type: string | null; // tem uma carga de sequência de caracteres opcional
 	}>();
 
 	function handleClick() {
@@ -115,32 +115,32 @@ Events can be typed with `createEventDispatcher`:
 <button on:click={handleClick} on:keydown={handleType}>Click</button>
 ```
 
-## Enhancing built-in DOM types
+## Melhorando os Tipos do DOM Embutidos
 
-Svelte provides a best effort of all the HTML DOM types that exist. Sometimes you may want to use experimental attributes or custom events coming from an action. In these cases, TypeScript will throw a type error, saying that it does not know these types. If it's a non-experimental standard attribute/event, this may very well be a missing typing from our [HTML typings](https://github.com/sveltejs/svelte/blob/master/packages/svelte/elements.d.ts). In that case, you are welcome to open an issue and/or a PR fixing it.
+A Svelte fornece um melhor esforço para todos os tipos do DOM de HTML que existem. Algumas vezes podemos desejar usar atributos experimentais ou eventos personalizados vindos a partir duma ação. Se for um atributo ou evento padrão não experimental, este pode muito bem uma tipificação em falta da nossas [tipificações de HTML](https://github.com/sveltejs/svelte/blob/master/packages/svelte/elements.d.ts). Neste caso, todos são bem-vindos a abrir uma questão ou um pedido de atualização do repositório para correção.
 
-In case this is a custom or experimental attribute/event, you can enhance the typings like this:
+No caso que for um evento ou atributo experimental ou personalizado, podemos melhor as tipificações com isto:
 
 ```ts
 /// file: additional-svelte-typings.d.ts
 declare namespace svelteHTML {
-	// enhance elements
+	// melhorar os elementos
 	interface IntrinsicElements {
 		'my-custom-element': { someattribute: string; 'on:event': (e: CustomEvent<any>) => void };
 	}
-	// enhance attributes
+	// melhorar os atributos
 	interface HTMLAttributes<T> {
-		// If you want to use on:beforeinstallprompt
+		// Se quisermos usar `on:beforeinstallprompt`
 		'on:beforeinstallprompt'?: (event: any) => any;
-		// If you want to use myCustomAttribute={..} (note: all lowercase)
-		mycustomattribute?: any; // You can replace any with something more specific if you like
+		// Se quisermos usar `myCustomAttribute={..}` (nota: tudo minúsculo)
+		mycustomattribute?: any; // Podemos substituir `any` por algo mais específico se quisermos
 	}
 }
 ```
 
-Then make sure that `d.ts` file is referenced in your `tsconfig.json`. If it reads something like `"include": ["src/**/*"]` and your `d.ts` file is inside `src`, it should work. You may need to reload for the changes to take effect.
+Depois certificamos-nos de que o ficheiro `d.ts` é referenciando no nosso `tsconfig.json`. Se este precisar de algo como `"include": ["src/**/*"]` e o nosso ficheiro `d.ts` estiver dentro de `src`, deve funcionar. Nós podemos precisar recarregar para as mudanças surtirem efeito.
 
-Since Svelte version 4.2 / `svelte-check` version 3.5 / VS Code extension version 107.10.0 you can also declare the typings by augmenting the `svelte/elements` module like this:
+Desde a versão 4.2 da Svelte ou versão 3.5 do `svelte-check` ou versão 107.10.0 da extensão do VSCode também podemos declarar as tipificações aumentando o módulo `svelte/elements` desta maneira:
 
 ```ts
 /// file: additional-svelte-typings.d.ts
@@ -151,52 +151,52 @@ declare module 'svelte/elements' {
 		'custom-button': HTMLButtonAttributes;
 	}
 
-	// allows for more granular control over what element to add the typings to
+	// permite controle mais granular sobre para qual elemento adicionar as tipificações
 	export interface HTMLButtonAttributes {
 		veryexperimentalattribute?: string;
 	}
 }
 
-export {}; // ensure this is not an ambient module, else types will be overridden instead of augmented
+export {}; // garantir que isto não é um módulo ambiente, senão os tipos serão sobrepostos ao invés de aumentados
 ```
 
-## Experimental advanced typings
+## Tipificações Avançadas Experimentais
 
-A few features are missing from taking full advantage of TypeScript in more advanced use cases like typing that a component implements a certain interface, explicitly typing slots, or using generics. These things are possible using experimental advanced type capabilities. See [this RFC](https://github.com/dummdidumm/rfcs/blob/ts-typedefs-within-svelte-components/text/ts-typing-props-slots-events.md) for more information on how to make use of them.
+Algumas funcionalidades não estão tirando total vantagem da TypeScript nos casos de uso mais avançados como tipificar que um componente implementa uma certa interface, explicitamente tipificando as ranhuras, ou usando os genéricos. Estas coisas são possíveis usando as capacidades de tipo avançado experimentais. Consulte esta [RFC](https://github.com/dummdidumm/rfcs/blob/ts-typedefs-within-svelte-components/text/ts-typing-props-slots-events.md) por mais informação sobre como fazer uso das mesmas.
 
-> The API is experimental and may change at any point
+> A API é experimental e pode mudar em algum ponto.
 
-## Limitations
+## Limitações
 
-### No TS in markup
+### Sem TypeScript na Marcação
 
-You cannot use TypeScript in your template's markup. For example, the following does not work:
+Nós não podemos usar TypeScript na marcação do nosso modelo de marcação de hipertexto. Por exemplo, o seguinte não funciona:
 
 ```svelte
 <script lang="ts">
 	let count = 10;
 </script>
 
-<h1>Count as string: {count as string}!</h1> <!-- ❌ Does not work -->
+<h1>Count as string: {count as string}!</h1> <!-- ❌ Não funciona -->
 {#if count > 4}
-	{@const countString: string = count} <!-- ❌ Does not work -->
+	{@const countString: string = count} <!-- ❌ Não funciona -->
 	{countString}
 {/if}
 ```
 
-### Reactive Declarations
+### Declarações Reativas
 
-You cannot type your reactive declarations with TypeScript in the way you type a variable. For example, the following does not work:
+Nós não podemos tipificar as nossas declarações reativas com a TypeScript da maneira que tipificamos uma variável. Por exemplo, o seguinte não funciona:
 
 ```svelte
 <script lang="ts">
 	let count = 0;
 
-	$: doubled: number = count * 2; // ❌ Does not work
+	$: doubled: number = count * 2; // ❌ Não funciona
 </script>
 ```
 
-You cannot add a `: TYPE` because it's invalid syntax in this position. Instead, you can move the definition to a `let` statement just above:
+Não podemos adicionar um `: TYPE` porque é sintaxe inválida nesta posição. No lugar disto, podemos mover a definição para uma declaração de `let` como acima:
 
 ```svelte
 <script lang="ts">
@@ -207,6 +207,6 @@ You cannot add a `: TYPE` because it's invalid syntax in this position. Instead,
 </script>
 ```
 
-## Types
+## Tipos
 
 > TYPES: svelte
