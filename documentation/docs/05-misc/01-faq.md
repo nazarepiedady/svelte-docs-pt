@@ -1,36 +1,36 @@
 ---
-title: Frequently asked questions
+title: Questões Frequentes
 ---
 
-## I'm new to Svelte. Where should I start?
+## Sou Nova na Svelte. Onde Começo?
 
-We think the best way to get started is playing through the interactive [tutorial](https://learn.svelte.dev/). Each step there is mainly focused on one specific aspect and is easy to follow. You'll be editing and running real Svelte components right in your browser.
+Nós achamos que a melhor maneira de começar é brincando através do [tutorial](https://learn-svelte-pt.vercel.app) interativo. Cada etapa lá é principalmente focado sobre um aspeto específico e é fácil de seguir. Editaremos e executaremos componentes reais da Svelte diretamente no nosso navegador.
 
-Five to ten minutes should be enough to get you up and running. An hour and a half should get you through the entire tutorial.
+5 à dez minutos deveria ser o suficiente para nós aprendermos o que precisamos. Uma hora e meia deve para ultrapassarmos o tutorial inteiro.
 
-## Where can I get support?
+## Onde Posso Conseguir Suporte?
 
-If your question is about certain syntax, the [API page](https://svelte.dev/docs) is a good place to start.
+Se a nossa questão é sobre certa sintaxe, a [página da API](https://svelte-docs-pt.vercel.app/docs) é um bom lugar para começar.
 
-Stack Overflow is a popular forum to ask code-level questions or if you’re stuck with a specific error. Read through the existing questions tagged with [Svelte](https://stackoverflow.com/questions/tagged/svelte+or+svelte-3) or [ask your own](https://stackoverflow.com/questions/ask?tags=svelte)!
+Stack Overflow é um fórum popular para fazer questões de nível de código ou se estivermos presos com um erro específico. Leia atentamente as questões existentes rotuladas com [Svelte](https://stackoverflow.com/questions/tagged/svelte+or+svelte-3) ou [faça a tua própria questão](https://stackoverflow.com/questions/ask?tags=svelte)!
 
-There are online forums and chats which are a great place for discussion about best practices, application architecture or just to get to know fellow Svelte users. [Our Discord](https://svelte.dev/chat) or [the Reddit channel](https://www.reddit.com/r/sveltejs/) are examples of that. If you have an answerable code-level question, Stack Overflow is usually a better fit.
+Existem fóruns e salas de conversas digitais que são excelentes lugares para discussão sobre boas práticas, arquitetura de aplicação ou apenas conhecer os colegas que usam a Svelte. [Nossa Discord](https://svelte.dev/chat) ou o [canal da Reddit](https://www.reddit.com/r/sveltejs/) são exemplos disto. Se tivermos uma questão de nível de código respondível, o Stack Overflow é normalmente um dos mais adequados.
 
-## Are there any third-party resources?
+## Existem Recursos de Terceiros?
 
-Svelte Society maintains a [list of books and videos](https://sveltesociety.dev/resources).
+A Svelte Society mantém uma [lista de livros e vídeos](https://sveltesociety.dev/resources).
 
-## How can I get VS Code to syntax-highlight my .svelte files?
+## Como Posso Fazer o VSCode Destacar a Sintaxe dos Meus Ficheiros `.svelte`?
 
-There is an [official VS Code extension for Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
+Existe uma [extensão de VSCode oficial para a Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
 
-## Is there a tool to automatically format my .svelte files?
+## Existe uma Ferramenta para Formatar Automaticamente os Meus Ficheiros `.svelte`?
 
-You can use prettier with the [prettier-plugin-svelte](https://www.npmjs.com/package/prettier-plugin-svelte) plugin.
+Nós podemos usar a `prettier` com a extensão [`prettier-plugin-svelte`](https://www.npmjs.com/package/prettier-plugin-svelte).
 
-## How do I document my components?
+## Como Documento os Meus Componentes?
 
-In editors which use the Svelte Language Server you can document Components, functions and exports using specially formatted comments.
+Nos editores que usam o Servidor da Linguagem da Svelte podemos documentar os componentes, funções e exportações usando comentários especialmente formatados:
 
 ````svelte
 <script>
@@ -57,25 +57,25 @@ It will show up on hover.
 </main>
 ````
 
-Note: The `@component` is necessary in the HTML comment which describes your component.
+Nota: O `@component` é necessário no comentário de HTML que descreve o nosso componente.
 
-## Does Svelte scale?
+## Svelte Escala?
 
-There will be a blog post about this eventually, but in the meantime, check out [this issue](https://github.com/sveltejs/svelte/issues/2546).
+Eventualmente existirá uma publicação de blogue sobre isto, mas entretanto, consulte [esta questão](https://github.com/sveltejs/svelte/issues/2546).
 
-## Is there a UI component library?
+## Existe uma Biblioteca de Componente de Interface?
 
-There are several UI component libraries as well as standalone components. Find them under the [design systems section of the components page](https://sveltesociety.dev/components#design-systems) on the Svelte Society website.
+Existem várias bibliotecas de componente de interface bom como componentes independentes. Encontre as mesmas sob a [seção de sistemas de desenho da página dos componentes](https://sveltesociety.dev/components#design-systems) na página da Web da Svelte Society.
 
-## How do I test Svelte apps?
+## Como Testo as Aplicações de Svelte?
 
-How your application is structured and where logic is defined will determine the best way to ensure it is properly tested. It is important to note that not all logic belongs within a component - this includes concerns such as data transformation, cross-component state management, and logging, among others. Remember that the Svelte library has its own test suite, so you do not need to write tests to validate implementation details provided by Svelte.
+Como a nossa aplicação está estruturada e onde a lógica está definida determinará a melhor maneira de garantir que está devidamente testada. É importante notar que nem toda lógica deve estar dentro dum componente - isto inclui preocupações tais como transformação de dados, gestão de estado transversal de componente, registo, entre outros. Temos que lembrar que a biblioteca da Svelte tem seu próprio conjunto de teste, então não precisamos de escrever testes para validar detalhes de implementação fornecidos pela Svelte.
 
-A Svelte application will typically have three different types of tests: Unit, Component, and End-to-End (E2E).
+Uma aplicação de Svelte normalmente terá três tipos diferentes de testes: Unitário, Componente, e Ponta-a-Ponta (E2E).
 
-_Unit Tests_: Focus on testing business logic in isolation. Often this is validating individual functions and edge cases. By minimizing the surface area of these tests they can be kept lean and fast, and by extracting as much logic as possible from your Svelte components more of your application can be covered using them. When creating a new SvelteKit project, you will be asked whether you would like to setup [Vitest](https://vitest.dev/) for unit testing. There are a number of other test runners that could be used as well.
+_Testes Unitários_: Foca-se em testar a lógica de negocio em isolamento. Muitas vezes é validando funções individuais e casos extremos. Com a minimização da superfície destes testes, estes podem ser mantidos simples e rápidos, e com a extração do máximo de lógica possível dos nossos componentes de Svelte mais da nossa aplicação pode ser coberta usando os mesmos. Quando criarmos um novo projeto de SvelteKit, seremos perguntados se gostaríamos de configurar a [Vitest](https://vitest.dev/) para os testes unitários. Também existem um número de outros executores de teste que poderiam ser usados.
 
-_Component Tests_: Validating that a Svelte component mounts and interacts as expected throughout its lifecycle requires a tool that provides a Document Object Model (DOM). Components can be compiled (since Svelte is a compiler and not a normal library) and mounted to allow asserting against element structure, listeners, state, and all the other capabilities provided by a Svelte component. Tools for component testing range from an in-memory implementation like jsdom paired with a test runner like [Vitest](https://vitest.dev/) to solutions that leverage an actual browser to provide a visual testing capability such as [Playwright](https://playwright.dev/docs/test-components) or [Cypress](https://www.cypress.io/).
+_Testes de Componente_: Validar que um componente de Svelte monta e interage como esperado ao longo do seu ciclo de vida exige uma ferramenta que fornece um Modelo de Objeto de Documento (DOM). Os componentes podem ser compilados (uma vez que a Svelte é um compilador e não uma biblioteca normal) e montados para permitir asserir contra a estrutura do elemento, ouvintes, estado, e todas outras capacidades fornecidas por um componente de Svelte. As ferramentas para teste de componentes variam desde uma implementação em memória como `jsdom` combinada com um executor de testes como a [Vitest](https://vitest.dev/) até soluções que influenciam um navegador verdadeiro a fornecer uma capacidade de teste visual como [Playwright](https://playwright.dev/docs/test-components) ou [Cypress](https://www.cypress.io/).
 
 _End-to-End Tests_: To ensure your users are able to interact with your application it is necessary to test it as a whole in a manner as close to production as possible. This is done by writing end-to-end (E2E) tests which load and interact with a deployed version of your application in order to simulate how the user will interact with your application. When creating a new SvelteKit project, you will be asked whether you would like to setup [Playwright](https://playwright.dev/) for end-to-end testing. There are many other E2E test libraries available for use as well.
 
