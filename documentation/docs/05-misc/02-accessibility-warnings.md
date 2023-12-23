@@ -1,43 +1,43 @@
 ---
-title: 'Accessibility warnings'
+title: 'Avisos de Acessibilidade'
 ---
 
-Accessibility (shortened to a11y) isn't always easy to get right, but Svelte will help by warning you at compile time if you write inaccessible markup. However, keep in mind that many accessibility issues can only be identified at runtime using other automated tools and by manually testing your application.
+Acessibilidade (abreviada para a11y) nem sempre é fácil de fazer-se corretamente, mas a Svelte ajuda avisando-nos no momento da compilação se escrevemos marcação inacessível. No entanto, devemos lembrar-nos de que muitos problemas de acessibilidade apenas podem ser identificados no momento da execução usando outras ferramentas automatizadas e testando manualmente a nossa aplicação.
 
-Some warnings may be incorrect in your concrete use case. You can disable such false positives by placing a `<!-- svelte-ignore a11y-<code> -->` comment above the line that causes the warning. Example:
+Alguns avisos podem estar incorretos no nosso caso de uso concreto. Nós podemos desligar tais falsos positivos colocando um comentário `<!-- svelte-ignore a11y-<code> -->` em cima da linha que causa o aviso. Exemplo:
 
 ```svelte
 <!-- svelte-ignore a11y-autofocus -->
 <input autofocus />
 ```
 
-Here is a list of accessibility checks Svelte will do for you.
+Eis uma lista de verificações de acessibilidade que a Svelte fará por nós.
 
 ## `a11y-accesskey`
 
-Enforce no `accesskey` on element. Access keys are HTML attributes that allow web developers to assign keyboard shortcuts to elements. Inconsistencies between keyboard shortcuts and keyboard commands used by screen reader and keyboard-only users create accessibility complications. To avoid complications, access keys should not be used.
+Não forçar nenhum `accesskey` sobre o elemento. As teclas de acesso são atributos de HTML que permite os programadores da Web atribuírem atalhos de teclado aos elementos. As inconsistências entre os atalhos de teclado e comandos do teclado usados pelo leitor de tela e utilizadores teclado criam complicações de acessibilidade. Para evitar complicações, as teclas de acesso não deveriam ser usadas:
 
 <!-- prettier-ignore -->
 ```svelte
-<!-- A11y: Avoid using accesskey -->
+<!-- A11y: Evitar usar a tecla de acesso -->
 <div accessKey="z" />
 ```
 
 ## `a11y-aria-activedescendant-has-tabindex`
 
-An element with `aria-activedescendant` must be tabbable, so it must either have an inherent `tabindex` or declare `tabindex` as an attribute.
+Um elemento com `aria-activedescendant` deve ser separável, então este deve ter um `tabindex` inerente ou declarar `tabindex` como atributo:
 
 ```svelte
-<!-- A11y: Elements with attribute aria-activedescendant should have tabindex value -->
+<!-- A11y: Os elementos com atributo aria-activedescendant devem ter o valor tabindex  -->
 <div aria-activedescendant="some-id" />
 ```
 
 ## `a11y-aria-attributes`
 
-Certain reserved DOM elements do not support ARIA roles, states and properties. This is often because they are not visible, for example `meta`, `html`, `script`, `style`. This rule enforces that these DOM elements do not contain the `aria-*` props.
+Certos elementos do DOM reservados não suportam os papéis, estados e propriedades ARIA. Isto deve-se frequentemente ao fato de não serem visíveis, por exemplo `meta`, `html`, `script`, `style`. Esta regra força estes elementos do DOM a não terem as propriedades `aria-*`:
 
 ```svelte
-<!-- A11y: <meta> should not have aria-* attributes -->
+<!-- A11y: <meta> não deve ter atributos aria-* -->
 <meta aria-hidden="false" />
 ```
 
@@ -288,7 +288,7 @@ Tab key navigation should be limited to elements on the page that can be interac
 <div tabindex="0" />
 ```
 
-## a11y-no-static-element-interactions
+## `a11y-no-static-element-interactions`
 
 Elements like `<div>` with interactive handlers like `click` must have an ARIA role.
 
