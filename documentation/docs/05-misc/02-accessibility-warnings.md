@@ -43,10 +43,10 @@ Certos elementos do DOM reservados não suportam os papéis, estados e proprieda
 
 ## `a11y-autofocus`
 
-Enforce that `autofocus` is not used on elements. Autofocusing elements can cause usability issues for sighted and non-sighted users alike.
+Força que o `autofocus` não seja usado sobre os elementos. O foco automático dos elementos pode causar problemas de usabilidade tanto utilizadores com visão como para os utilizadores sem visão:
 
 ```svelte
-<!-- A11y: Avoid using autofocus -->
+<!-- A11y: Evitar usar foco automático -->
 <input autofocus />
 ```
 
