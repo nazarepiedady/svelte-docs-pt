@@ -19,7 +19,7 @@
 				Se esperavas encontrar alguma coisa, visite a <a href="/chat">sala de conversas da Discord</a> e informe-nos, ou levante uma questão na <a href="https://github.com/sveltejs/sites">GitHub</a>. Obrigado!
 			</p>
 		{:else}
-			<h1>Yikes!</h1>
+			<h1>Oh Não!</h1>
 			<p>Algo correu mal quando tentávamos processar esta página.</p>
 			{#if $page.error.message}
 				<p class="error">{$page.status}: {$page.error.message}</p>
@@ -32,7 +32,7 @@
 			</p>
 		{/if}
 	{:else}
-		<h1>Parece que não estás ligado à internet</h1>
+		<h1>Parece que não tens conexão à internet</h1>
 		<p>Recarregue a página quando ligares a internet.</p>
 	{/if}
 </div>
