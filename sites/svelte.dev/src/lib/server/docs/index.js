@@ -1,14 +1,11 @@
 import { base as app_base } from '$app/paths';
-import { modules } from '$lib/generated/type-info.js';
 import {
 	escape,
 	extractFrontmatter,
 	markedTransform,
 	normalizeSlugify,
-	removeMarkdown,
-	replaceExportTypePlaceholders
+	removeMarkdown
 } from '@sveltejs/site-kit/markdown';
-import fs from 'node:fs';
 import { CONTENT_BASE_PATHS } from '../../../constants.js';
 import { render_content } from '../renderer';
 
@@ -31,12 +28,14 @@ export async function get_parsed_docs(docs_data, slug) {
 	return null;
 }
 
-/** @return {import('./types').DocsData} */
-export function get_docs_data(base = CONTENT_BASE_PATHS.DOCS) {
+/** @return {Promise<import('./types').DocsData>} */
+export async function get_docs_data(base = CONTENT_BASE_PATHS.DOCS) {
+	const { readdir, readFile } = await import('node:fs/promises');
+
 	/** @type {import('./types').DocsData} */
 	const docs_data = [];
 
-	for (const category_dir of fs.readdirSync(base)) {
+	for (const category_dir of await readdir(base)) {
 		const match = /\d{2}-(.+)/.exec(category_dir);
 		if (!match) continue;
 
@@ -44,7 +43,7 @@ export function get_docs_data(base = CONTENT_BASE_PATHS.DOCS) {
 
 		// Read the meta.json
 		const { title: category_title, draft = 'false' } = JSON.parse(
-			fs.readFileSync(`${base}/${category_dir}/meta.json`, 'utf-8')
+			await readFile(`${base}/${category_dir}/meta.json`, 'utf-8')
 		);
 
 		if (draft === 'true') continue;
@@ -56,7 +55,7 @@ export function get_docs_data(base = CONTENT_BASE_PATHS.DOCS) {
 			pages: []
 		};
 
-		for (const filename of fs.readdirSync(`${base}/${category_dir}`)) {
+		for (const filename of await readdir(`${base}/${category_dir}`)) {
 			if (filename === 'meta.json') continue;
 			const match = /\d{2}-(.+)/.exec(filename);
 			if (!match) continue;
@@ -64,7 +63,7 @@ export function get_docs_data(base = CONTENT_BASE_PATHS.DOCS) {
 			const page_slug = match[1].replace('.md', '');
 
 			const page_data = extractFrontmatter(
-				fs.readFileSync(`${base}/${category_dir}/${filename}`, 'utf-8')
+				await readFile(`${base}/${category_dir}/${filename}`, 'utf-8')
 			);
 
 			if (page_data.metadata.draft === 'true') continue;
@@ -76,7 +75,8 @@ export function get_docs_data(base = CONTENT_BASE_PATHS.DOCS) {
 				title: page_title,
 				slug: page_slug,
 				content: page_content,
-				sections: get_sections(page_content),
+				category: category_title,
+				sections: await get_sections(page_content),
 				path: `${app_base}/docs/${page_slug}`,
 				file: `${category_dir}/${filename}`
 			});
@@ -99,19 +99,24 @@ export function get_docs_list(docs_data) {
 	}));
 }
 
-const titled = (str) =>
+/** @param {string} str */
+const titled = async (str) =>
 	removeMarkdown(
-		escape(markedTransform(str, { paragraph: (txt) => txt }))
+		escape(await markedTransform(str, { paragraph: (txt) => txt }))
 			.replace(/<\/?code>/g, '')
 			.replace(/&#39;/g, "'")
 			.replace(/&quot;/g, '"')
 			.replace(/&lt;/g, '<')
 			.replace(/&gt;/g, '>')
+			.replace(/&amp;/, '&')
 			.replace(/<(\/)?(em|b|strong|code)>/g, '')
 	);
 
-/** @param {string} markdown */
-function get_sections(markdown) {
+/**
+ * @param {string} markdown
+ * @returns {Promise<import('./types').Section[]>}
+ */
+export async function get_sections(markdown) {
 	const lines = markdown.split('\n');
 	const root = /** @type {import('./types').Section} */ ({
 		title: 'Root',
@@ -122,11 +127,11 @@ function get_sections(markdown) {
 	});
 	let currentNodes = [root];
 
-	lines.forEach((line) => {
+	for (const line of lines) {
 		const match = line.match(/^(#{2,4})\s(.*)/);
 		if (match) {
 			const level = match[1].length - 2;
-			const text = titled(match[2]);
+			const text = await titled(match[2]);
 			const slug = normalizeSlugify(text);
 
 			// Prepare new node
@@ -140,7 +145,9 @@ function get_sections(markdown) {
 			};
 
 			// Add the new node to the tree
-			currentNodes[level].sections.push(newNode);
+			const sections = currentNodes[level].sections;
+			if (!sections) throw new Error(`Could not find section ${level}`);
+			sections.push(newNode);
 
 			// Prepare for potential children of the new node
 			currentNodes = currentNodes.slice(0, level + 1);
@@ -149,7 +156,7 @@ function get_sections(markdown) {
 			// Add non-heading line to the text of the current section
 			currentNodes[currentNodes.length - 1].text += line + '\n';
 		}
-	});
+	}
 
-	return root.sections;
+	return /** @type {import('./types').Section[]} */ (root.sections);
 }
