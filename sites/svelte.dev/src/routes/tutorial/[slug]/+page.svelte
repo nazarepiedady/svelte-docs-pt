@@ -98,9 +98,9 @@
 </script>
 
 <svelte:head>
-	<title>{selected.section.title} / {selected.chapter.title} • Iniciação de Svelte</title>
+	<title>{selected.section.title} / {selected.chapter.title} • Tutorial da Svelte</title>
 
-	<meta name="twitter:title" content="Iniciação de Svelte" />
+	<meta name="twitter:title" content="Tutorial da Svelte" />
 	<meta name="twitter:description" content="{selected.section.title} / {selected.chapter.title}" />
 	<meta name="Description" content="{selected.section.title} / {selected.chapter.title}" />
 </svelte:head>
@@ -122,7 +122,7 @@
 						<!-- TODO disable this button when the contents of the REPL
 							matches the expected end result -->
 						<button class="show" on:click={() => (completed ? reset() : complete())}>
-							{completed ? 'Reiniciar' : 'Mostra-me'}
+							{completed ? 'Reiniciar' : 'Mostrar'}
 						</button>
 					{/if}
 
@@ -161,7 +161,7 @@
 <style>
 	.tutorial-outer {
 		position: relative;
-		height: calc(100vh - var(--sk-nav-height));
+		height: calc(100vh - var(--sk-nav-height) - var(--sk-banner-bottom-height));
 		overflow: hidden;
 		padding: 0 0 42px 0;
 		box-sizing: border-box;
