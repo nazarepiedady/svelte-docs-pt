@@ -1,6 +1,6 @@
 <script>
+	import Terminal from './Terminal.svelte';
 	import { Section } from '@sveltejs/site-kit/components';
-	import { TryTerminal } from '@sveltejs/site-kit/components';
 </script>
 
 <div class="try-container">
@@ -14,7 +14,7 @@
 			</div>
 
 			<div class="try">
-				<TryTerminal />
+				<Terminal />
 			</div>
 		</div>
 	</Section>

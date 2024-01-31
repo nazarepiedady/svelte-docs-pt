@@ -6,7 +6,7 @@
 	// @ts-ignore
 	import MachineMobile from './svelte-machine-mobile.png?w=960&format=avif;webp;png;&as=picture';
 
-	const srcset = (sources) => sources.map(({ src, w }) => `${src} ${w}w`).join(', ');
+	const srcset = (sources) => sources;
 </script>
 
 <div class="hero">
@@ -96,14 +96,15 @@
 		border-radius: var(--sk-border-radius);
 		box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.08);
 		color: #fff;
-		color: color-mix(in hwb, hsl(var(--sk-theme-1-hsl)) 10%, var(--sk-back-1) 95%);
 		transition: 0.5s var(--quint-out);
 		transition-property: box-shadow, color;
 	}
 
 	.cta:hover {
 		text-decoration: none;
-		box-shadow: 0px 0.8px 3.8px rgba(0, 0, 0, 0.115), 0px 6px 30px rgba(0, 0, 0, 0.23);
+		box-shadow:
+			0px 0.8px 3.8px rgba(0, 0, 0, 0.115),
+			0px 6px 30px rgba(0, 0, 0, 0.23);
 	}
 
 	.cta.basic {
@@ -114,6 +115,7 @@
 
 	.logotype {
 		width: min(45vw, 40em);
+		height: auto;
 	}
 
 	@media (min-width: 800px) {

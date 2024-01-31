@@ -1,0 +1,87 @@
+<div class="terminal">
+	<div class="chrome">
+		<span class="dot" />
+		<span class="dot" />
+		<span class="dot" />
+		<span class="title">terminal</span>
+	</div>
+	<pre>
+		<code>
+			<span class="line">npm create <span class="orange-highlight">svelte</span>@latest my-app</span>
+			<span class="line">cd my-app</span>
+			<span class="line">npm install</span>
+			<span class="line">npm run dev -- --open</span>
+		</code>
+	</pre>
+</div>
+
+<style>
+	.terminal {
+		margin: 0;
+		overflow: hidden;
+		background-color: #212121;
+		border-radius: var(--sk-border-radius);
+	}
+
+	.terminal .chrome {
+		gap: 1rem;
+		color: #999;
+		padding: 1rem;
+		display: flex;
+		font-size: 1.8rem;
+		position: relative;
+		align-items: center;
+		border-bottom: 1px #29252a solid;
+		background-color: hsl(0, 0%, 10%);
+	}
+
+	.terminal .dot {
+		width: 1rem;
+		height: 1rem;
+		border-radius: 50%;
+		background-color: #999;
+	}
+
+	.title {
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		position: absolute;
+		padding-top: 0.4rem;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.terminal pre {
+		padding: 1em;
+		font-size: var(--sk-text-xs);
+	}
+
+	.line::before {
+		opacity: 0.3;
+		content: '$ ';
+	}
+
+	pre code {
+		color: white;
+		font-size: 1em;
+	}
+
+	.orange-highlight {
+		color: hsl(15, 100%, 65%);
+	}
+
+	@media (min-width: 440px) {
+		.terminal pre {
+			font-size: var(--sk-text-s);
+		}
+	}
+
+	@media (min-width: 1080px) {
+		.terminal pre {
+			font-size: var(--sk-text-m);
+		}
+	}
+</style>
