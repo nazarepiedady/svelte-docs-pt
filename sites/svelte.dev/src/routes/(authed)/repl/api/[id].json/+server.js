@@ -46,9 +46,8 @@ export async function GET({ params }) {
 			.map((example) => example.slug)
 	);
 
-	if (examples.has(params.id)) {
-		const example = get_example(examples_data, params.id);
-
+	const example = get_example(examples_data, params.id);
+	if (example) {
 		return json({
 			id: params.id,
 			name: example.title,
@@ -61,7 +60,7 @@ export async function GET({ params }) {
 	if (dev && !client) {
 		// in dev with no local Supabase configured, proxy to production
 		// this lets us at least load saved REPLs
-		const res = await fetch(`https://svelte.dev/repl/${params.id}.json`);
+		const res = await fetch(`https://svelte.dev/repl/api/${params.id}.json`);
 
 		// returning the response directly results in a bizarre
 		// content encoding error, so we create a new one
@@ -74,13 +73,13 @@ export async function GET({ params }) {
 	}
 
 	if (!UUID_REGEX.test(params.id)) {
-		throw error(404);
+		error(404);
 	}
 
 	const app = await gist.read(params.id);
 
 	if (!app) {
-		throw error(404, 'not found');
+		error(404, 'not found');
 	}
 
 	return json({
@@ -95,6 +94,8 @@ export async function GET({ params }) {
 }
 
 export async function entries() {
+	const { get_examples_list } = await import('$lib/server/examples/index.js');
+
 	return get_examples_list(examples_data)
 		.map(({ examples }) => examples)
 		.flatMap((val) => val.map(({ slug }) => ({ id: slug })));
