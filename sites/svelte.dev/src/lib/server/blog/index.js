@@ -1,8 +1,8 @@
 // @ts-check
 import { extractFrontmatter } from '@sveltejs/site-kit/markdown';
-import fs from 'node:fs';
 import { CONTENT_BASE_PATHS } from '../../../constants.js';
 import { render_content } from '../renderer.js';
+import { get_sections } from '../docs/index.js';
 
 /**
  * @param {import('./types').BlogData} blog_data
@@ -23,16 +23,18 @@ export async function get_processed_blog_post(blog_data, slug) {
 
 const BLOG_NAME_REGEX = /^(\d{4}-\d{2}-\d{2})-(.+)\.md$/;
 
-/** @returns {import('./types').BlogData} */
-export function get_blog_data(base = CONTENT_BASE_PATHS.BLOG) {
+/** @returns {Promise<import('./types').BlogData>} */
+export async function get_blog_data(base = CONTENT_BASE_PATHS.BLOG) {
+	const { readdir, readFile } = await import('node:fs/promises');
+
 	/** @type {import('./types').BlogData} */
 	const blog_posts = [];
 
-	for (const file of fs.readdirSync(base).reverse()) {
+	for (const file of (await readdir(base)).reverse()) {
 		if (!BLOG_NAME_REGEX.test(file)) continue;
 
 		const { date, date_formatted, slug } = get_date_and_slug(file);
-		const { metadata, body } = extractFrontmatter(fs.readFileSync(`${base}/${file}`, 'utf-8'));
+		const { metadata, body } = extractFrontmatter(await readFile(`${base}/${file}`, 'utf-8'));
 
 		blog_posts.push({
 			date,
@@ -46,7 +48,8 @@ export function get_blog_data(base = CONTENT_BASE_PATHS.BLOG) {
 			author: {
 				name: metadata.author,
 				url: metadata.authorURL
-			}
+			},
+			sections: await get_sections(body)
 		});
 	}
 
