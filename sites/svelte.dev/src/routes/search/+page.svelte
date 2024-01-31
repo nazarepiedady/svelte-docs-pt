@@ -11,7 +11,14 @@
 <main>
 	<h1>Pesquisar</h1>
 	<form>
-		<input name="q" value={data.query} placeholder="Pesquisar" spellcheck="false" />
+		<input
+			name="q"
+			value={data.query}
+			type="search"
+			aria-label="Pesquisar"
+			placeholder="Pesquisar"
+			spellcheck="false"
+		/>
 	</form>
 
 	<SearchResults results={data.results} query={data.query} />
