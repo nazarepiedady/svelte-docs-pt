@@ -1,19 +1,18 @@
-import { stringify } from 'querystring';
 import { redirect } from '@sveltejs/kit';
-import { oauth, client_id } from '../_config.js';
+import { client_id, oauth } from '../_config.js';
 
 export const GET = client_id
-	? ({ url }) => {
+	? /** @param {{url: URL}} opts */ ({ url }) => {
 			const Location =
 				`${oauth}/authorize?` +
-				stringify({
+				new URLSearchParams({
 					scope: 'read:user',
 					client_id,
 					redirect_uri: `${url.origin}/auth/callback`
-				});
+				}).toString();
 
-			throw redirect(302, Location);
-	  }
+			redirect(302, Location);
+		}
 	: () =>
 			new Response(
 				`
