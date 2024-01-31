@@ -4,12 +4,15 @@ export const prerender = true;
 
 const months = ',Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec'.split(',');
 
+/** @param {string} str */
 function formatPubdate(str) {
 	const [y, m, d] = str.split('-');
 	return `${d} ${months[+m]} ${y} 12:00 +0000`;
 }
 
+/** @param {string} html */
 function escapeHTML(html) {
+	/** @type {{ [key: string]: string }} */
 	const chars = {
 		'"': 'quot',
 		"'": '#39',
@@ -30,7 +33,7 @@ const get_rss = (posts) =>
 <channel>
 	<title>Blogue da Svelte</title>
 	<link>https://svelte.dev/blog</link>
-	<description>Novidades e informação sobre o desaparecer mágico da abstração de interface de utilizador.</description>
+	<description>Novidades e informações sobre a abstração de interface mágica que desaparece.</description>
 	<image>
 		<url>https://svelte.dev/favicon.png</url>
 		<title>Svelte</title>
@@ -58,7 +61,7 @@ const get_rss = (posts) =>
 		.trim();
 
 export async function GET() {
-	const posts = get_blog_list(get_blog_data());
+	const posts = get_blog_list(await get_blog_data());
 
 	return new Response(get_rss(posts), {
 		headers: {
