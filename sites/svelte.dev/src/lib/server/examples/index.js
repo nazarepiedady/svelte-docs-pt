@@ -1,5 +1,4 @@
 import { CONTENT_BASE_PATHS } from '../../../constants.js';
-import fs from 'node:fs';
 
 /**
  * @param {import('./types').ExamplesData} examples_data
@@ -18,25 +17,29 @@ export function get_example(examples_data, slug) {
 }
 
 /**
- * @returns {import('./types').ExamplesData}
+ * @returns {Promise<import('./types').ExamplesData>}
  */
-export function get_examples_data(base = CONTENT_BASE_PATHS.EXAMPLES) {
+export async function get_examples_data(base = CONTENT_BASE_PATHS.EXAMPLES) {
+	const { readdir, stat, readFile } = await import('node:fs/promises');
+
 	const examples = [];
 
-	for (const subdir of fs.readdirSync(base)) {
+	for (const subdir of await readdir(base)) {
+		/** @type {import('./types').ExamplesDatum} */
 		const section = {
 			title: '', // Initialise with empty
 			slug: subdir.split('-').slice(1).join('-'),
 			examples: []
 		};
 
-		if (!(fs.statSync(`${base}/${subdir}`).isDirectory() || subdir.endsWith('meta.json'))) continue;
+		if (!((await stat(`${base}/${subdir}`)).isDirectory() || subdir.endsWith('meta.json')))
+			continue;
 
 		if (!subdir.endsWith('meta.json'))
 			section.title =
-				JSON.parse(fs.readFileSync(`${base}/${subdir}/meta.json`, 'utf-8')).title ?? 'Embeds';
+				JSON.parse(await readFile(`${base}/${subdir}/meta.json`, 'utf-8')).title ?? 'Embeds';
 
-		for (const section_dir of fs.readdirSync(`${base}/${subdir}`)) {
+		for (const section_dir of await readdir(`${base}/${subdir}`)) {
 			const match = /\d{2}-(.+)/.exec(section_dir);
 			if (!match) continue;
 
@@ -46,17 +49,28 @@ export function get_examples_data(base = CONTENT_BASE_PATHS.EXAMPLES) {
 
 			// Get title for
 			const example_title = JSON.parse(
-				fs.readFileSync(`${example_base_dir}/meta.json`, 'utf-8')
+				await readFile(`${example_base_dir}/meta.json`, 'utf-8')
 			).title;
 
+			/**
+			 * @type {Array<{
+			 *   name: string;
+			 *   type: string;
+			 *   content: string;
+			 * }>}
+			 */
 			const files = [];
-			for (const file of fs
-				.readdirSync(example_base_dir)
-				.filter((file) => !file.endsWith('meta.json'))) {
+			for (const file of (await readdir(example_base_dir)).filter(
+				(file) => !file.endsWith('meta.json')
+			)) {
+				const type = file.split('.').at(-1);
+				if (!type) {
+					throw new Error(`Could not determine type from ${file}`);
+				}
 				files.push({
 					name: file,
-					type: file.split('.').at(-1),
-					content: fs.readFileSync(`${example_base_dir}/${file}`, 'utf-8')
+					type,
+					content: await readFile(`${example_base_dir}/${file}`, 'utf-8')
 				});
 			}
 
